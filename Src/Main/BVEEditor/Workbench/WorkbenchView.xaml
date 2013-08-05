@@ -1,0 +1,109 @@
+﻿<Window x:Class="BVEEditor.Workbench.WorkbenchView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:core="http://funprogramming.ojaru.jp/BVEEditor/core"
+    xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+    xmlns:local="clr-namespace:BVEEditor.Workbench"
+    xmlns:workbench="clr-namespace:BVEEditor.Workbench;assembly=BVEEditor.Core"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:ResxLocalizationProvider.DefaultDictionary="StringResources"
+    Title="{lex:Loc MainWindow_DialogName}"
+    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+	AllowDrop="True"
+	FlowDirection="{Binding FlowDirection}"
+	WindowState="{Binding LastNonMinimizedState, Mode=TwoWay}"
+	Left="{Binding Path=RestoreBounds.X, Mode=TwoWay}"
+	Top="{Binding Path=RestoreBounds.Y, Mode=TwoWay}"
+	Width="{Binding Path=RestoreBounds.Width, Mode=TwoWay}"
+	Height="{Binding Path=RestoreBounds.Height, Mode=TwoWay}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="OnDragEnter">
+            <cal:ActionMessage MethodName="OnDragEnter">
+                <cal:Parameter Value="$eventArgs" />
+            </cal:ActionMessage>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="OnDragOver">
+            <cal:ActionMessage MethodName="OnDragOver">
+                <cal:Parameter Value="$eventArgs" />
+            </cal:ActionMessage>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="OnDrop">
+            <cal:ActionMessage MethodName="OnDrop">
+                <cal:Parameter Value="$eventArgs" />
+            </cal:ActionMessage>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo />
+    </Window.TaskbarItemInfo>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        
+        <ContentControl x:Name="main_menu" Grid.Row="0" />
+        <ContentControl x:Name="toolbars" Grid.Row="1" />
+        <avalonDock:DockingManager
+			x:Name="dock_manager"
+            Grid.Row="2"
+			AllowMixedOrientation="True"
+			AnchorablesSource="{Binding Pads}"
+			ActiveContent="{Binding ActiveViewContent, Mode=TwoWay}"
+			DocumentsSource="{Binding ViewDocuments}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="DocumentClosed">
+                    <cal:ActionMessage MethodName="DocumentClosed">
+                        <cal:Parameter Value="$documentcontext" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="DocumentClosing">
+                    <cal:ActionMessage MethodName="DocumentClosing">
+                        <cal:Parameter Value="$documentcontext" />
+                        <cal:Parameter Value="$eventArgs" />
+                    </cal:ActionMessage>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <avalonDock:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </avalonDock:DockingManager.DocumentHeaderTemplate>
+            <avalonDock:DockingManager.AnchorableHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </avalonDock:DockingManager.AnchorableHeaderTemplate>
+            <avalonDock:DockingManager.LayoutItemTemplateSelector>
+                <workbench:AutobinderTemplateSelector>
+                    <workbench:AutobinderTemplateSelector.Template>
+                        <DataTemplate>
+                            <ContentControl cal:View.Model="{Binding .}" IsTabStop="False" />
+                        </DataTemplate>
+                    </workbench:AutobinderTemplateSelector.Template>
+                </workbench:AutobinderTemplateSelector>
+            </avalonDock:DockingManager.LayoutItemTemplateSelector>
+            <!--<avalonDock:DockingManager.LayoutUpdateStrategy>
+                <local:LayoutInitializer />
+            </avalonDock:DockingManager.LayoutUpdateStrategy>-->
+            <avalonDock:LayoutRoot x:Name="layout_root">
+                <avalonDock:LayoutPanel>
+                    <avalonDock:LayoutDocumentPaneGroup x:Name="doc_area"/>
+                </avalonDock:LayoutPanel>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+        <ContentControl x:Name="status_bar" Grid.Row="3" />
+    </Grid>
+</Window>

@@ -1,0 +1,866 @@
+﻿/*
+ * Created by SharpDevelop.
+ * User: HAZAMA
+ * Date: 2013/07/03
+ * Time: 16:27
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Navigation;
+using System.Windows.Threading;
+using BVEEditor.AvalonDock;
+using BVEEditor.Events;
+using BVEEditor.Logging;
+using BVEEditor.Result;
+using BVEEditor.Services;
+using BVEEditor.Startup;
+using BVEEditor.Strategies;
+using Caliburn.Micro;
+//using Core.Presentation;
+using ICSharpCode.Core;
+//using ICSharpCode.SharpDevelop.Widgets;
+using Microsoft.Win32;
+using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
+
+namespace BVEEditor.Workbench
+{
+	/// <summary>
+	/// The view model for workbench.
+	/// The following table lists some terms relating to the content shown in the main window and its meanings.
+	/// <list type="bullet | number | table">
+	/// 	<item>
+	/// 		<term>ViewDocument</term>
+	/// 		<description>The content type shown in the document area</description>
+	/// 	</item>
+	/// 	<item>
+	/// 		<term>Pad</term>
+	/// 		<description>The content type shown not in the document area</description>
+	/// 	</item>
+	/// 	<item>
+	/// 		<term>ViewContent</term>
+	/// 		<description>One of the content in a single ViewDocument</description>
+	/// 	</item>
+	/// 	<item>
+	/// 		<term>WorkbenchWindow</term>
+	/// 		<description>A window that wraps a ViewDocument or a Pad</description>
+	/// 	</item>
+	/// </list>
+	/// </summary>
+	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, IHandle<FileRenameEvent>
+	{
+		const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
+		const string PadContentPath = "/BVEEditor/Workbench/Pad";
+		const string LayoutConfig = "LayoutConfig.xml";
+        const string WorkbenchMemento = "WorkbenchMemento";
+		
+		List<PadViewModel> pads = new List<PadViewModel>();
+		BindableCollection<PadDescriptor> pad_descriptors = new BindableCollection<PadDescriptor>();
+		BindableCollection<ViewDocumentViewModel> view_documents = new BindableCollection<ViewDocumentViewModel>();
+        IEventAggregator event_aggregator;
+        IFileService file_service;
+        IPropertyService property_service;
+        IFileDialogStrategies file_strategies;
+		//EditorStatusBar status_bar = new EditorStatusBar();
+        //ToolBar[] tool_bars;
+
+        #region Binding sources
+        public FlowDirection FlowDirection{
+			get;
+			private set;
+		}
+
+        public Rect RestoreBounds{
+            get; set;
+        }
+		
+		public WindowState LastNonMinimizedState{
+			get{return last_non_minimized_window_state;}
+			set{
+				last_non_minimized_window_state = value;
+			}
+		}
+		
+		string title;
+		public string Title{
+			get{return title;}
+			set{
+				if(title != value){
+					title = value;
+					NotifyOfPropertyChange(() => title);
+				}
+			}
+		}
+        #endregion
+
+        #region View related events
+        internal void OnViewOpened(ViewContentEvent e)
+		{
+			event_aggregator.Publish(e);
+		}
+		
+		internal void OnViewClosed(ViewContentEvent e)
+		{
+			event_aggregator.Publish(e);
+		}
+		#endregion
+		
+		public Window MainWindow{
+			get{return Application.Current.MainWindow;}
+		}
+		
+		public WorkbenchViewModel(IFileService fileService, IEventAggregator eventAggregator, IPropertyService propertyService,
+            IResultFactory resultFactory, IFileDialogStrategies fileStrategies) : base(resultFactory)
+		{
+            event_aggregator = eventAggregator;
+            eventAggregator.Subscribe(this);
+            //file_service = fileService;
+            property_service = propertyService;
+            file_strategies = fileStrategies;
+
+            title = "BVEEditor";
+
+			UpdateFlowDirection();
+
+            SetMemento(property_service.NestedProperties(WorkbenchMemento));    //restore workbench memento
+			
+			var descriptors = AddInTree.BuildItems<PadDescriptor>(PadContentPath, this, false);
+			foreach(PadDescriptor content in descriptors){
+				if(content != null)
+					AddPad(content);
+			}
+			
+			/*main_menu.ItemsSource = MenuService.CreateMenuItems(this, this, MainMenuPath, activationMethod: "MainMenu", immediatelyExpandMenuBuildersForShortcuts: true);
+			
+			tool_bars = ToolBarService.CreateToolBars(this, this, "/BVEEditor/Workbench/ToolBar");
+			foreach(ToolBar tb in tool_bars){
+				DockPanel.SetDock(tb, Dock.Top);
+				dockPanel.Children.Insert(1, tb);
+			}
+			DockPanel.SetDock(status_bar, Dock.Bottom);
+			main_panel.Children.Insert(main_panel.Children.Count - 2, status_bar);*/
+			
+			//Core.WinForms.MenuService.ExecuteCommand = ExecuteCommand;
+			//UpdateMenu();
+			
+			//Project.ProjectService.CurrentProjectChanged += SetProjectTitle;
+			
+			//SD.FileService.FileRemoved += ((RecentOpen)SD.FileService.RecentOpen).FileRemoved;
+			//SD.FileService.FileRenamed += ((RecentOpen)SD.FileService.RecentOpen).FileRenamed;
+			
+			requery_suggested_event_handler = new EventHandler(CommandManager_RequerySuggested);
+			CommandManager.RequerySuggested += requery_suggested_event_handler;
+			//resourceService.LanguageChanged += OnLanguageChanged;
+			
+			//SD.StatusBar.SetMessage("${res:MainWindow.StatusBar.ReadyMessage}");
+		}
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            InitDocking();
+        }
+
+        protected override IEnumerable<IResult> CanClose()
+        {
+            var handle_dirty_results = view_documents.SelectMany(HandleDocumentClosing);
+            foreach(var result in handle_dirty_results)
+                yield return result;
+
+            event_aggregator.Publish(new ApplicationExitingEvent());
+
+            DeinitDocking();
+
+            var workbench_memento = CreateMemento();    //store workbench memento
+            property_service.SetNestedProperties(WorkbenchMemento, workbench_memento);
+        }
+
+        #region Layout mainipulation
+        void InitDocking()
+        {
+            var path = System.IO.Path.Combine(property_service.ConfigDirectory, LayoutConfig);
+            if(!System.IO.File.Exists(path))
+                return;
+
+            try {
+                var serializer = new XmlLayoutSerializer(DockingManager);
+                serializer.Deserialize(path);
+            }
+            catch {
+                Log4netLogger.Instance.Error("Could not load layout configuration from {0}. Maybe the file is missing? Try to delete the file.", path);
+                //SD.FileSystem.Delete(FileName.Create(path));
+            }
+        }
+
+        void DeinitDocking()
+        {
+            var path = System.IO.Path.Combine(property_service.ConfigDirectory, LayoutConfig);
+
+            try {
+                var serializer = new XmlLayoutSerializer(DockingManager);
+                serializer.Serialize(path);
+            }
+            catch {
+                Log4netLogger.Instance.Error("Could not save the layout configuration. Any changes to the layout will be lost.");
+            }
+        }
+        #endregion
+
+        DockingManager DockingManager{
+            get{return (this.GetView() as IDockingManagerProvider).DockingManager;}
+        }
+		
+		/*void ExecuteCommand(ICommand command, object caller)
+		{
+			//ServiceSingleton.GetRequiredService<IAnalyticsMonitor>()
+			//	.TrackFeature(command.GetType().FullName, "Menu");
+			
+			var routed_command = command as System.Windows.Input.RoutedCommand;
+			if(routed_command != null){
+				var target = System.Windows.Input.FocusManager.GetFocusedElement(this);
+				if(routed_command.CanExecute(caller, target))
+					routed_command.Execute(caller, target);
+			}else{
+				if(command.CanExecute(caller))
+					command.Execute(caller);
+			}
+		}*/
+		
+		// keep a reference to the event handler to prevent it from being garbage collected
+		// (CommandManager.RequerySuggested only keeps weak references to the event handlers)
+		EventHandler requery_suggested_event_handler;
+
+		void CommandManager_RequerySuggested(object sender, EventArgs e)
+		{
+			UpdateMenu();
+		}
+		
+		void UpdateMenu()
+		{
+			/*MenuService.UpdateStatus(main_menu.ItemsSource);
+			
+			foreach(ToolBar tb in tool_bars)
+				ToolBarService.UpdateStatus(tb.ItemsSource);*/
+		}
+		
+		void OnLanguageChanged(object sender, EventArgs e)
+		{
+			//MenuService.UpdateText(main_menu.ItemsSource);
+			UpdateFlowDirection();
+		}
+		
+		void UpdateFlowDirection()
+		{
+			//UILanguage language = UILanguageService.GetLanguage(resource_service.Language);
+			//Core.WinForms.RightToLeftConverter.IsRightToLeft = language.IsRightToLeft;
+			//this.FlowDirection = language.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+			//App.Current.Resources[GlobalStyles.FlowDirectionKey] = this.FlowDirection;
+		}
+
+        /*void SetProjectTitle(object sender, Project.ProjectEventArgs e)
+        {
+            if (e.Project != null) {
+                Title = e.Project.Name + " - " + ResourceService.GetString("MainWindow.DialogName");
+            } else {
+                Title = ResourceService.GetString("MainWindow.DialogName");
+            }
+        }*/
+
+        #region Event handlers
+        public void OnDragEnter(DragEventArgs e)
+        {
+            try{
+                if(!e.Handled){
+                    e.Effects = GetEffect(e.Data);
+                    e.Handled = true;
+                }
+            }
+            catch(Exception ex){
+                //yield return Result.ShowMessageBox(StringParser.Parse("{res:Common.Dialogs.ExceptionRaised}"), ex.Message, MessageBoxButton.OK);
+            }
+        }
+
+        public void OnDragOver(DragEventArgs e)
+        {
+            try{
+                if(!e.Handled){
+                    e.Effects = GetEffect(e.Data);
+                    e.Handled = true;
+                }
+            }
+            catch(Exception ex){
+                MessageService.ShowException(ex);
+            }
+        }
+
+        DragDropEffects GetEffect(IDataObject data)
+        {
+            try {
+                if(data != null && data.GetDataPresent(DataFormats.FileDrop)){
+                    string[] files = (string[])data.GetData(DataFormats.FileDrop);
+                    if(files != null) {
+                        foreach(string file in files) {
+                            if(File.Exists(file))
+                                return DragDropEffects.Link;
+                        }
+                    }
+                }
+            }
+            catch(COMException){
+                // Ignore errors getting the data (e.g. happens when dragging attachments out of Thunderbird)
+            }
+            return DragDropEffects.None;
+        }
+
+        protected void OnDrop(DragEventArgs e)
+        {
+            try{
+                if(!e.Handled && e.Data != null && e.Data.GetDataPresent(DataFormats.FileDrop)){
+                    e.Handled = true;
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    if(files == null)
+                        return;
+
+                    foreach(string file in files){
+                        if(File.Exists(file)){
+                            var fileName = FileName.Create(file);
+                            /*if (SD.ProjectService.IsSolutionOrProjectFile(fileName)) {
+                                SD.ProjectService.OpenSolutionOrProject(fileName);
+                            } else {*/
+                            file_service.OpenFile(fileName);
+                            //}
+                        }
+                    }
+                }
+            }
+            catch(Exception ex) {
+                MessageService.ShowException(ex);
+            }
+        }
+        #endregion
+
+        #region Properties representing contents
+        public ICollection<ViewContentViewModel> ViewContentCollection {
+			get {
+				//SD.MainThread.VerifyAccess();
+				return view_documents.SelectMany(d => d.ViewContents).ToList().AsReadOnly();
+			}
+		}
+		
+		public ICollection<ViewContentViewModel> PrimaryViewContents {
+			get {
+				//SD.MainThread.VerifyAccess();
+				return (from document in view_documents
+				        where document.ViewContents.Count > 0
+				        select document.ViewContents[0]
+				       ).ToList().AsReadOnly();
+			}
+		}
+		
+		public IList<PadViewModel> Pads{
+			get{
+				//SD.MainThread.VerifyAccess();
+				return pads.AsReadOnly();
+			}
+		}
+		
+		public IList<ViewDocumentViewModel> Documents{
+			get{
+				//SD.MainThread.VerifyAccess();
+				return view_documents;
+			}
+		}
+		
+		/*IWorkbenchWindow active_workbench_window;
+		public IWorkbenchWindow ActiveWorkbenchWindow {
+			get {
+				SD.MainThread.VerifyAccess();
+				return active_workbench_window;
+			}
+			private set {
+				if (active_workbench_window != value) {
+					if (active_workbench_window != null) {
+						active_workbench_window.ActiveViewContentChanged -= WorkbenchWindowActiveViewContentChanged;
+					}
+					
+					active_workbench_window = value;
+					
+					if (value != null) {
+						value.ActiveViewContentChanged += WorkbenchWindowActiveViewContentChanged;
+					}
+					
+					if (ActiveWorkbenchWindowChanged != null) {
+						ActiveWorkbenchWindowChanged(this, EventArgs.Empty);
+					}
+					WorkbenchWindowActiveViewContentChanged(null, null);
+				}
+			}
+		}*/
+		#endregion
+
+		ViewContentViewModel active_view_content;
+		public ViewContentViewModel ActiveViewContent{
+			get{
+				//SD.MainThread.VerifyAccess();
+				return active_view_content;
+			}
+			set{
+				//SD.MainThread.VerifyAccess();
+				if(active_view_content != value){
+					active_view_content = value;
+					NotifyOfPropertyChange(() => active_view_content);
+					ActiveDocument = value.ViewDocument;
+				}
+			}
+		}
+		
+		ViewDocumentViewModel active_document;
+		public ViewDocumentViewModel ActiveDocument{
+			get{
+				//SD.MainThread.VerifyAccess();
+				return active_document;
+			}
+			private set{
+				if(active_document != value){
+					active_document = value;
+					NotifyOfPropertyChange(() => active_document);
+				}
+			}
+		}
+		
+		#region NewCommand
+		RelayCommand<object> new_command;
+		public ICommand NewCommand{
+			get{
+				if(new_command == null)
+					new_command = new RelayCommand<object>(OnNew, CanNew);
+				
+				return new_command;
+			}
+		}
+		
+		bool CanNew(object parameter)
+		{
+			return true;
+		}
+		
+		void OnNew(object parameter)
+		{
+			
+		}
+		#endregion
+		
+		#region OpenCommand
+		RelayCommand<object> open_command;
+		public ICommand OpenCommand{
+			get{
+				if(open_command == null)
+					open_command = new RelayCommand<object>(OnOpen, CanOpen);
+				
+				return open_command;
+			}
+		}
+		
+		bool CanOpen(object parameter)
+		{
+			return true;
+		}
+		
+		void OnOpen(object parameter)
+		{
+			
+		}
+		#endregion
+		
+		#region Document related methods
+		public void AddDocument(ViewDocumentViewModel content)
+		{
+			ShowDocument(content, true);
+		}
+		
+		public void ShowDocument(ViewDocumentViewModel content, bool switchToOpenedView)
+		{
+			//SD.MainThread.VerifyAccess();
+			if(content == null)
+				throw new ArgumentNullException("content");
+			
+			if(view_documents.Contains(content))
+				throw new ArgumentException("ViewDocument is already shown");
+			
+			LoadViewDocumentMemento(content);
+			view_documents.Add(content);
+		}
+		#endregion
+		
+		#region Pad related methods
+		public void AddPad(PadDescriptor content)
+		{
+			//SD.MainThread.VerifyAccess();
+			if(content == null)
+				throw new ArgumentNullException("content");
+			
+			var viewmodel = content.CreateViewModel();
+			if(pads.Contains(viewmodel))
+				throw new ArgumentException("Pad is already loaded");
+			
+			pads.Add(viewmodel);
+			pad_descriptors.Add(content);
+		}
+		
+		public PadViewModel GetPad(Type type)
+		{
+			//SD.MainThread.VerifyAccess();
+			if(type == null)
+				throw new ArgumentNullException("type");
+			
+			foreach(PadDescriptor descriptor in pad_descriptors){
+				if(descriptor.ViewModelName == type.FullName)
+					return pads[pad_descriptors.IndexOf(descriptor)];
+			}
+			return null;
+		}
+		
+		public void ActivatePad(PadDescriptor content)
+		{
+			//if(workbench_panel != null)
+			//	workbench_panel.ActivatePad(content);
+		}
+		#endregion
+		
+		#region ViewDocument related commands
+        public IEnumerable<IResult> DocumentClosing(ViewDocumentViewModel document, DocumentClosingEventArgs args)
+        {
+            return HandleDocumentClosing(document);
+        }
+
+        public void DocumentClosed(ViewDocumentViewModel document)
+        {
+            view_documents.Remove(document);
+        }
+
+        IEnumerable<IResult> HandleDocumentClosing(ViewDocumentViewModel document)
+        {
+            return HandleDocumentClosing(document, null);
+        }
+
+        IEnumerable<IResult> HandleDocumentClosing(ViewDocumentViewModel document, System.Action cancelCallback)
+        {
+            if(document.IsDirty){
+                var res = Result.ShowMessageBox(StringParser.Parse("{res:Common.Dialogs.Captions.SaveBeforeClose}"),
+                    StringParser.Format("{res:Common.Dialogs.Messages.SaveBeforeClose}", document.FileName), MessageBoxButton.YesNoCancel);
+				yield return res;
+
+				if(res.Result == System.Windows.MessageBoxResult.Cancel){
+					yield return Result.Cancel(cancelCallback);
+                }else if(res.Result == System.Windows.MessageBoxResult.Yes){
+                    foreach(var result in file_strategies.SaveAs(document, true, null))
+					    yield return result;
+                }
+			}
+        }
+
+		public void Save(ViewDocumentViewModel viewDocument, bool saveAsFlag = false)
+		{
+			if(viewDocument.File.IsUntitled || saveAsFlag){
+				var dlg = new SaveFileDialog();
+				if(dlg.ShowDialog().GetValueOrDefault())
+					viewDocument.File.FileName = FileName.Create(dlg.SafeFileName);
+			}
+		}
+		
+		public void Open(ViewDocumentViewModel viewDocument)
+		{
+			ShowDocument(viewDocument, true);
+			view_documents.Add(viewDocument);
+		}
+		
+		public void New()
+		{
+			var new_doc = new ViewDocumentViewModel(file_service.CreateUntitledOpenedFile("Untitled", null));
+			view_documents.Add(new_doc);
+		}
+		#endregion
+		
+		public void CloseAllViews()
+		{
+			//SD.MainThread.VerifyAccess();
+			foreach(ViewDocumentViewModel document in this.view_documents)
+				HandleDocumentClosing(document);
+		}
+		
+		public bool CloseAllSolutionViews(bool force)
+		{
+			bool result = true;
+			/*foreach(ViewDocumentViewModel document in this.view_documents){
+				if(document.ActiveViewContent != null && document.ActiveViewContent.CloseWithSolution)
+					result &= document.CloseWindow(force);
+			}*/
+			return result;
+		}
+		
+		#region ViewContent Memento Handling
+		FileName view_content_mementos_file_name;
+		
+		FileName ViewContentMementosFileName{
+			get{
+				if(view_content_mementos_file_name == null)
+					view_content_mementos_file_name = FileName.Create(Path.Combine(PropertyService.ConfigDirectory, "LastViewStates.xml"));
+					
+				return view_content_mementos_file_name;
+			}
+		}
+		
+		ICSharpCode.Core.Properties LoadOrCreateViewContentMementos()
+		{
+			try{
+				return ICSharpCode.Core.Properties.Load(this.ViewContentMementosFileName) ?? new ICSharpCode.Core.Properties();
+			}catch(Exception ex){
+				Log4netLogger.Instance.Warn("Error while loading the view content memento file. Discarding any saved view states.", ex);
+				return new ICSharpCode.Core.Properties();
+			}
+		}
+		
+		static string GetMementoKeyName(ViewDocumentViewModel viewDocument)
+		{
+			return String.Concat(viewDocument.GetType().FullName.GetHashCode().ToString("x", CultureInfo.InvariantCulture), ":",
+			                     FileUtility.NormalizePath(viewDocument.FileName).ToUpperInvariant());
+		}
+		
+		public bool LoadDocumentProperties {
+			get { return property_service.Get("BVEEditor.LoadDocumentProperties", true); }
+			set { property_service.Set("BVEEditor.LoadDocumentProperties", value); }
+		}
+		
+		/// <summary>
+		/// Stores the memento for the view content.
+		/// Such mementos are automatically loaded in ShowView().
+		/// </summary>
+		public void StoreMemento(ViewDocumentViewModel viewDocument)
+		{
+			IMementoCapable memento_capable = viewDocument as IMementoCapable;
+			if(memento_capable != null && LoadDocumentProperties){
+				if(viewDocument.File == null)
+					return;
+				
+				string key = GetMementoKeyName(viewDocument);
+				Log4netLogger.Instance.Debug("Saving memento of '" + viewDocument.ToString() + "' to key '" + key + "'");
+				
+				ICSharpCode.Core.Properties memento = memento_capable.CreateMemento();
+				ICSharpCode.Core.Properties p = this.LoadOrCreateViewContentMementos();
+				p.SetNestedProperties(key, memento);
+				FileUtility.ObservedSave(new NamedFileOperationDelegate(p.Save), this.ViewContentMementosFileName, FileErrorPolicy.Inform);
+			}
+		}
+		
+		void LoadViewDocumentMemento(ViewDocumentViewModel viewDocument)
+		{
+			IMementoCapable memento_capable = viewDocument as IMementoCapable;
+			if(memento_capable != null && LoadDocumentProperties){
+				if(viewDocument.FileName == null)
+					return;
+				
+				try{
+					string key = GetMementoKeyName(viewDocument);
+					Log4netLogger.Instance.Debug("Trying to restore memento of '" + viewDocument.ToString() + "' from key '" + key + "'");
+					
+					memento_capable.SetMemento(this.LoadOrCreateViewContentMementos().NestedProperties(key));
+				}catch(Exception e){
+					MessageService.ShowException(e, "Can't get/set memento");
+				}
+			}
+		}
+		#endregion
+		
+		System.Windows.WindowState last_non_minimized_window_state = System.Windows.WindowState.Normal;
+		
+		/*protected override void OnStateChanged(EventArgs e)
+		{
+			base.OnStateChanged(e);
+			if(this.WindowState != System.Windows.WindowState.Minimized)
+				last_non_minimized_window_state = this.WindowState;
+		}*/
+		
+		public ICSharpCode.Core.Properties CreateMemento()
+		{
+			ICSharpCode.Core.Properties prop = new ICSharpCode.Core.Properties();
+			prop.Set("WindowState", last_non_minimized_window_state);
+			var bounds = this.RestoreBounds;
+			
+			if(!bounds.IsEmpty)
+				prop.Set("Bounds", bounds);
+			
+			return prop;
+		}
+		
+		public void SetMemento(ICSharpCode.Core.Properties memento)
+		{
+			Rect bounds = memento.Get("Bounds", new Rect(10, 10, 750, 550));
+			// bounds are validated after PresentationSource is initialized (see OnSourceInitialized)
+			last_non_minimized_window_state = memento.Get("WindowState", System.Windows.WindowState.Maximized);
+			RestoreBounds = bounds;
+		}
+		
+		/*public string CurrentLayoutConfiguration {
+			get {
+				return LayoutConfiguration.CurrentLayoutName;
+			}
+			set {
+				LayoutConfiguration.CurrentLayoutName = value;
+			}
+		}*/
+		
+		/*public void LoadConfiguration()
+		{
+			if (!dockingManager.IsLoaded)
+				return;
+			Busy = true;
+			try {
+				TryLoadConfiguration();
+			} catch (Exception ex) {
+				MessageService.ShowException(ex);
+				// ignore errors loading configuration
+			} finally {
+				Busy = false;
+			}
+			foreach (AvalonPadContent p in pads.Values) {
+				p.LoadPadContentIfRequired();
+			}
+		}
+		
+		void TryLoadConfiguration()
+		{
+			bool isPlainLayout = LayoutConfiguration.CurrentLayoutName == "Plain";
+			if(File.Exists(LayoutConfiguration.CurrentLayoutFileName)){
+				try {
+					LoadLayout(LayoutConfiguration.CurrentLayoutFileName, isPlainLayout);
+					return;
+				} catch (FileFormatException) {
+					// error when version of AvalonDock has changed: ignore and load template instead
+				}
+			}
+			if (File.Exists(LayoutConfiguration.CurrentLayoutTemplateFileName)) {
+				LoadLayout(LayoutConfiguration.CurrentLayoutTemplateFileName, isPlainLayout);
+			}
+		}
+		
+		void LoadLayout(string fileName, bool hideAllLostPads)
+		{
+			Log4netLogger.Instance.Info("Loading layout file: " + fileName + ", hideAllLostPads=" + hideAllLostPads);
+//			DockableContent[] oldContents = dockingManager.DockableContents;
+			dock_manager(fileName);
+//			DockableContent[] newContents = dockingManager.DockableContents;
+			// Restoring a AvalonDock layout will remove pads that are not
+			// stored in the layout file.
+			// We'll re-add those lost pads.
+//			foreach (DockableContent lostContent in oldContents.Except(newContents)) {
+//				AvalonPadContent padContent = lostContent as AvalonPadContent;
+//				Log4netLogger.Instance.Debug("Re-add lost pad: " + padContent);
+//				if (padContent != null && !hideAllLostPads) {
+//					padContent.ShowInDefaultPosition();
+//				} else {
+//					dockingManager.Hide(lostContent);
+//				}
+//			}
+		}
+		
+		public void StoreConfiguration()
+		{
+			try {
+				LayoutConfiguration current = LayoutConfiguration.CurrentLayout;
+				if (current != null && !current.IsReadOnly) {
+					string configPath = LayoutConfiguration.ConfigLayoutPath;
+					Directory.CreateDirectory(configPath);
+					string fileName = Path.Combine(configPath, current.FileName);
+					Log4netLogger.Instance.Info("Saving layout file: " + fileName);
+					// Save docking layout into memory stream first, then write the contents to file.
+					// This prevents corruption when there is an exception saving the layout.
+					var memoryStream = new MemoryStream();
+					dockingManager.SaveLayout(memoryStream);
+					memoryStream.Position = 0;
+					try {
+						using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.ReadWrite))
+							memoryStream.CopyTo(stream);
+					} catch (IOException ex) {
+						// ignore IO errors (maybe switching layout in two SharpDevelop instances at once?)
+						Log4netLogger.Instance.Warn(ex);
+					}
+				}
+			} catch (Exception e) {
+				MessageService.ShowException(e);
+			}
+		}
+		
+		public void SwitchLayout(string layoutName)
+		{
+			StoreConfiguration();
+			LayoutConfiguration.CurrentLayoutName = layoutName;
+		}*/
+
+        #region IHandle<FileEvent> メンバー
+
+        public void Handle(FileEvent message)
+        {
+            foreach(OpenedFile file in file_service.OpenedFiles){
+                if(FileUtility.IsBaseDirectory(message.FileName, file.FileName)){
+                    foreach(ViewContentViewModel content in file.RegisteredViewContents.ToArray()){
+                        // content.WorkbenchWindow can be null if multiple view contents
+                        // were in the same WorkbenchWindow and both should be closed
+                        // (e.g. Windows Forms Designer, Subversion History View)
+                        if(content.ViewDocument != null)
+                            HandleDocumentClosing(content.ViewDocument);
+                    }
+                }
+            }
+            //Editor.PermanentAnchorService.FileDeleted(e);
+        }
+
+        #endregion
+
+        #region IHandle<FileRenameEvent> メンバー
+
+        public void Handle(FileRenameEvent message)
+        {
+            if(message.IsDirectory){
+                foreach(OpenedFile file in file_service.OpenedFiles){
+                    if(file.FileName != null && FileUtility.IsBaseDirectory(message.SourceFile, file.FileName))
+                        file.FileName = FileName.Create(FileUtility.RenameBaseDirectory(file.FileName, message.SourceFile, message.TargetFile));
+                }
+            }else{
+                OpenedFile file = file_service.GetOpenedFile(message.SourceFile);
+                if(file != null)
+                    file.FileName = FileName.Create(message.TargetFile);
+            }
+            //Editor.PermanentAnchorService.FileRenamed(e);
+        }
+
+        #endregion
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)){
+                try{
+                    command.Execute(null);
+                }
+                catch(Exception ex){
+                    // allow startup to continue if some commands fail
+                    MessageService.ShowException(ex);
+                }
+            }
+        }
+    }
+}

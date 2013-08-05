@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ShiftPositionsDialog.AmountOfShift" xml:space="preserve">
+    <value>Amount of Shift:</value>
+  </data>
+  <data name="ShiftPositionsDialog.TextboxTooltip" xml:space="preserve">
+    <value>Enter an integer indicating how much you want to shift the whole or the part of the route. A negative integer shifts backward, and a positive one does forward.</value>
+  </data>
+  <data name="XML.MainMenu.FileMenu.SaveAll.Description" xml:space="preserve">
+    <value>Save all buffers currently open</value>
+  </data>
+  <data name="XML.MainMenu.FileMenu.Save.Description" xml:space="preserve">
+    <value>Save current buffer</value>
+  </data>
+  <data name="XML.MainMenu.FileMenu.Open.Project.Description" xml:space="preserve">
+    <value>Open project</value>
+  </data>
+  <data name="MainWindow.DialogName" xml:space="preserve">
+    <value>BVEEditor</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Paste.Description" xml:space="preserve">
+    <value>Paste text from clipboard</value>
+  </data>
+  <data name="MainWindow.StatusBar.ReadyMessage" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Copy.Description" xml:space="preserve">
+    <value>Copy selection to clipboard</value>
+  </data>
+  <data name="Global.ErrorText" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="CommonStrings.TextUndefined" xml:space="preserve">
+    <value>Undefined</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Undo.Description" xml:space="preserve">
+    <value>Undo last action</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Delete.Description" xml:space="preserve">
+    <value>Delete text</value>
+  </data>
+  <data name="CommonStrings.TextYes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="CommonStrings.TextNo" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Cut.Description" xml:space="preserve">
+    <value>Cut selection to clipboard</value>
+  </data>
+  <data name="XML.MainMenu.FileMenu.New.File.Description" xml:space="preserve">
+    <value>Open new buffer</value>
+  </data>
+  <data name="XML.MainMenu.FileMenu.Open.File.Description" xml:space="preserve">
+    <value>Open buffer from disc</value>
+  </data>
+  <data name="XML.MainMenu.EditMenu.Redo.Description" xml:space="preserve">
+    <value>Redo last undo action</value>
+  </data>
+  <data name="BVE5Binding.BVE5Files" xml:space="preserve">
+    <value>BVE5 Files</value>
+  </data>
+  <data name="Template.Description.Curve" xml:space="preserve">
+    <value>Inserts a series of curves(including transition curves).</value>
+  </data>
+  <data name="Template.Text.Curve" xml:space="preserve">
+    <value>${TransitionStartPosition};
+${TabCharacter}Curve.BeginTransition();     //Start of transition curve
+${CurvePosition};
+${TabCharacter}Curve.BeginCircular(${Radius}, ${Cant});
+${CurveEndPosition};
+${TabCharacter}Curve.BeginTransition();
+${TransitionEndPosition};
+${TabCharacter}Curve.End();</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.CurvePosition" xml:space="preserve">
+    <value>Start position:</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.LengthCurve" xml:space="preserve">
+    <value>CCL:</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.LengthTransitionBefore" xml:space="preserve">
+    <value>TCL(before):</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.LengthTransitionAfter" xml:space="preserve">
+    <value>TCL(after):</value>
+  </data>
+  <data name="CommonStrings.TextNonInteger" xml:space="preserve">
+    <value>{0} is not an integer!</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.Radius" xml:space="preserve">
+    <value>Radius:</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.Cant" xml:space="preserve">
+    <value>Cant:</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.ErrorInserting" xml:space="preserve">
+    <value>Couldn't insert a curve template since some of the text boxes are left empty, or have invalid values.</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.CurvePosition" xml:space="preserve">
+    <value>The position where the circle curve starts.</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.Cant" xml:space="preserve">
+    <value>The height of the cant. If it is negative, it will be automatically calculated using the CalculateCantDialog.</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.LengthTransitionAfter" xml:space="preserve">
+    <value>The length of the transition curve after the real curve. If it is negative, it will be automatically calculated.</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.LengthTransitionBefore" xml:space="preserve">
+    <value>The length of the transition curve before the circle curve. If it is negative, it will be automatically calculated.</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.Radius" xml:space="preserve">
+    <value>The radius of the curve. If it is negative, that means the curve goes left, and if it is positive the curve goes right.</value>
+  </data>
+  <data name="Template.Description.Gradient" xml:space="preserve">
+    <value>Inserts a series of slopes(including transition gradients)</value>
+  </data>
+  <data name="GradientTemplateDialog.Text.Position" xml:space="preserve">
+    <value>Gradient position:</value>
+  </data>
+  <data name="GradientTemplateDialog.Text.Gradient" xml:space="preserve">
+    <value>Gradient:</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.LengthCurve" xml:space="preserve">
+    <value>The length of the circle curve.</value>
+  </data>
+  <data name="Template.Text.Gradient" xml:space="preserve">
+    <value>${TransitionStartPosition};
+${TabCharacter}Gradient.BeginTransition();
+${GradientPosition};
+${TabCharacter}Gradient.BeginConst(${Gradient});</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.Speed" xml:space="preserve">
+    <value>Speed:</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.Speed" xml:space="preserve">
+    <value>The speed at which the train is supposed to pass the curve. It will be used to calculate the cant or the transition curve length.</value>
+  </data>
+  <data name="CurveTemplateDialog.Msg.SpeedNotEntered" xml:space="preserve">
+    <value>The speed textbox is empty! Can't continue the calculation!</value>
+  </data>
+  <data name="CurveTemplateDialog.Text.Gauge" xml:space="preserve">
+    <value>Gauge:</value>
+  </data>
+  <data name="CurveTemplateDialog.Tooltip.Gauge" xml:space="preserve">
+    <value>The width of the gauge. That is, the distance between the two rails.</value>
+  </data>
+  <data name="CommonStrings.TextNonNumber" xml:space="preserve">
+    <value>{0} is not a number!</value>
+  </data>
+  <data name="BVEEditor.FileFilter.AllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
+</root>
