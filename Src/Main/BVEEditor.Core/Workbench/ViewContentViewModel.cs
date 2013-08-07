@@ -16,11 +16,10 @@ using ICSharpCode.Core;
 namespace BVEEditor.Workbench
 {
 	/// <summary>
-	/// ViewContentViewModel is the view model for "tabs" in the document area of BVEEditor.
-	/// A view content represents either a view onto a single file, or other content that opens like a document
-	/// (e.g. the start page).
+	/// ViewContentViewModel is the base view model for "tabs" in the document area of BVEEditor.
+	/// A view content represents either a view onto a single file.
 	/// </summary>
-	public class ViewContentViewModel : PaneViewModel
+	public abstract class ViewContentViewModel : PaneViewModel
 	{
 		ViewDocumentViewModel parent;
 		

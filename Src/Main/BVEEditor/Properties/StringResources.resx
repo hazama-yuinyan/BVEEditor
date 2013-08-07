@@ -117,64 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="XML_MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
-    <value>Save all buffers currently open</value>
+  <data name="MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
+    <value>@MainMenu_FileMenu_SaveAll_Description</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_Save_Description" xml:space="preserve">
-    <value>Save current buffer</value>
+  <data name="MainMenu_FileMenu_Save_Description" xml:space="preserve">
+    <value>@MainMenu_FileMenu_Save_Description</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_Open_Project_Description" xml:space="preserve">
-    <value>Open project</value>
+  <data name="MainMenu_FileMenu_Open_Project_Description" xml:space="preserve">
+    <value>@MainMenu_FileMenu_OpenProject_Description</value>
   </data>
   <data name="MainWindow_DialogName" xml:space="preserve">
-    <value>BVEEditor</value>
+    <value>@MainWindow_DialogName</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Paste_Description" xml:space="preserve">
-    <value>Paste text from clipboard</value>
+  <data name="MainMenu_EditMenu_Paste_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Paste_Description</value>
   </data>
   <data name="MainWindow_StatusBar_ReadyMessage" xml:space="preserve">
-    <value>Ready</value>
+    <value>@MainWindow_StatusBar_ReadyMessage</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Copy_Description" xml:space="preserve">
-    <value>Copy selection to clipboard</value>
+  <data name="MainMenu_EditMenu_Copy_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Copy_Description</value>
   </data>
-  <data name="Global_ErrorText" xml:space="preserve">
-    <value>Error</value>
+  <data name="Common_ErrorText" xml:space="preserve">
+    <value>@Error</value>
   </data>
-  <data name="CommonStrings_TextUndefined" xml:space="preserve">
-    <value>Undefined</value>
+  <data name="Common_TextUndefined" xml:space="preserve">
+    <value>@Common_TextUndefined</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Undo_Description" xml:space="preserve">
-    <value>Undo last action</value>
+  <data name="MainMenu_EditMenu_Undo_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Undo_Description</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Delete_Description" xml:space="preserve">
-    <value>Delete text</value>
+  <data name="MainMenu_EditMenu_Delete_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Delete_Description</value>
   </data>
-  <data name="CommonStrings_TextYes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="Common_TextYes" xml:space="preserve">
+    <value>@Common_TextYes</value>
   </data>
-  <data name="CommonStrings_TextNo" xml:space="preserve">
-    <value>No</value>
+  <data name="Common_TextNo" xml:space="preserve">
+    <value>@Common_TextNo</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Cut_Description" xml:space="preserve">
-    <value>Cut selection to clipboard</value>
+  <data name="MainMenu_EditMenu_Cut_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Cut_Description</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_New_File_Description" xml:space="preserve">
-    <value>Open new buffer</value>
+  <data name="MainMenu_FileMenu_New_File_Description" xml:space="preserve">
+    <value>@MainMenu_FileMenu_NewFile_Description</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
-    <value>Open buffer from disc</value>
+  <data name="MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
+    <value>@MainMenu_FileMenu_OpenFile_Description</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Redo_Description" xml:space="preserve">
-    <value>Redo last undo action</value>
+  <data name="MainMenu_EditMenu_Redo_Description" xml:space="preserve">
+    <value>@MainMenu_EditMenu_Redo_Description</value>
   </data>
-  <data name="CommonStrings_TextNonInteger" xml:space="preserve">
-    <value>{0} is not an integer!</value>
+  <data name="Common_TextNonInteger" xml:space="preserve">
+    <value>@Common_TextNonInteger</value>
   </data>
-  <data name="CommonStrings_TextNonNumber" xml:space="preserve">
-    <value>{0} is not a number!</value>
+  <data name="Common_TextNonNumber" xml:space="preserve">
+    <value>@Common_TextNonNumber</value>
   </data>
   <data name="BVEEditor_FileFilter_AllFiles" xml:space="preserve">
-    <value>All files</value>
+    <value>@BVEEditor_FileFilter_AllFiles</value>
+  </data>
+  <data name="MainMenu_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MainMenu_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="MainMenu_FileMenu_ApplicationExitEntry" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MainMenu_FileMenu_NewEntry" xml:space="preserve">
+    <value>New...</value>
+  </data>
+  <data name="MainMenu_FileMenu_OpenDocumentEntry" xml:space="preserve">
+    <value>Open...</value>
   </data>
 </root>

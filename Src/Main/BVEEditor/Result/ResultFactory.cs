@@ -1,31 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
+using Ninject;
 
 namespace BVEEditor.Result
 {
+    /// <summary>
+    /// A factory class that creates various <see cref="Caliburn.Micro.IResult"/> implementations.
+    /// </summary>
     public class ResultFactory : IResultFactory
     {
-        SimpleContainer container;
+        IKernel kernel;
 
-        public ResultFactory(SimpleContainer container)
+        public ResultFactory(IKernel kernel)
         {
-            this.container = container;
+            this.kernel = kernel;
         }
 
         #region IResultFactory メンバー
 
         public ShowDialogResult<TModel> ShowDialogResult<TModel>() where TModel : Workbench.ShellPresentationViewModel
         {
-            return (ShowDialogResult<TModel>)container.GetInstance(typeof(ShowDialogResult<TModel>), null);
+            return kernel.Get<ShowDialogResult<TModel>>();
         }
 
         public CloseResult Close()
         {
-            return (CloseResult)container.GetInstance(typeof(CloseResult), null);
+            return kernel.Get<CloseResult>();
         }
 
         public FileDialogResult ShowFileDialog(string title, string filter, FileDialogMode mode)

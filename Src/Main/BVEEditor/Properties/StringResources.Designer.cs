@@ -61,7 +61,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   All files に類似しているローカライズされた文字列を検索します。
+        ///   @BVEEditor_FileFilter_AllFiles に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string BVEEditor_FileFilter_AllFiles {
             get {
@@ -70,61 +70,205 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   No に類似しているローカライズされた文字列を検索します。
+        ///   @Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_TextNo {
+        public static string Common_ErrorText {
             get {
-                return ResourceManager.GetString("CommonStrings_TextNo", resourceCulture);
+                return ResourceManager.GetString("Common_ErrorText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   {0} is not an integer! に類似しているローカライズされた文字列を検索します。
+        ///   @Common_TextNo に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_TextNonInteger {
+        public static string Common_TextNo {
             get {
-                return ResourceManager.GetString("CommonStrings_TextNonInteger", resourceCulture);
+                return ResourceManager.GetString("Common_TextNo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   {0} is not a number! に類似しているローカライズされた文字列を検索します。
+        ///   @Common_TextNonInteger に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_TextNonNumber {
+        public static string Common_TextNonInteger {
             get {
-                return ResourceManager.GetString("CommonStrings_TextNonNumber", resourceCulture);
+                return ResourceManager.GetString("Common_TextNonInteger", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Undefined に類似しているローカライズされた文字列を検索します。
+        ///   @Common_TextNonNumber に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_TextUndefined {
+        public static string Common_TextNonNumber {
             get {
-                return ResourceManager.GetString("CommonStrings_TextUndefined", resourceCulture);
+                return ResourceManager.GetString("Common_TextNonNumber", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Yes に類似しているローカライズされた文字列を検索します。
+        ///   @Common_TextUndefined に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string CommonStrings_TextYes {
+        public static string Common_TextUndefined {
             get {
-                return ResourceManager.GetString("CommonStrings_TextYes", resourceCulture);
+                return ResourceManager.GetString("Common_TextUndefined", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Error に類似しているローカライズされた文字列を検索します。
+        ///   @Common_TextYes に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Global_ErrorText {
+        public static string Common_TextYes {
             get {
-                return ResourceManager.GetString("Global_ErrorText", resourceCulture);
+                return ResourceManager.GetString("Common_TextYes", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   BVEEditor に類似しているローカライズされた文字列を検索します。
+        ///   Edit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_Edit {
+            get {
+                return ResourceManager.GetString("MainMenu_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Copy_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Copy_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Copy_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Cut_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Cut_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Cut_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Delete_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Delete_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Delete_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Paste_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Paste_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Paste_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Redo_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Redo_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Redo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_EditMenu_Undo_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_Undo_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_Undo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   File に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_File {
+            get {
+                return ResourceManager.GetString("MainMenu_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Exit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_ApplicationExitEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_ApplicationExitEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_FileMenu_NewFile_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_New_File_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_New_File_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   New... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_NewEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_NewEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_FileMenu_OpenFile_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_Open_File_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_Open_File_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_FileMenu_OpenProject_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_Open_Project_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_Open_Project_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_OpenDocumentEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_OpenDocumentEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_FileMenu_Save_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_Save_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_Save_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainMenu_FileMenu_SaveAll_Description に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_SaveAll_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_SaveAll_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   @MainWindow_DialogName に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_DialogName {
             get {
@@ -133,110 +277,11 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Ready に類似しているローカライズされた文字列を検索します。
+        ///   @MainWindow_StatusBar_ReadyMessage に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_StatusBar_ReadyMessage {
             get {
                 return ResourceManager.GetString("MainWindow_StatusBar_ReadyMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Copy selection to clipboard に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Copy_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Copy_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Cut selection to clipboard に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Cut_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Cut_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Delete text に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Delete_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Delete_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Paste text from clipboard に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Paste_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Paste_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Redo last undo action に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Redo_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Redo_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Undo last action に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_EditMenu_Undo_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_EditMenu_Undo_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Open new buffer に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_FileMenu_New_File_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_FileMenu_New_File_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Open buffer from disc に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_FileMenu_Open_File_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_FileMenu_Open_File_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Open project に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_FileMenu_Open_Project_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_FileMenu_Open_Project_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Save current buffer に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_FileMenu_Save_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_FileMenu_Save_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Save all buffers currently open に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        public static string XML_MainMenu_FileMenu_SaveAll_Description {
-            get {
-                return ResourceManager.GetString("XML_MainMenu_FileMenu_SaveAll_Description", resourceCulture);
             }
         }
     }

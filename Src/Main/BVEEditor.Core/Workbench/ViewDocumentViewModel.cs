@@ -10,29 +10,26 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using BVEEditor.Events;
+using Caliburn.Micro;
 using ICSharpCode.Core;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace BVEEditor.Workbench
 {
 	/// <summary>
-	/// A ViewDocumentViewModel takes care of a ViewDocument.
+	/// The ViewDocumentViewModel is the base view model whose content is shown in the document area.
 	/// </summary>
 	/// <remarks>
 	/// A ViewDocument can contain multiple tabs. The first content(on screen it will show in the leftmost) is called the primary content,
 	/// and the others are called secondary contents.
 	/// </remarks>
-	public class ViewDocumentViewModel : PaneViewModel
+	public abstract class ViewDocumentViewModel : PaneViewModel
 	{
 		readonly static string ContextMenuPath = "/BVEEditor/Workbench/OpenFileTab/ContextMenu";
 		
-		List<ViewContentViewModel> view_contents = new List<ViewContentViewModel>();
         IFileService file_service;
-        IWorkbench workbench;
-		
-		public IList<ViewContentViewModel> ViewContents{
-			get{return view_contents;}
-		}
+        IEventAggregator event_aggregator;
 		
 		#region File
 		OpenedFile file;
@@ -59,8 +56,8 @@ namespace BVEEditor.Workbench
 			newItem.FileNameChanged += OnFileNameChanged;
 			newItem.IsDirtyChanged += OnIsDirtyChanged;
 			if(automatically_register_view_on_files){
-				foreach(var vm in view_contents)
-					newItem.RegisterView(vm);
+				//foreach(var vm in view_contents)
+				//	newItem.RegisterView(vm);
 			}
 			
 			OnIsDirtyChanged(null, EventArgs.Empty); // re-evaluate this.IsDirty after changing the file collection
@@ -71,8 +68,8 @@ namespace BVEEditor.Workbench
 			oldItem.FileNameChanged -= OnFileNameChanged;
 			oldItem.IsDirtyChanged -= OnIsDirtyChanged;
 			if(automatically_register_view_on_files){
-				foreach(var vm in view_contents)
-					oldItem.UnregisterView(vm);
+				//foreach(var vm in view_contents)
+				//	oldItem.UnregisterView(vm);
 			}
 			
 			OnIsDirtyChanged(null, EventArgs.Empty); // re-evaluate this.IsDirty after changing the file collection
@@ -150,15 +147,10 @@ namespace BVEEditor.Workbench
 		}
 		#endregion
 		
-		public ViewDocumentViewModel(FileName fileToOpen, IFileService fileService, IWorkbench workbench)
+		public ViewDocumentViewModel(IFileService fileService, IEventAggregator eventAggregator)
 		{
-			var file = fileService.GetOrCreateOpenedFile(fileToOpen);
-			File = file;
-		}
-		
-		public ViewDocumentViewModel(OpenedFile file)
-		{
-			File = file;
+            file_service = fileService;
+            event_aggregator = eventAggregator;
 		}
 		
 		#region Dispose
@@ -179,6 +171,12 @@ namespace BVEEditor.Workbench
 				Disposed(this, EventArgs.Empty);
 		}
 		#endregion
+
+        public ViewDocumentViewModel Configure(FileName fileToOpen)
+        {
+            //File = file_service.GetOrCreateOpenedFile(fileToOpen);
+            return this;
+        }
 		
 		public void AddView()
 		{
@@ -187,7 +185,7 @@ namespace BVEEditor.Workbench
 		
 		public void Select()
 		{
-			workbench.ActiveViewContent = ViewContents[0];
+            //event_aggregator.Publish(new ActiveViewContentChangedEvent(ViewContents[0]));
 		}
 	}
 }

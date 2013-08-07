@@ -27,6 +27,7 @@ using BVEEditor.Result;
 using BVEEditor.Services;
 using BVEEditor.Startup;
 using BVEEditor.Strategies;
+using BVEEditor.Views;
 using Caliburn.Micro;
 //using Core.Presentation;
 using ICSharpCode.Core;
@@ -60,7 +61,8 @@ namespace BVEEditor.Workbench
 	/// 	</item>
 	/// </list>
 	/// </summary>
-	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, IHandle<FileRenameEvent>
+	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, IHandle<FileRenameEvent>,
+        IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewContentChangedEvent>
 	{
 		const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
 		const string PadContentPath = "/BVEEditor/Workbench/Pad";
@@ -121,15 +123,21 @@ namespace BVEEditor.Workbench
 		public Window MainWindow{
 			get{return Application.Current.MainWindow;}
 		}
+
+        public MainMenuViewModel Menu{
+            get; set;
+        }
 		
-		public WorkbenchViewModel(IFileService fileService, IEventAggregator eventAggregator, IPropertyService propertyService,
-            IResultFactory resultFactory, IFileDialogStrategies fileStrategies) : base(resultFactory)
+		public WorkbenchViewModel(/*IFileService fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
+            IResultFactory resultFactory, IFileDialogStrategies fileStrategies,
+            MainMenuViewModel mainMenuViewModel) : base(resultFactory)
 		{
             event_aggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             //file_service = fileService;
             property_service = propertyService;
             file_strategies = fileStrategies;
+            Menu = mainMenuViewModel;
 
             title = "BVEEditor";
 
@@ -172,6 +180,21 @@ namespace BVEEditor.Workbench
         {
             base.OnViewLoaded(view);
             InitDocking();
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)) {
+                try {
+                    command.Execute(null);
+                }
+                catch(Exception ex) {
+                    // allow startup to continue if some commands fail
+                    MessageService.ShowException(ex);
+                }
+            }
         }
 
         protected override IEnumerable<IResult> CanClose()
@@ -222,22 +245,6 @@ namespace BVEEditor.Workbench
         DockingManager DockingManager{
             get{return (this.GetView() as IDockingManagerProvider).DockingManager;}
         }
-		
-		/*void ExecuteCommand(ICommand command, object caller)
-		{
-			//ServiceSingleton.GetRequiredService<IAnalyticsMonitor>()
-			//	.TrackFeature(command.GetType().FullName, "Menu");
-			
-			var routed_command = command as System.Windows.Input.RoutedCommand;
-			if(routed_command != null){
-				var target = System.Windows.Input.FocusManager.GetFocusedElement(this);
-				if(routed_command.CanExecute(caller, target))
-					routed_command.Execute(caller, target);
-			}else{
-				if(command.CanExecute(caller))
-					command.Execute(caller);
-			}
-		}*/
 		
 		// keep a reference to the event handler to prevent it from being garbage collected
 		// (CommandManager.RequerySuggested only keeps weak references to the event handlers)
@@ -356,17 +363,18 @@ namespace BVEEditor.Workbench
         public ICollection<ViewContentViewModel> ViewContentCollection {
 			get {
 				//SD.MainThread.VerifyAccess();
-				return view_documents.SelectMany(d => d.ViewContents).ToList().AsReadOnly();
+				return null;//return view_documents.SelectMany(d => d.ViewContents).ToList().AsReadOnly();
 			}
 		}
 		
 		public ICollection<ViewContentViewModel> PrimaryViewContents {
 			get {
 				//SD.MainThread.VerifyAccess();
-				return (from document in view_documents
+				/*return (from document in view_documents
 				        where document.ViewContents.Count > 0
 				        select document.ViewContents[0]
-				       ).ToList().AsReadOnly();
+				       ).ToList().AsReadOnly();*/
+                return null;
 			}
 		}
 		
@@ -377,7 +385,7 @@ namespace BVEEditor.Workbench
 			}
 		}
 		
-		public IList<ViewDocumentViewModel> Documents{
+		public IList<ViewDocumentViewModel> ViewDocuments{
 			get{
 				//SD.MainThread.VerifyAccess();
 				return view_documents;
@@ -440,50 +448,6 @@ namespace BVEEditor.Workbench
 				}
 			}
 		}
-		
-		#region NewCommand
-		RelayCommand<object> new_command;
-		public ICommand NewCommand{
-			get{
-				if(new_command == null)
-					new_command = new RelayCommand<object>(OnNew, CanNew);
-				
-				return new_command;
-			}
-		}
-		
-		bool CanNew(object parameter)
-		{
-			return true;
-		}
-		
-		void OnNew(object parameter)
-		{
-			
-		}
-		#endregion
-		
-		#region OpenCommand
-		RelayCommand<object> open_command;
-		public ICommand OpenCommand{
-			get{
-				if(open_command == null)
-					open_command = new RelayCommand<object>(OnOpen, CanOpen);
-				
-				return open_command;
-			}
-		}
-		
-		bool CanOpen(object parameter)
-		{
-			return true;
-		}
-		
-		void OnOpen(object parameter)
-		{
-			
-		}
-		#endregion
 		
 		#region Document related methods
 		public void AddDocument(ViewDocumentViewModel content)
@@ -579,18 +543,6 @@ namespace BVEEditor.Workbench
 				if(dlg.ShowDialog().GetValueOrDefault())
 					viewDocument.File.FileName = FileName.Create(dlg.SafeFileName);
 			}
-		}
-		
-		public void Open(ViewDocumentViewModel viewDocument)
-		{
-			ShowDocument(viewDocument, true);
-			view_documents.Add(viewDocument);
-		}
-		
-		public void New()
-		{
-			var new_doc = new ViewDocumentViewModel(file_service.CreateUntitledOpenedFile("Untitled", null));
-			view_documents.Add(new_doc);
 		}
 		#endregion
 		
@@ -848,19 +800,31 @@ namespace BVEEditor.Workbench
 
         #endregion
 
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
+        #region IHandle<ViewDocumentAddedEvent> メンバー
 
-            foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)){
-                try{
-                    command.Execute(null);
-                }
-                catch(Exception ex){
-                    // allow startup to continue if some commands fail
-                    MessageService.ShowException(ex);
-                }
+        public void Handle(ViewDocumentAddedEvent message)
+        {
+            //See if the new ViewDocument already exists in view_documents collection.
+            var doc = view_documents.FirstOrDefault(view_doc => view_doc.ContentId == message.Document.ContentId);
+
+            if(doc == null){
+                doc = message.Document;
+                view_documents.Add(doc);
             }
+
+            doc.IsActive = true;
         }
+
+        #endregion
+
+        #region IHandle<ActiveViewContentChangedEvent> メンバー
+
+        public void Handle(ActiveViewContentChangedEvent message)
+        {
+            ActiveViewContent = message.Content;
+            ActiveDocument = message.Content.ViewDocument;
+        }
+
+        #endregion
     }
 }

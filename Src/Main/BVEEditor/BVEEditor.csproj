@@ -40,6 +40,9 @@
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\..\..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -88,13 +91,30 @@
     </Compile>
     <Compile Include="Result\ResultFactory.cs" />
     <Compile Include="Startup\BVEEditorBootstrapper.cs" />
+    <Compile Include="Startup\ServiceBootstrapper.cs" />
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
     <None Include="Workbench\FileServiceOpenedFile.cs" />
+    <Compile Include="Views\Main\MainMenuView.xaml.cs">
+      <DependentUpon>MainMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\MainMenuViewModel.cs" />
+    <Compile Include="Workbench\ErrorDocumentView.xaml.cs">
+      <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\ErrorDocumentViewModel.cs" />
     <Compile Include="Workbench\LayoutInitializer.cs" />
     <Compile Include="Workbench\RecentOpen.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
+    <Page Include="Views\Main\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workbench\ErrorDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Workbench\WorkbenchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -124,6 +144,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\StringResources.en.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

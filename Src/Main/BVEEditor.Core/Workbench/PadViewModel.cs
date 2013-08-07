@@ -13,7 +13,7 @@ namespace BVEEditor.Workbench
 	/// <summary>
 	/// A PadViewModel takes care of a pad.
 	/// </summary>
-	public class PadViewModel : PaneViewModel
+	public abstract class PadViewModel : PaneViewModel
 	{
 		public string Name{
 			get;

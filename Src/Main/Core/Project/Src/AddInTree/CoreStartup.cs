@@ -182,9 +182,9 @@ namespace ICSharpCode.Core
 			addInTree.Load(addInFiles, disabledAddIns);
 			
 			// perform service registration
-			var container = IoC.Get<IServiceContainer>();
-			if(container != null)
-				addInTree.BuildItems<object>("/BVEEditor/Services", container, false);
+			//var container = IoC.Get<IServiceContainer>();
+			//if(container != null)
+			//	addInTree.BuildItems<object>("/BVEEditor/Services", container, false);
 			
 			// run workspace autostart commands
 			DebugLogger.Instance.Info("Running autostart commands...");
@@ -224,7 +224,7 @@ namespace ICSharpCode.Core
             instances.Add(new KeyValuePair<Type,object>(typeof(IAddInTree), addInTree));
             
             services.Add(new KeyValuePair<Type,Type>(typeof(ApplicationStateInfoService), typeof(ApplicationStateInfoService)));
-			StringParser.RegisterStringTagProvider(new AppNameProvider { appName = application_name });
+			StringParser.RegisterStringTagProvider(new AppNameProvider{appName = application_name});
 
             return Tuple.Create((IEnumerable<KeyValuePair<Type, Type>>)services, (IEnumerable<KeyValuePair<Type, object>>)instances);
 		}

@@ -12,12 +12,10 @@ namespace BVEEditor.Strategies
     public class FileDialogStrategies : IFileDialogStrategies
     {
         IResultFactory result_factory;
-        IResourceService resource_service;
 
-        public FileDialogStrategies(IResultFactory resultFactory, IResourceService resourceService)
+        public FileDialogStrategies(IResultFactory resultFactory)
         {
             result_factory = resultFactory;
-            resource_service = resourceService;
         }
 
         #region IFileDialogStrategies メンバー

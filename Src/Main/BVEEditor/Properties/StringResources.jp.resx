@@ -117,43 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="XML_MainMenu_FileMenu_Save_Description" xml:space="preserve">
+  <data name="MainMenu_FileMenu_Save_Description" xml:space="preserve">
     <value>このバッファーを保存する</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Redo_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Redo_Description" xml:space="preserve">
     <value>一個前に取り消した動作を再度行う</value>
   </data>
   <data name="MainWindow_DialogName" xml:space="preserve">
     <value>BVEEditor</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Undo_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Undo_Description" xml:space="preserve">
     <value>一個前の動作を取り消す</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_Open_Project_Description" xml:space="preserve">
+  <data name="MainMenu_FileMenu_Open_Project_Description" xml:space="preserve">
     <value>プロジェクトを開く</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
+  <data name="MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
     <value>開いているすべてのバッファーを保存する</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Cut_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Cut_Description" xml:space="preserve">
     <value>選択されたテキストをカットする</value>
   </data>
-  <data name="Global_ErrorText" xml:space="preserve">
+  <data name="Common_ErrorText" xml:space="preserve">
     <value>エラー</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Delete_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Delete_Description" xml:space="preserve">
     <value>テキストを消去する</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Copy_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Copy_Description" xml:space="preserve">
     <value>選択されたテキストをコピーする</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
+  <data name="MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
     <value>ディスクからバッファーを開く</value>
   </data>
-  <data name="XML_MainMenu_EditMenu_Paste_Description" xml:space="preserve">
+  <data name="MainMenu_EditMenu_Paste_Description" xml:space="preserve">
     <value>クリップボードのテキストを貼り付ける</value>
   </data>
-  <data name="XML_MainMenu_FileMenu_New_File_Description" xml:space="preserve">
+  <data name="MainMenu_FileMenu_New_File_Description" xml:space="preserve">
     <value>新しいバッファーを開く</value>
   </data>
   <data name="MainWindow_StatusBar_ReadyMessage" xml:space="preserve">
@@ -162,19 +162,34 @@
   <data name="BVEEditor_FileFilter_AllFiles" xml:space="preserve">
     <value>すべてのファイル</value>
   </data>
-  <data name="CommonStrings_TextNo" xml:space="preserve">
+  <data name="Common_TextNo" xml:space="preserve">
     <value>いいえ</value>
   </data>
-  <data name="CommonStrings_TextNonInteger" xml:space="preserve">
+  <data name="Common_TextNonInteger" xml:space="preserve">
     <value>{0}は整数ではありません！</value>
   </data>
-  <data name="CommonStrings_TextNonNumber" xml:space="preserve">
+  <data name="Common_TextNonNumber" xml:space="preserve">
     <value>{0}は数字ではありません！</value>
   </data>
-  <data name="CommonStrings_TextUndefined" xml:space="preserve">
+  <data name="Common_TextUndefined" xml:space="preserve">
     <value>未定義</value>
   </data>
-  <data name="CommonStrings_TextYes" xml:space="preserve">
+  <data name="Common_TextYes" xml:space="preserve">
     <value>はい</value>
+  </data>
+  <data name="MainMenu_Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="MainMenu_File" xml:space="preserve">
+    <value>ファイル</value>
+  </data>
+  <data name="MainMenu_FileMenu_ApplicationExitEntry" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="MainMenu_FileMenu_NewEntry" xml:space="preserve">
+    <value>新規ファイル...</value>
+  </data>
+  <data name="MainMenu_FileMenu_OpenDocumentEntry" xml:space="preserve">
+    <value>ファイルを開く...</value>
   </data>
 </root>

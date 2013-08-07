@@ -49,8 +49,8 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         
-        <ContentControl x:Name="main_menu" Grid.Row="0" />
-        <ContentControl x:Name="toolbars" Grid.Row="1" />
+        <ContentControl x:Name="Menu" Grid.Row="0" />
+        <ContentControl x:Name="Toolbar" Grid.Row="1" />
         <avalonDock:DockingManager
 			x:Name="dock_manager"
             Grid.Row="2"
@@ -104,6 +104,6 @@
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
-        <ContentControl x:Name="status_bar" Grid.Row="3" />
+        <ContentControl x:Name="StatusBar" Grid.Row="3" />
     </Grid>
 </Window>

@@ -8,25 +8,19 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.Configuration;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Resources;
-using System.Windows.Input;
 using BVEEditor.AvalonDock;
 using BVEEditor.Commands;
 using BVEEditor.Logging;
 using BVEEditor.Result;
 using BVEEditor.Strategies;
+using BVEEditor.Views;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
+using Ninject;
 
 namespace BVEEditor.Startup
 {
@@ -35,22 +29,20 @@ namespace BVEEditor.Startup
 	/// </summary>
 	public class Bootstrapper : Bootstrapper<IWorkbench>    //Because we register WorkbenchViewModel class as IWorkbench on our IoC container,
 	{                                                       //we should tell the bootstrapper that IWorkbench is the root view model class.
-        SimpleContainer container;
+        IKernel kernel;
         System.Action addin_initializer;
 		
 		#region Bootstrapper overrides
 		protected override void Configure()
 		{
             init_status = InitStatus.CoreInitializing;
-			container = new SimpleContainer();
+			kernel = ServiceBootstrapper.Create();
 			
-			container.Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>()
-                .Singleton<IWorkbench, WorkbenchViewModel>()
-                //.Singleton<IFileService, FileService>()
-                .Singleton<IFileDialogStrategies, FileDialogStrategies>()
-                .Singleton<IResultFactory, ResultFactory>();
-            
+            kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
+            kernel.Bind<IResultFactory>().To<ResultFactory>();
+            kernel.Bind<IFileDialogStrategies>().To<FileDialogStrategies>();
+            kernel.Bind<IWorkbench>().To<WorkbenchViewModel>().InSingletonScope();
+
             SetupCustomMessageBindings();
 			
 			StartupSettings startup = new StartupSettings();
@@ -85,17 +77,17 @@ namespace BVEEditor.Startup
 		
 		protected override object GetInstance(Type service, string key)
 		{
-            return container.GetInstance(service, key);
+            return kernel.Get(service, key);
 		}
 		
 		protected override IEnumerable<object> GetAllInstances(Type service)
 		{
-			return container.GetAllInstances(service);;
+			return kernel.GetAll(service);
 		}
 		
 		protected override void BuildUp(object instance)
 		{
-            container.BuildUp(instance);
+            kernel.Inject(instance);
 		}
 		
 		protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
@@ -164,10 +156,10 @@ namespace BVEEditor.Startup
 			
 			var core_services = startup.StartCoreServices();    //register services provided by ICSharpCode.Core
             foreach(var service in core_services.Item1)
-                container.RegisterSingleton(service.Key, null, service.Value);
+                kernel.Bind(service.Key).To(service.Value).InSingletonScope();
 
             foreach(var inst in core_services.Item2)
-                container.RegisterInstance(inst.Key, null, inst.Value);
+                kernel.Bind(inst.Key).ToConstant(inst.Value);
 
             //var resource_service = core_services.Item2.Select(inst => inst.;
 

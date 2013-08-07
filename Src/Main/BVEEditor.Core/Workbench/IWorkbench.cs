@@ -53,7 +53,7 @@ namespace BVEEditor.Workbench
 			get;
 		}
 		
-		IList<ViewDocumentViewModel> Documents{
+		IList<ViewDocumentViewModel> ViewDocuments{
 			get;
 		}
 		
@@ -122,25 +122,6 @@ namespace BVEEditor.Workbench
 		/// <param name="document"></param>
 		/// <param name="saveAsFlag"></param>
 		void Save(ViewDocumentViewModel document, bool saveAsFlag = false);
-		
-		/// <summary>
-		/// Opens the ViewDocument.
-		/// </summary>
-		/// <param name="document"></param>
-		void Open(ViewDocumentViewModel document);
-		
-		/// <summary>
-		/// Makes a new ViewDocument.
-		/// </summary>
-		void New();
-		
-		ICommand NewCommand{
-			get;
-		}
-		
-		ICommand OpenCommand{
-			get;
-		}
 		
 		/// <summary>
 		/// Closes all views inside the workbench.

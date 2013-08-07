@@ -8,6 +8,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Text;
 using Caliburn.Micro;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Extensions;
 
 namespace ICSharpCode.Core
 {
@@ -49,6 +51,19 @@ namespace ICSharpCode.Core
 			
             return input.Replace("${", "${$}{");
 		}
+
+        /// <summary>
+        /// Replaces all occurrences of a dot '.' with an underscore '_' in order to make the identifier valid.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string ValidateIdentifier(string name)
+        {
+            if(name == null)
+                throw new ArgumentNullException("name");
+
+            return name.Replace('.', '_');
+        }
 		
 		/// <summary>
 		/// Expands ${xyz} style property values.
@@ -188,15 +203,12 @@ namespace ICSharpCode.Core
 				// before allocaing the prefix/propertyName strings
 				// All other prefixed properties {prefix:Key} shoulg get handled in the switch below.
 				if(propertyName.StartsWith("res:", StringComparison.OrdinalIgnoreCase)){
-					var resourceService = (IResourceService)ServiceSingleton.ServiceProvider.GetService(typeof(IResourceService));
-					if(resourceService == null)
-						return null;
-					
-                    try{
-						return Parse(resourceService.GetString(propertyName.Substring(4)), customTags);
-					}catch(ResourceNotFoundException){
-						return null;
-					}
+                    string str_resource;
+                    var loc_extension = new LocExtension(ValidateIdentifier(propertyName.Substring(4)));
+                    if(!loc_extension.ResolveLocalizedValue(out str_resource))
+                        return null;
+                    
+                    return Parse(str_resource, customTags);
 				}
 				
 				string prefix = propertyName.Substring(0, k);
