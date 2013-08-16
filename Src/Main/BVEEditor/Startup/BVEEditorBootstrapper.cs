@@ -11,10 +11,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using BVEEditor.AvalonDock;
 using BVEEditor.Commands;
 using BVEEditor.Logging;
 using BVEEditor.Result;
+using BVEEditor.Services;
 using BVEEditor.Strategies;
 using BVEEditor.Views;
 using BVEEditor.Workbench;
@@ -36,12 +38,15 @@ namespace BVEEditor.Startup
 		protected override void Configure()
 		{
             init_status = InitStatus.CoreInitializing;
+            var msg_loop = new DispatcherMessageLoop(App.Current.Dispatcher, SynchronizationContext.Current);
 			kernel = ServiceBootstrapper.Create();
 			
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
             kernel.Bind<IResultFactory>().To<ResultFactory>();
             kernel.Bind<IFileDialogStrategies>().To<FileDialogStrategies>();
             kernel.Bind<IWorkbench>().To<WorkbenchViewModel>().InSingletonScope();
+            kernel.Bind<IMessageLoop>().ToConstant(msg_loop).InSingletonScope();
+            kernel.Bind<IDisplayBindingService>().To<DisplayBindingService>().InSingletonScope();
 
             SetupCustomMessageBindings();
 			

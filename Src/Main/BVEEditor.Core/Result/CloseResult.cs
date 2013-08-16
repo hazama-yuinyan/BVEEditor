@@ -8,6 +8,9 @@ using Caliburn.Micro;
 
 namespace BVEEditor.Result
 {
+    /// <summary>
+    /// An IResult implementation that closes a window.
+    /// </summary>
     public class CloseResult : Result
     {
         public override void Execute(ActionExecutionContext context)

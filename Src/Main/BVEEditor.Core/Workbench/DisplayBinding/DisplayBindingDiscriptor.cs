@@ -12,19 +12,13 @@ using ICSharpCode.Core;
 
 namespace BVEEditor.Workbench
 {
+    /// <summary>
+    /// Describes a DisplayBinding.
+    /// </summary>
 	public class DisplayBindingDescriptor
 	{
 		IDisplayBinding binding;
 		Codon codon;
-		
-		/// <summary>
-		/// Gets the IDisplayBinding or ISecondaryDisplayBinding if it is already loaded,
-		/// otherwise returns null.
-		/// </summary>
-		internal object GetLoadedBinding()
-		{
-			return binding;
-		}
 		
 		public IDisplayBinding Binding {
 			get {

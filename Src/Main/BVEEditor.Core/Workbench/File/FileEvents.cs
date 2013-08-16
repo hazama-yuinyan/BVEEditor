@@ -33,6 +33,9 @@ namespace BVEEditor
 		}
 	}
 
+    /// <summary>
+    /// An event fired immediately before a file is renamed.
+    /// </summary>
     public class FileRenamingEvent : FileRenameEvent
     {
         public bool Cancel
@@ -53,6 +56,9 @@ namespace BVEEditor
         }
     }
 
+    /// <summary>
+    /// An event fired immediately after a file is renamed.
+    /// </summary>
     public class FileRenameEvent
     {
         public string SourceFile
@@ -81,6 +87,9 @@ namespace BVEEditor
         }
     }
 
+    /// <summary>
+    /// An event fired immediately before a file is removed.
+    /// </summary>
     public class FileRemovingEvent : FileRenamingEvent
     {
         public FileRemovingEvent(string sourceFile, string targetFile, bool isDirectory)
@@ -88,6 +97,9 @@ namespace BVEEditor
         {}
     }
 
+    /// <summary>
+    /// An event fired immediately after a file is removed.
+    /// </summary>
     public class FileRemovedEvent : FileRenameEvent
     {
         public FileRemovedEvent(string sourceFile, string targetFile, bool isDirectory)
@@ -95,6 +107,9 @@ namespace BVEEditor
         {}
     }
 
+    /// <summary>
+    /// An event fired immediately before a file is copied.
+    /// </summary>
     public class FileCopyingEvent : FileRenamingEvent
     {
         public FileCopyingEvent(string sourceFile, string targetFile, bool isDirectory)
@@ -102,6 +117,9 @@ namespace BVEEditor
         {}
     }
 
+    /// <summary>
+    /// An event fired immediately after a file is copied.
+    /// </summary>
     public class FileCopiedEvent : FileRenameEvent
     {
         public FileCopiedEvent(string sourceFile, string targetFile, bool isDirectory)

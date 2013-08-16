@@ -20,6 +20,7 @@ namespace BVEEditor.Views
         readonly IResultFactory result_factory;
         readonly IFileDialogStrategies file_strategies;
         readonly IEventAggregator event_aggregator;
+        readonly IDisplayBindingService display_binding;
         readonly Func<ErrorDocumentViewModel> error_doc_factory;
 
         ViewDocumentViewModel active_doc;
@@ -54,7 +55,7 @@ namespace BVEEditor.Views
             return file_strategies.Open(CreateViewDocumentViewModel);
         }
 
-        void CreateViewDocumentViewModel(string filePath)
+        internal void CreateViewDocumentViewModel(string filePath)
         {
             var new_doc = error_doc_factory()
                 .Configure(FileName.Create("Untitled"));
@@ -82,7 +83,7 @@ namespace BVEEditor.Views
 
         void SaveInternel(ViewDocumentViewModel viewDoc, string path)
         {
-            viewDoc.File.FileName = FileName.Create(path);
+            viewDoc.FilePath = FileName.Create(path);
 
         }
 

@@ -10,7 +10,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-
+using BVEEditor.Logging;
 using ICSharpCode.Core;
 
 namespace BVEEditor.Workbench
@@ -28,15 +28,15 @@ namespace BVEEditor.Workbench
 		
 		static void StartCommandLine(string cmd, string workingDir)
 		{
-			LoggingService.Debug("ExternalProcessDisplayBinding> " + cmd);
+			Log4netLogger.Instance.Debug("ExternalProcessDisplayBinding> " + cmd);
 			cmd = cmd.Trim();
 			if (cmd.Length == 0) return;
 			ProcessStartInfo info = new ProcessStartInfo();
-			if (cmd[0] == '"') {
+			if(cmd[0] == '"'){
 				int pos = cmd.IndexOf('"', 1);
 				info.FileName = cmd.Substring(1, pos - 1);
 				info.Arguments = cmd.Substring(pos + 1).TrimStart();
-			} else {
+			}else{
 				int pos = cmd.IndexOf(' ', 0);
 				info.FileName = cmd.Substring(0, pos);
 				info.Arguments = cmd.Substring(pos + 1);
@@ -53,19 +53,19 @@ namespace BVEEditor.Workbench
             return string.Equals(Path.GetExtension(fileName), FileExtension, StringComparison.OrdinalIgnoreCase);
         }
 
-        public ViewDocumentViewModel CreateViewModelForFile(OpenedFile file)
+        public ViewDocumentViewModel CreateViewModelForFile(FileName path)
         {
-            if(file.IsDirty) {
+            /*if(path.IsDirty) {
                 // TODO: warn user that the file must be saved
-            }
-            try {
+            }*/
+            try{
                 string cmd;
                 if(CommandLine.Contains("%1"))
-                    cmd = CommandLine.Replace("%1", file.FileName);
+                    cmd = CommandLine.Replace("%1", path);
                 else
-                    cmd = CommandLine + " \"" + file.FileName + "\"";
+                    cmd = CommandLine + " \"" + path + "\"";
 
-                StartCommandLine(cmd, Path.GetDirectoryName(file.FileName));
+                StartCommandLine(cmd, Path.GetDirectoryName(path));
             }
             catch(Exception ex) {
                 MessageService.ShowError(ex.Message);
@@ -90,7 +90,7 @@ namespace BVEEditor.Workbench
 	{
 		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
 		{
-			if (sourceType == typeof(string))
+			if(sourceType == typeof(string))
 				return true;
 			else
 				return base.CanConvertFrom(context, sourceType);
@@ -98,7 +98,7 @@ namespace BVEEditor.Workbench
 		
 		public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
 		{
-			if (destinationType == typeof(string))
+			if(destinationType == typeof(string))
 				return true;
 			else
 				return base.CanConvertTo(context, destinationType);
@@ -106,29 +106,29 @@ namespace BVEEditor.Workbench
 		
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
 		{
-			if (destinationType == typeof(string)) {
+			if(destinationType == typeof(string)){
 				ExternalProcessDisplayBinding binding = (ExternalProcessDisplayBinding)value;
 				return binding.Id + "|" + binding.FileExtension + "|" + binding.Title + "|" + binding.CommandLine;
-			} else {
+			}else{
 				return base.ConvertTo(context, culture, value, destinationType);
 			}
 		}
 		
 		public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
 		{
-			if (value is string) {
+			if(value is string){
 				string[] values = value.ToString().Split('|');
-				if (values.Length == 4) {
+				if(values.Length == 4){
 					return new ExternalProcessDisplayBinding {
 						Id = values[0],
 						FileExtension = values[1],
 						Title = values[2],
 						CommandLine = values[3]
 					};
-				} else {
+				}else{
 					return null;
 				}
-			} else {
+			}else{
 				return base.ConvertFrom(context, culture, value);
 			}
 		}

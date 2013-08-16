@@ -9,7 +9,8 @@
 using System;
 using System.Drawing;
 using System.IO;
-using BVEEditor.Workbench;
+using BVEEditor.Events;
+using Caliburn.Micro;
 
 namespace BVEEditor.Editor
 {
@@ -21,12 +22,12 @@ namespace BVEEditor.Editor
 		const int Threshold = 5;
 		
 		#region constructor
-		public TextNavigationPoint(IFileService fileService) : this(fileService, String.Empty, 0, 0) {}
-		public TextNavigationPoint(IFileService fileService, string fileName) : this(fileService, fileName, 0, 0) {}
-		public TextNavigationPoint(IFileService fileService, string fileName, int lineNumber, int column)
-            : this(fileService, fileName, lineNumber, column, String.Empty) {}
-		public TextNavigationPoint(IFileService fileService, string fileName, int lineNumber, int column, string content)
-            : base(fileService, fileName, new Point(column, lineNumber))
+		public TextNavigationPoint(IEventAggregator eventAggregator) : this(eventAggregator, String.Empty, 0, 0) {}
+		public TextNavigationPoint(IEventAggregator eventAggregator, string fileName) : this(eventAggregator, fileName, 0, 0) {}
+		public TextNavigationPoint(IEventAggregator eventAggregator, string fileName, int lineNumber, int column)
+            : this(eventAggregator, fileName, lineNumber, column, String.Empty) {}
+		public TextNavigationPoint(IEventAggregator eventAggregator, string fileName, int lineNumber, int column, string content)
+            : base(eventAggregator, fileName, new Point(column, lineNumber))
 		{
 			if(String.IsNullOrEmpty(content)){
 				this.content = String.Empty;
@@ -54,9 +55,9 @@ namespace BVEEditor.Editor
 		
 		public override void JumpTo()
 		{
-			file_service.JumpToFilePosition(ICSharpCode.Core.FileName.Create(this.FileName),
+			event_aggregator.Publish(new JumpLocationEvent(ICSharpCode.Core.FileName.Create(this.FileName),
 			                               this.LineNumber,
-			                               this.Column);
+			                               this.Column));
 		}
 		
 		public override void ContentChanging(object sender, EventArgs e)

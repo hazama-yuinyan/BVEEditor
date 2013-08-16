@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ICSharpCode.Core;
 using Microsoft.Win32;
 
 namespace BVEEditor.Result
@@ -13,6 +14,9 @@ namespace BVEEditor.Result
         Save = 2
     }
 
+    /// <summary>
+    /// An IResult implementation that shows a file-related dialog.
+    /// </summary>
     public class FileDialogResult : Result
     {
         readonly string title;
@@ -22,6 +26,11 @@ namespace BVEEditor.Result
         public FileDialogMode Mode{get; private set;}
         public string File{get; private set;}
 
+        /// <summary>
+        /// Constructs a new <see cref="BVEEditor.Result.FileDialogResult"/> instance.
+        /// Note that <code>title</code> and <code>filter</code> will be put into the <see cref="ICSharpCode.Core.StringParser.Parse"/>
+        /// method.
+        /// </summary>
         public FileDialogResult(string title, string filter, FileDialogMode mode, string fileName)
         {
             Mode = mode;
@@ -34,8 +43,8 @@ namespace BVEEditor.Result
         {
             var dialog = (Mode == FileDialogMode.Open) ? new OpenFileDialog() as FileDialog : new SaveFileDialog();
             dialog.FileName = file_name;
-            dialog.Title = title;
-            dialog.Filter = filter;
+            dialog.Title = StringParser.Parse(title);
+            dialog.Filter = StringParser.Parse(filter);
 
             dialog.ShowDialog();
             File = dialog.FileName;

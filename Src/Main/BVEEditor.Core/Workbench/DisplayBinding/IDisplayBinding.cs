@@ -41,6 +41,6 @@ namespace BVEEditor.Workbench
 		/// <returns>
 		/// A newly created ViewDocumentViewModel object with ViewContent already set up.
 		/// </returns>
-		ViewDocumentViewModel CreateViewModelForFile(OpenedFile file);
+		ViewDocumentViewModel CreateViewModelForFile(FileName path);
 	}
 }

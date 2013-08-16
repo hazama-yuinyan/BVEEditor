@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BVEEditor.Services;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using Ninject;
@@ -18,7 +19,7 @@ namespace BVEEditor.Startup
             var kernel = new StandardKernel();
             AddCustomBindings(kernel);
 
-            kernel.Bind<IFileService>().ToConstant<IFileService>(null);//.To<FileService>().InSingletonScope();
+            kernel.Bind<IFileSystem>().To<FileSystem>().InSingletonScope();
             kernel.Bind<IEventAggregator>().To<EventAggregator>().InSingletonScope();
 
             return kernel;

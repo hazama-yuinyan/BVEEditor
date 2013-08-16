@@ -61,8 +61,8 @@ namespace BVEEditor.Workbench
 	/// 	</item>
 	/// </list>
 	/// </summary>
-	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, IHandle<FileRenameEvent>,
-        IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewContentChangedEvent>
+	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, /*IHandle<FileRenameEvent>,*/
+        IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewContentChangedEvent>, IHandle<JumpLocationEvent>
 	{
 		const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
 		const string PadContentPath = "/BVEEditor/Workbench/Pad";
@@ -73,7 +73,7 @@ namespace BVEEditor.Workbench
 		BindableCollection<PadDescriptor> pad_descriptors = new BindableCollection<PadDescriptor>();
 		BindableCollection<ViewDocumentViewModel> view_documents = new BindableCollection<ViewDocumentViewModel>();
         IEventAggregator event_aggregator;
-        IFileService file_service;
+        IFileSystem file_system;
         IPropertyService property_service;
         IFileDialogStrategies file_strategies;
 		//EditorStatusBar status_bar = new EditorStatusBar();
@@ -127,8 +127,13 @@ namespace BVEEditor.Workbench
         public MainMenuViewModel Menu{
             get; set;
         }
+
+        IRecentOpen recent_open;
+        public IRecentOpen RecentOpen{
+            get{return recent_open;}
+        }
 		
-		public WorkbenchViewModel(/*IFileService fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
+		public WorkbenchViewModel(/*IFileSystem fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
             IResultFactory resultFactory, IFileDialogStrategies fileStrategies,
             MainMenuViewModel mainMenuViewModel) : base(resultFactory)
 		{
@@ -343,17 +348,17 @@ namespace BVEEditor.Workbench
 
                     foreach(string file in files){
                         if(File.Exists(file)){
-                            var fileName = FileName.Create(file);
+                            var file_name = FileName.Create(file);
                             /*if (SD.ProjectService.IsSolutionOrProjectFile(fileName)) {
                                 SD.ProjectService.OpenSolutionOrProject(fileName);
                             } else {*/
-                            file_service.OpenFile(fileName);
+                            Menu.CreateViewDocumentViewModel(file_name);
                             //}
                         }
                     }
                 }
             }
-            catch(Exception ex) {
+            catch(Exception ex){
                 MessageService.ShowException(ex);
             }
         }
@@ -512,6 +517,7 @@ namespace BVEEditor.Workbench
 
         public void DocumentClosed(ViewDocumentViewModel document)
         {
+            StoreMemento(document);
             view_documents.Remove(document);
         }
 
@@ -535,15 +541,6 @@ namespace BVEEditor.Workbench
                 }
 			}
         }
-
-		public void Save(ViewDocumentViewModel viewDocument, bool saveAsFlag = false)
-		{
-			if(viewDocument.File.IsUntitled || saveAsFlag){
-				var dlg = new SaveFileDialog();
-				if(dlg.ShowDialog().GetValueOrDefault())
-					viewDocument.File.FileName = FileName.Create(dlg.SafeFileName);
-			}
-		}
 		#endregion
 		
 		public void CloseAllViews()
@@ -604,7 +601,7 @@ namespace BVEEditor.Workbench
 		{
 			IMementoCapable memento_capable = viewDocument as IMementoCapable;
 			if(memento_capable != null && LoadDocumentProperties){
-				if(viewDocument.File == null)
+				if(viewDocument.FilePath == null)
 					return;
 				
 				string key = GetMementoKeyName(viewDocument);
@@ -765,7 +762,7 @@ namespace BVEEditor.Workbench
 
         public void Handle(FileEvent message)
         {
-            foreach(OpenedFile file in file_service.OpenedFiles){
+            /*foreach(OpenedFile file in file_system.OpenedFiles){
                 if(FileUtility.IsBaseDirectory(message.FileName, file.FileName)){
                     foreach(ViewContentViewModel content in file.RegisteredViewContents.ToArray()){
                         // content.WorkbenchWindow can be null if multiple view contents
@@ -775,30 +772,30 @@ namespace BVEEditor.Workbench
                             HandleDocumentClosing(content.ViewDocument);
                     }
                 }
-            }
+            }*/
             //Editor.PermanentAnchorService.FileDeleted(e);
         }
 
         #endregion
 
-        #region IHandle<FileRenameEvent> メンバー
+        /*#region IHandle<FileRenameEvent> メンバー
 
         public void Handle(FileRenameEvent message)
         {
             if(message.IsDirectory){
-                foreach(OpenedFile file in file_service.OpenedFiles){
+                foreach(OpenedFile file in file_system.OpenedFiles){
                     if(file.FileName != null && FileUtility.IsBaseDirectory(message.SourceFile, file.FileName))
                         file.FileName = FileName.Create(FileUtility.RenameBaseDirectory(file.FileName, message.SourceFile, message.TargetFile));
                 }
             }else{
-                OpenedFile file = file_service.GetOpenedFile(message.SourceFile);
+                OpenedFile file = file_system.GetOpenedFile(message.SourceFile);
                 if(file != null)
                     file.FileName = FileName.Create(message.TargetFile);
             }
             //Editor.PermanentAnchorService.FileRenamed(e);
         }
 
-        #endregion
+        #endregion*/
 
         #region IHandle<ViewDocumentAddedEvent> メンバー
 
@@ -809,6 +806,7 @@ namespace BVEEditor.Workbench
 
             if(doc == null){
                 doc = message.Document;
+                LoadViewDocumentMemento(doc);
                 view_documents.Add(doc);
             }
 
@@ -823,6 +821,19 @@ namespace BVEEditor.Workbench
         {
             ActiveViewContent = message.Content;
             ActiveDocument = message.Content.ViewDocument;
+        }
+
+        #endregion
+
+        #region IHandle<JumpLocationEvent> メンバー
+
+        public void Handle(JumpLocationEvent message)
+        {
+            var open_doc = view_documents.Where(doc => doc.FilePath == message.FileName).Single();
+            /*if(open_doc == null){
+                open_doc = Menu.CreateViewDocumentViewModel
+            }*/
+            
         }
 
         #endregion

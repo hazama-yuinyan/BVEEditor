@@ -77,6 +77,13 @@ namespace BVEEditor.Workbench
 		ViewDocumentViewModel ActiveDocument {
 			get;
 		}
+
+        /// <summary>
+        /// Gets the recently opened file/project list.
+        /// </summary>
+        IRecentOpen RecentOpen{
+            get;
+        }
 		
 		/// <summary>
 		/// Is called, when the active content has changed.
@@ -109,19 +116,6 @@ namespace BVEEditor.Workbench
 		/// Returns a pad from a specific type.
 		/// </summary>
 		PadViewModel GetPad(Type type);
-		
-		/// <summary>
-		/// Closes the specified ViewDocument. It also prompts the user whether it should save the content.
-		/// </summary>
-		/// <param name="document"></param>
-		//void Close(ViewDocumentViewModel document);
-		
-		/// <summary>
-		/// Saves the content in the ViewDocument.
-		/// </summary>
-		/// <param name="document"></param>
-		/// <param name="saveAsFlag"></param>
-		void Save(ViewDocumentViewModel document, bool saveAsFlag = false);
 		
 		/// <summary>
 		/// Closes all views inside the workbench.

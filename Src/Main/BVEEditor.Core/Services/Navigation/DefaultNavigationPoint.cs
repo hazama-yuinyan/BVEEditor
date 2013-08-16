@@ -8,7 +8,8 @@
  */
 using System;
 using System.Globalization;
-using BVEEditor.Workbench;
+using BVEEditor.Events;
+using Caliburn.Micro;
 
 namespace BVEEditor
 {
@@ -20,14 +21,14 @@ namespace BVEEditor
 	{
 		string fileName;
 		object data;
-        protected IFileService file_service;
+        protected IEventAggregator event_aggregator;
 		
 		#region constructor
-		public DefaultNavigationPoint(IFileService fileService) : this(fileService, String.Empty, null) {}
-		public DefaultNavigationPoint(IFileService fileService, string fileName) : this(fileService, fileName, null) {}
-		public DefaultNavigationPoint(IFileService fileService, string fileName, object data)
+		public DefaultNavigationPoint(IEventAggregator eventAggregator) : this(eventAggregator, String.Empty, null) {}
+		public DefaultNavigationPoint(IEventAggregator eventAggregator, string fileName) : this(eventAggregator, fileName, null) {}
+		public DefaultNavigationPoint(IEventAggregator eventAggregator, string fileName, object data)
 		{
-            file_service = fileService;
+            this.event_aggregator = eventAggregator;
 			this.fileName = fileName == null ? String.Empty : fileName;
 			this.data = data;
 		}
@@ -91,7 +92,7 @@ namespace BVEEditor
 		
 		public virtual void JumpTo()
 		{
-			file_service.JumpToFilePosition(ICSharpCode.Core.FileName.Create(this.FileName), 0, 0);
+			event_aggregator.Publish(new JumpLocationEvent(ICSharpCode.Core.FileName.Create(this.FileName), 0, 0));
 		}
 		
 		public void FileNameChanged(string newName)

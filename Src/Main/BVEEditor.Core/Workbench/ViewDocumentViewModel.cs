@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using BVEEditor.Events;
+using BVEEditor.Result;
+using BVEEditor.Services;
 using Caliburn.Micro;
 using ICSharpCode.Core;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -24,114 +26,39 @@ namespace BVEEditor.Workbench
 	/// A ViewDocument can contain multiple tabs. The first content(on screen it will show in the leftmost) is called the primary content,
 	/// and the others are called secondary contents.
 	/// </remarks>
-	public abstract class ViewDocumentViewModel : PaneViewModel
+	public abstract class ViewDocumentViewModel : PaneViewModel, IHandle<FileRenameEvent>
 	{
 		readonly static string ContextMenuPath = "/BVEEditor/Workbench/OpenFileTab/ContextMenu";
 		
-        IFileService file_service;
-        IEventAggregator event_aggregator;
+        protected readonly IFileSystem file_system;
+        protected readonly IEventAggregator event_aggregator;
+        protected readonly IResultFactory result_factory;
 		
-		#region File
-		OpenedFile file;
-		public OpenedFile File{
-			get{return file;}
-			set{
-				if(file != null)
-					UnregisterFileEventHandlers(file);
-				
-				file = value;
-				if(value != null)
-					RegisterFileEventHandlers(file);
-			}
-		}
-		
-		bool automatically_register_view_on_files = true;
-		internal bool AutomaricallyRegisterViewOnFiles{
-			get{return automatically_register_view_on_files;}
-			set{automatically_register_view_on_files = value;}
-		}
-		
-		void RegisterFileEventHandlers(OpenedFile newItem)
-		{
-			newItem.FileNameChanged += OnFileNameChanged;
-			newItem.IsDirtyChanged += OnIsDirtyChanged;
-			if(automatically_register_view_on_files){
-				//foreach(var vm in view_contents)
-				//	newItem.RegisterView(vm);
-			}
-			
-			OnIsDirtyChanged(null, EventArgs.Empty); // re-evaluate this.IsDirty after changing the file collection
-		}
-		
-		void UnregisterFileEventHandlers(OpenedFile oldItem)
-		{
-			oldItem.FileNameChanged -= OnFileNameChanged;
-			oldItem.IsDirtyChanged -= OnIsDirtyChanged;
-			if(automatically_register_view_on_files){
-				//foreach(var vm in view_contents)
-				//	oldItem.UnregisterView(vm);
-			}
-			
-			OnIsDirtyChanged(null, EventArgs.Empty); // re-evaluate this.IsDirty after changing the file collection
-		}
-		
-		void OnFileNameChanged(object sender, EventArgs e)
-		{
-			OnFileNameChanged((OpenedFile)sender);
-			NotifyOfPropertyChange(() => file.FileName);
-			
-			if(Title == null && file != null){
-				OnTitleNameChanged(EventArgs.Empty);
-				NotifyOfPropertyChange(() => Title);
-			}
-		}
-		
-		/// <summary>
-		/// Is called when the file name of a file opened in this view content changes.
+        #region Properties
+        /// <summary>
+		/// Gets the file name as string.
 		/// </summary>
-		void OnFileNameChanged(OpenedFile file)
-		{
-			Title = file.FileName;
-		}
-		
-		void OnTitleNameChanged(EventArgs e)
-		{
-			
-		}
-		#endregion
-		
-		/// <summary>
-		/// Gets the file name in string.
-		/// </summary>
-		public string FileName{
+		public virtual string FileName{
 			get{
-				return file.FileName.GetFileName();
+				return System.IO.Path.GetFileNameWithoutExtension(this.FilePath);
 			}
 		}
-		
-		#region Dirty
-		bool IsDirtyInternal{
-			get{
-				return file.IsDirty;
-			}
-		}
+
+        public FileName FilePath{
+            get; set;
+        }
 		
 		bool is_dirty;
 		public bool IsDirty{
 			get{return is_dirty;}
+            set{
+                if(is_dirty != value){
+                    is_dirty = value;
+                    NotifyOfPropertyChange(() => is_dirty);
+                }
+            }
 		}
 		
-		void OnIsDirtyChanged(object sender, EventArgs e)
-		{
-			bool new_is_dirty = IsDirtyInternal;
-			if(new_is_dirty != is_dirty){
-				is_dirty = new_is_dirty;
-				NotifyOfPropertyChange(() => is_dirty);
-			}
-		}
-		#endregion
-		
-		#region InfoTip
 		string info_tip;
 		/// <summary>
 		/// The tooltip that will be shown when you hover the mouse over the title
@@ -147,10 +74,11 @@ namespace BVEEditor.Workbench
 		}
 		#endregion
 		
-		public ViewDocumentViewModel(IFileService fileService, IEventAggregator eventAggregator)
+		public ViewDocumentViewModel(IFileSystem fileSystem, IEventAggregator eventAggregator, IResultFactory resultFactory)
 		{
-            file_service = fileService;
+            file_system = fileSystem;
             event_aggregator = eventAggregator;
+            result_factory = resultFactory;
 		}
 		
 		#region Dispose
@@ -161,18 +89,15 @@ namespace BVEEditor.Workbench
 		
 		event EventHandler Disposed;
 		
-		public void Dispose()
+		public virtual void Dispose()
 		{
-			if(automatically_register_view_on_files)
-				File = null;
-			
 			is_disposed = true;
 			if(Disposed != null)
 				Disposed(this, EventArgs.Empty);
 		}
 		#endregion
 
-        public ViewDocumentViewModel Configure(FileName fileToOpen)
+        public virtual ViewDocumentViewModel Configure(FileName fileToOpen)
         {
             //File = file_service.GetOrCreateOpenedFile(fileToOpen);
             return this;
@@ -182,10 +107,42 @@ namespace BVEEditor.Workbench
 		{
 			
 		}
+
+        /// <summary>
+        /// Saves the content of this ViewDocument to the specified file.
+        /// </summary>
+        /// <param name="filePath">The file path to save the content to.</param>
+        /// <returns></returns>
+        public virtual IEnumerable<IResult> Save(string filePath)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Loads the content into this ViewDocument.
+        /// </summary>
+        /// <param name="filePath">The file path to load the content from.</param>
+        /// <returns></returns>
+        public virtual IEnumerable<IResult> Load(string filePath)
+        {
+            return null;
+        }
 		
 		public void Select()
 		{
             //event_aggregator.Publish(new ActiveViewContentChangedEvent(ViewContents[0]));
 		}
-	}
+
+        #region IHandle<FileRenameEvent> メンバー
+
+        public void Handle(FileRenameEvent message)
+        {
+            if(!message.IsDirectory){
+                FilePath = ICSharpCode.Core.FileName.Create(message.TargetFile);
+                Title = System.IO.Path.GetFileName(FilePath);
+            }
+        }
+
+        #endregion
+    }
 }

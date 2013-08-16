@@ -54,30 +54,6 @@ namespace BVEEditor.Workbench
 		}
 		
 		/// <summary>
-		/// Saves the content to the location <code>fileName</code>
-		/// </summary>
-		/// <remarks>
-		/// When the user switches between multiple views editing the same file, a view
-		/// change will trigger one view content to save that file into a memory stream
-		/// and the other view content will load the file from that memory stream.
-		/// </remarks>
-		public virtual void Save(OpenedFile file, Stream stream)
-		{
-		}
-		
-		/// <summary>
-		/// Load or reload the content of the specified file from the stream.
-		/// </summary>
-		/// <remarks>
-		/// When the user switches between multiple views editing the same file, a view
-		/// change will trigger one view content to save that file into a memory stream
-		/// and the other view content will load the file from that memory stream.
-		/// </remarks>
-		public virtual void Load(OpenedFile file, Stream stream)
-		{
-		}
-		
-		/// <summary>
 		/// Builds an <see cref="INavigationPoint"/> for the current position.
 		/// </summary>
 		public virtual INavigationPoint BuildNavPoint()

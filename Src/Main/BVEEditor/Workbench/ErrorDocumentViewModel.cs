@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BVEEditor.Result;
+using BVEEditor.Services;
 using Caliburn.Micro;
 
 namespace BVEEditor.Workbench
@@ -12,8 +14,8 @@ namespace BVEEditor.Workbench
     /// </summary>
     public class ErrorDocumentViewModel : ViewDocumentViewModel
     {
-        public ErrorDocumentViewModel(IFileService fileService, IEventAggregator eventAggregator)
-            : base(fileService, eventAggregator)
+        public ErrorDocumentViewModel(IFileSystem fileSystem, IEventAggregator eventAggregator, IResultFactory resultFactory)
+            : base(fileSystem, eventAggregator, resultFactory)
         {}
     }
 }

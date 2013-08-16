@@ -192,4 +192,22 @@
   <data name="MainMenu_FileMenu_OpenDocumentEntry" xml:space="preserve">
     <value>ファイルを開く...</value>
   </data>
+  <data name="MainWindow_StatusBar_CursorPanelText" xml:space="preserve">
+    <value>${Line}行 ${Column}列 ${Character}文字</value>
+  </data>
+  <data name="Common_TextCancel" xml:space="preserve">
+    <value>キャンセル</value>
+  </data>
+  <data name="Common_TextOk" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_SearchReplace_MatchCase" xml:space="preserve">
+    <value>大文字・小文字を区別する</value>
+  </data>
+  <data name="Common_SearchReplace_MatchWholeWord" xml:space="preserve">
+    <value>単語単位</value>
+  </data>
+  <data name="Common_SearchReplace_SearchStringNotFound" xml:space="preserve">
+    <value>指定した文字列は見つかりませんでした！</value>
+  </data>
 </root>

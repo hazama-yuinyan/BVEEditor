@@ -79,6 +79,42 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Match case に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_SearchReplace_MatchCase {
+            get {
+                return ResourceManager.GetString("Common_SearchReplace_MatchCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Match whole word に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_SearchReplace_MatchWholeWord {
+            get {
+                return ResourceManager.GetString("Common_SearchReplace_MatchWholeWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Search string not found! に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_SearchReplace_SearchStringNotFound {
+            get {
+                return ResourceManager.GetString("Common_SearchReplace_SearchStringNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cancel に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_TextCancel {
+            get {
+                return ResourceManager.GetString("Common_TextCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   @Common_TextNo に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNo {
@@ -102,6 +138,15 @@ namespace BVEEditor.Properties {
         public static string Common_TextNonNumber {
             get {
                 return ResourceManager.GetString("Common_TextNonNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   OK に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_TextOk {
+            get {
+                return ResourceManager.GetString("Common_TextOk", resourceCulture);
             }
         }
         
@@ -273,6 +318,15 @@ namespace BVEEditor.Properties {
         public static string MainWindow_DialogName {
             get {
                 return ResourceManager.GetString("MainWindow_DialogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ln ${Line} col ${Column} ch ${Character} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainWindow_StatusBar_CursorPanelText {
+            get {
+                return ResourceManager.GetString("MainWindow_StatusBar_CursorPanelText", resourceCulture);
             }
         }
         
