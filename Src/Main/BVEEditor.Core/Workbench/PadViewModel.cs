@@ -23,7 +23,7 @@ namespace BVEEditor.Workbench
 		public PadViewModel(string name)
 		{
 			Name = name;
-			Title = name;
+			DisplayName = name;
 		}
 	}
 }

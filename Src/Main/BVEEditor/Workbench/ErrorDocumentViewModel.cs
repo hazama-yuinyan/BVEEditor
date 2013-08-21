@@ -18,4 +18,38 @@ namespace BVEEditor.Workbench
             : base(fileSystem, eventAggregator, resultFactory)
         {}
     }
+
+    public class ErrorDocumentDisplayBinding : IDisplayBinding
+    {
+        Func<ErrorDocumentViewModel> error_doc_factory;
+
+        public ErrorDocumentDisplayBinding(Func<ErrorDocumentViewModel> errorDocFactory)
+        {
+            error_doc_factory = errorDocFactory;
+        }
+
+        #region IDisplayBinding メンバー
+
+        public bool IsPreferredBindingForFile(ICSharpCode.Core.FileName fileName)
+        {
+            return true;
+        }
+
+        public bool CanHandle(ICSharpCode.Core.FileName fileName)
+        {
+            return true;
+        }
+
+        public double AutoDetectFileContent(ICSharpCode.Core.FileName fileName, System.IO.Stream fileContent, string detectedMimeType)
+        {
+            return 0.0;
+        }
+
+        public ViewDocumentViewModel CreateViewModelForFile(ICSharpCode.Core.FileName path)
+        {
+            return error_doc_factory();
+        }
+
+        #endregion
+    }
 }

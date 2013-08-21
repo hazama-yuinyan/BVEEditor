@@ -64,18 +64,17 @@ namespace BVEEditor.Workbench
 	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, /*IHandle<FileRenameEvent>,*/
         IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewContentChangedEvent>, IHandle<JumpLocationEvent>
 	{
-		const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
 		const string PadContentPath = "/BVEEditor/Workbench/Pad";
 		const string LayoutConfig = "LayoutConfig.xml";
         const string WorkbenchMemento = "WorkbenchMemento";
 		
-		List<PadViewModel> pads = new List<PadViewModel>();
-		BindableCollection<PadDescriptor> pad_descriptors = new BindableCollection<PadDescriptor>();
-		BindableCollection<ViewDocumentViewModel> view_documents = new BindableCollection<ViewDocumentViewModel>();
+		Conductor<PadViewModel>.Collection.AllActive pad_conductor = new Conductor<PadViewModel>.Collection.AllActive();
+        ViewDocumentConductor viewdoc_conductor = new ViewDocumentConductor();
         IEventAggregator event_aggregator;
-        IFileSystem file_system;
+        //IFileSystem file_system;
         IPropertyService property_service;
         IFileDialogStrategies file_strategies;
+        IMessageService msg_service;
 		//EditorStatusBar status_bar = new EditorStatusBar();
         //ToolBar[] tool_bars;
 
@@ -91,21 +90,20 @@ namespace BVEEditor.Workbench
 		
 		public WindowState LastNonMinimizedState{
 			get{return last_non_minimized_window_state;}
-			set{
-				last_non_minimized_window_state = value;
-			}
+			set{last_non_minimized_window_state = value;}
 		}
-		
-		string title;
-		public string Title{
-			get{return title;}
-			set{
-				if(title != value){
-					title = value;
-					NotifyOfPropertyChange(() => title);
-				}
-			}
-		}
+
+        public IList<PadViewModel> Pads{
+            get{
+                return pad_conductor.Items;
+            }
+        }
+
+        public IList<ViewDocumentViewModel> ViewDocuments{
+            get{
+                return viewdoc_conductor.Items;
+            }
+        }
         #endregion
 
         #region View related events
@@ -134,26 +132,27 @@ namespace BVEEditor.Workbench
         }
 		
 		public WorkbenchViewModel(/*IFileSystem fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
-            IResultFactory resultFactory, IFileDialogStrategies fileStrategies,
-            MainMenuViewModel mainMenuViewModel) : base(resultFactory)
+            IResultFactory resultFactory, IFileDialogStrategies fileStrategies, MainMenuViewModel mainMenuViewModel,
+            IMessageService messageService, ViewDocumentConductor viewDocConductor) : base(resultFactory)
 		{
             event_aggregator = eventAggregator;
             eventAggregator.Subscribe(this);
             //file_service = fileService;
             property_service = propertyService;
             file_strategies = fileStrategies;
+            msg_service = messageService;
             Menu = mainMenuViewModel;
+            
+            viewdoc_conductor.ConductWith(this);
 
-            title = "BVEEditor";
-
-			UpdateFlowDirection();
+            DisplayName = "BVEEditor";
 
             SetMemento(property_service.NestedProperties(WorkbenchMemento));    //restore workbench memento
 			
 			var descriptors = AddInTree.BuildItems<PadDescriptor>(PadContentPath, this, false);
 			foreach(PadDescriptor content in descriptors){
-				if(content != null)
-					AddPad(content);
+				//if(content != null)
+					//AddPad(content);
 			}
 			
 			/*main_menu.ItemsSource = MenuService.CreateMenuItems(this, this, MainMenuPath, activationMethod: "MainMenu", immediatelyExpandMenuBuildersForShortcuts: true);
@@ -177,6 +176,7 @@ namespace BVEEditor.Workbench
 			requery_suggested_event_handler = new EventHandler(CommandManager_RequerySuggested);
 			CommandManager.RequerySuggested += requery_suggested_event_handler;
 			//resourceService.LanguageChanged += OnLanguageChanged;
+            viewdoc_conductor.PropertyChanged += ViewDocConductorPropertyChanged;
 			
 			//SD.StatusBar.SetMessage("${res:MainWindow.StatusBar.ReadyMessage}");
 		}
@@ -197,14 +197,14 @@ namespace BVEEditor.Workbench
                 }
                 catch(Exception ex) {
                     // allow startup to continue if some commands fail
-                    MessageService.ShowException(ex);
+                    msg_service.ShowException(ex);
                 }
             }
         }
 
         protected override IEnumerable<IResult> CanClose()
         {
-            var handle_dirty_results = view_documents.SelectMany(HandleDocumentClosing);
+            var handle_dirty_results = ViewDocuments.SelectMany(HandleDocumentClosing);
             foreach(var result in handle_dirty_results)
                 yield return result;
 
@@ -314,7 +314,7 @@ namespace BVEEditor.Workbench
                 }
             }
             catch(Exception ex){
-                MessageService.ShowException(ex);
+                msg_service.ShowException(ex);
             }
         }
 
@@ -359,7 +359,15 @@ namespace BVEEditor.Workbench
                 }
             }
             catch(Exception ex){
-                MessageService.ShowException(ex);
+                msg_service.ShowException(ex);
+            }
+        }
+
+        void ViewDocConductorPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "ActiveItem"){
+                event_aggregator.Publish(new ActiveViewDocumentChangedEvent(viewdoc_conductor.ActiveItem));
+				NotifyOfPropertyChange(() => viewdoc_conductor.ActiveItem);
             }
         }
         #endregion
@@ -382,131 +390,19 @@ namespace BVEEditor.Workbench
                 return null;
 			}
 		}
-		
-		public IList<PadViewModel> Pads{
-			get{
-				//SD.MainThread.VerifyAccess();
-				return pads.AsReadOnly();
-			}
-		}
-		
-		public IList<ViewDocumentViewModel> ViewDocuments{
-			get{
-				//SD.MainThread.VerifyAccess();
-				return view_documents;
-			}
-		}
-		
-		/*IWorkbenchWindow active_workbench_window;
-		public IWorkbenchWindow ActiveWorkbenchWindow {
-			get {
-				SD.MainThread.VerifyAccess();
-				return active_workbench_window;
-			}
-			private set {
-				if (active_workbench_window != value) {
-					if (active_workbench_window != null) {
-						active_workbench_window.ActiveViewContentChanged -= WorkbenchWindowActiveViewContentChanged;
-					}
-					
-					active_workbench_window = value;
-					
-					if (value != null) {
-						value.ActiveViewContentChanged += WorkbenchWindowActiveViewContentChanged;
-					}
-					
-					if (ActiveWorkbenchWindowChanged != null) {
-						ActiveWorkbenchWindowChanged(this, EventArgs.Empty);
-					}
-					WorkbenchWindowActiveViewContentChanged(null, null);
-				}
-			}
-		}*/
 		#endregion
 
-		ViewContentViewModel active_view_content;
-		public ViewContentViewModel ActiveViewContent{
-			get{
-				//SD.MainThread.VerifyAccess();
-				return active_view_content;
-			}
-			set{
-				//SD.MainThread.VerifyAccess();
-				if(active_view_content != value){
-					active_view_content = value;
-					NotifyOfPropertyChange(() => active_view_content);
-					ActiveDocument = value.ViewDocument;
-				}
-			}
-		}
-		
-		ViewDocumentViewModel active_document;
 		public ViewDocumentViewModel ActiveDocument{
 			get{
-				//SD.MainThread.VerifyAccess();
-				return active_document;
+				return viewdoc_conductor.ActiveItem;
 			}
 			private set{
-				if(active_document != value){
-					active_document = value;
-					NotifyOfPropertyChange(() => active_document);
-				}
+				if(viewdoc_conductor.ActiveItem != value)
+                    viewdoc_conductor.ActiveItem = value;
 			}
 		}
-		
-		#region Document related methods
-		public void AddDocument(ViewDocumentViewModel content)
-		{
-			ShowDocument(content, true);
-		}
-		
-		public void ShowDocument(ViewDocumentViewModel content, bool switchToOpenedView)
-		{
-			//SD.MainThread.VerifyAccess();
-			if(content == null)
-				throw new ArgumentNullException("content");
-			
-			if(view_documents.Contains(content))
-				throw new ArgumentException("ViewDocument is already shown");
-			
-			LoadViewDocumentMemento(content);
-			view_documents.Add(content);
-		}
-		#endregion
 		
 		#region Pad related methods
-		public void AddPad(PadDescriptor content)
-		{
-			//SD.MainThread.VerifyAccess();
-			if(content == null)
-				throw new ArgumentNullException("content");
-			
-			var viewmodel = content.CreateViewModel();
-			if(pads.Contains(viewmodel))
-				throw new ArgumentException("Pad is already loaded");
-			
-			pads.Add(viewmodel);
-			pad_descriptors.Add(content);
-		}
-		
-		public PadViewModel GetPad(Type type)
-		{
-			//SD.MainThread.VerifyAccess();
-			if(type == null)
-				throw new ArgumentNullException("type");
-			
-			foreach(PadDescriptor descriptor in pad_descriptors){
-				if(descriptor.ViewModelName == type.FullName)
-					return pads[pad_descriptors.IndexOf(descriptor)];
-			}
-			return null;
-		}
-		
-		public void ActivatePad(PadDescriptor content)
-		{
-			//if(workbench_panel != null)
-			//	workbench_panel.ActivatePad(content);
-		}
 		#endregion
 		
 		#region ViewDocument related commands
@@ -518,7 +414,7 @@ namespace BVEEditor.Workbench
         public void DocumentClosed(ViewDocumentViewModel document)
         {
             StoreMemento(document);
-            view_documents.Remove(document);
+            viewdoc_conductor.CloseDocument(document);
         }
 
         IEnumerable<IResult> HandleDocumentClosing(ViewDocumentViewModel document)
@@ -529,8 +425,8 @@ namespace BVEEditor.Workbench
         IEnumerable<IResult> HandleDocumentClosing(ViewDocumentViewModel document, System.Action cancelCallback)
         {
             if(document.IsDirty){
-                var res = Result.ShowMessageBox(StringParser.Parse("{res:Common.Dialogs.Captions.SaveBeforeClose}"),
-                    StringParser.Format("{res:Common.Dialogs.Messages.SaveBeforeClose}", document.FileName), MessageBoxButton.YesNoCancel);
+                var res = Result.ShowMessageBox(StringParser.Parse("${res:BVEEditor:StringResources:Common.Dialogs.Captions.SaveBeforeClose}"),
+                    StringParser.Format("${res:BVEEditor:StringResources:Common.Dialogs.Messages.SaveBeforeClose}", document.FileName), MessageBoxButton.YesNoCancel);
 				yield return res;
 
 				if(res.Result == System.Windows.MessageBoxResult.Cancel){
@@ -543,30 +439,13 @@ namespace BVEEditor.Workbench
         }
 		#endregion
 		
-		public void CloseAllViews()
-		{
-			//SD.MainThread.VerifyAccess();
-			foreach(ViewDocumentViewModel document in this.view_documents)
-				HandleDocumentClosing(document);
-		}
-		
-		public bool CloseAllSolutionViews(bool force)
-		{
-			bool result = true;
-			/*foreach(ViewDocumentViewModel document in this.view_documents){
-				if(document.ActiveViewContent != null && document.ActiveViewContent.CloseWithSolution)
-					result &= document.CloseWindow(force);
-			}*/
-			return result;
-		}
-		
 		#region ViewContent Memento Handling
 		FileName view_content_mementos_file_name;
 		
 		FileName ViewContentMementosFileName{
 			get{
 				if(view_content_mementos_file_name == null)
-					view_content_mementos_file_name = FileName.Create(Path.Combine(PropertyService.ConfigDirectory, "LastViewStates.xml"));
+					view_content_mementos_file_name = FileName.Create(Path.Combine(property_service.ConfigDirectory, "LastViewStates.xml"));
 					
 				return view_content_mementos_file_name;
 			}
@@ -802,15 +681,16 @@ namespace BVEEditor.Workbench
         public void Handle(ViewDocumentAddedEvent message)
         {
             //See if the new ViewDocument already exists in view_documents collection.
-            var doc = view_documents.FirstOrDefault(view_doc => view_doc.ContentId == message.Document.ContentId);
-
+            var doc = ViewDocuments.FirstOrDefault(view_doc => view_doc.ContentId == message.Document.ContentId);
+            
             if(doc == null){
                 doc = message.Document;
                 LoadViewDocumentMemento(doc);
-                view_documents.Add(doc);
+                viewdoc_conductor.AddDocument(doc);
             }
 
-            doc.IsActive = true;
+            //if(message.ShowOnAdded)
+            //    ActiveDocument = doc;
         }
 
         #endregion
@@ -819,7 +699,7 @@ namespace BVEEditor.Workbench
 
         public void Handle(ActiveViewContentChangedEvent message)
         {
-            ActiveViewContent = message.Content;
+            //ActiveViewDocument = message.Content;
             ActiveDocument = message.Content.ViewDocument;
         }
 
@@ -829,7 +709,7 @@ namespace BVEEditor.Workbench
 
         public void Handle(JumpLocationEvent message)
         {
-            var open_doc = view_documents.Where(doc => doc.FilePath == message.FileName).Single();
+            var open_doc = ViewDocuments.Where(doc => doc.FilePath == message.FileName).Single();
             /*if(open_doc == null){
                 open_doc = Menu.CreateViewDocumentViewModel
             }*/

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BVEEditor.Events
 {
+    /// <summary>
+    /// Event fired when the application is about to quit.
+    /// </summary>
     public class ApplicationExitingEvent
     {
     }

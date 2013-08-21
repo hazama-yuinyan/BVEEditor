@@ -37,12 +37,12 @@ namespace Core.Presentation
 			this.conditions = conditions;
 			
 			if (codon.Properties.Contains("icon")) {
-				try {
+				//try {
 					var image = new Image();
-					image.Source = PresentationResourceService.GetBitmapSource(codon.Properties["icon"]);
+					//image.Source = PresentationResourceService.GetBitmapSource(codon.Properties["icon"]);
 					image.Height = 16;
 					this.Icon = image;
-				} catch (ResourceNotFoundException) {}
+				//} catch (ResourceNotFoundException) {}
 			}
 			UpdateText();
 		}
@@ -57,11 +57,12 @@ namespace Core.Presentation
 		public virtual void UpdateStatus()
 		{
 			ConditionFailedAction result = ICSharpCode.Core.Condition.GetFailedAction(conditions, caller);
-			if (result == ConditionFailedAction.Exclude)
+			if(result == ConditionFailedAction.Exclude)
 				this.Visibility = Visibility.Collapsed;
 			else
 				this.Visibility = Visibility.Visible;
-			if (SetEnabled)
+			
+            if(SetEnabled)
 				this.IsEnabled = result == ConditionFailedAction.Nothing;
 		}
 	}

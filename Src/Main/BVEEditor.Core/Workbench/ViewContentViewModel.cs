@@ -21,8 +21,6 @@ namespace BVEEditor.Workbench
 	/// </summary>
 	public abstract class ViewContentViewModel : PaneViewModel
 	{
-		ViewDocumentViewModel parent;
-		
 		/// <summary>
 		/// Is raised when the value of the TabPageText property changes.
 		/// </summary>
@@ -45,12 +43,7 @@ namespace BVEEditor.Workbench
 		}
 		
 		public ViewDocumentViewModel ViewDocument{
-			get{return parent;}
-		}
-		
-		public ViewContentViewModel(ViewDocumentViewModel viewDocument)
-		{
-			parent = viewDocument;
+			get{return this.Parent as ViewDocumentViewModel;}
 		}
 		
 		/// <summary>
@@ -66,6 +59,7 @@ namespace BVEEditor.Workbench
 		/// </summary>
 		public virtual bool IsReadOnly{
 			get{return false;}
+            set{throw new NotImplementedException();}
 		}
 		
 		/// <summary>

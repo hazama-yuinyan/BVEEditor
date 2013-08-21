@@ -392,8 +392,12 @@
     <EmbeddedResource Include="Highlighting\Resources\XmlDoc.xshd" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CodeCompletion\CompletionList.xaml" />
-    <Page Include="CodeCompletion\InsightWindow.xaml" />
+    <Page Include="CodeCompletion\CompletionList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CodeCompletion\InsightWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Search\SearchPanel.xaml">
       <DependentUpon>SearchPanel.cs</DependentUpon>
     </Page>

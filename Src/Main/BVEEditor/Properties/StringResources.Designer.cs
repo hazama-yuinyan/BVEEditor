@@ -61,7 +61,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @BVEEditor_FileFilter_AllFiles に類似しているローカライズされた文字列を検索します。
+        ///   All files *.*|* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string BVEEditor_FileFilter_AllFiles {
             get {
@@ -70,7 +70,43 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Error に類似しているローカライズされた文字列を検索します。
+        ///   Open file に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Captions_Open {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Captions_Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save file as... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Captions_Save {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Captions_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save before closing? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Captions_SaveBeforeClose {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Captions_SaveBeforeClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ${0} is modified. Do you want to save it before quitting the application? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Messages_SaveBeforeClose {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Messages_SaveBeforeClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_ErrorText {
             get {
@@ -115,7 +151,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Common_TextNo に類似しているローカライズされた文字列を検索します。
+        ///   No に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNo {
             get {
@@ -124,7 +160,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Common_TextNonInteger に類似しているローカライズされた文字列を検索します。
+        ///   ${0} is not an integer! に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNonInteger {
             get {
@@ -133,7 +169,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Common_TextNonNumber に類似しているローカライズされた文字列を検索します。
+        ///   ${0} is not a number! に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNonNumber {
             get {
@@ -151,7 +187,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Common_TextUndefined に類似しているローカライズされた文字列を検索します。
+        ///   Undefined に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextUndefined {
             get {
@@ -160,7 +196,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @Common_TextYes に類似しているローカライズされた文字列を検索します。
+        ///   Yes に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextYes {
             get {
@@ -178,7 +214,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Copy_Description に類似しているローカライズされた文字列を検索します。
+        ///   Copy selected item に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Copy_Description {
             get {
@@ -187,7 +223,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Cut_Description に類似しているローカライズされた文字列を検索します。
+        ///   Copy に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_CopyEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_CopyEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cut out selected item に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Cut_Description {
             get {
@@ -196,7 +241,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Delete_Description に類似しているローカライズされた文字列を検索します。
+        ///   Cut に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_CutEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_CutEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Delete selected item に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Delete_Description {
             get {
@@ -205,7 +259,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Paste_Description に類似しているローカライズされた文字列を検索します。
+        ///   Delete に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_DeleteEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_DeleteEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Paste item from clipboard に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Paste_Description {
             get {
@@ -214,7 +277,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Redo_Description に類似しているローカライズされた文字列を検索します。
+        ///   Paste に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_PasteEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_PasteEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Redo last undo action に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Redo_Description {
             get {
@@ -223,11 +295,38 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_EditMenu_Undo_Description に類似しているローカライズされた文字列を検索します。
+        ///   Redo に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_RedoEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_RedoEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_SelectAllEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_SelectAllEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Undo last action に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_EditMenu_Undo_Description {
             get {
                 return ResourceManager.GetString("MainMenu_EditMenu_Undo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Undo に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_EditMenu_UndoEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_EditMenu_UndoEntry", resourceCulture);
             }
         }
         
@@ -250,7 +349,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_FileMenu_NewFile_Description に類似しているローカライズされた文字列を検索します。
+        ///   Create a new file に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_New_File_Description {
             get {
@@ -268,7 +367,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_FileMenu_OpenFile_Description に類似しているローカライズされた文字列を検索します。
+        ///   Open a file に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_Open_File_Description {
             get {
@@ -277,7 +376,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_FileMenu_OpenProject_Description に類似しているローカライズされた文字列を検索します。
+        ///   Open a project に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_Open_Project_Description {
             get {
@@ -295,7 +394,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_FileMenu_Save_Description に類似しているローカライズされた文字列を検索します。
+        ///   Save に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_QuickSaveDocumentEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_QuickSaveDocumentEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save current file に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_Save_Description {
             get {
@@ -304,7 +412,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainMenu_FileMenu_SaveAll_Description に類似しているローカライズされた文字列を検索します。
+        ///   Save all the files that are open に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_SaveAll_Description {
             get {
@@ -313,7 +421,25 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainWindow_DialogName に類似しているローカライズされた文字列を検索します。
+        ///   Save as... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_SaveDocumentAsEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_SaveDocumentAsEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Help に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_Help {
+            get {
+                return ResourceManager.GetString("MainMenu_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BVEEditor に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_DialogName {
             get {
@@ -331,7 +457,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   @MainWindow_StatusBar_ReadyMessage に類似しているローカライズされた文字列を検索します。
+        ///   Ready に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_StatusBar_ReadyMessage {
             get {

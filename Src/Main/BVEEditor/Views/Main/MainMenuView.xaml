@@ -15,9 +15,22 @@
             <MenuItem Header="{lex:Loc MainMenu_File}">
                 <common:GestureMenuItem x:Name="NewDocument" Header="{lex:Loc MainMenu_FileMenu_NewEntry}" Modifiers="Ctrl" Key="N" />
                 <common:GestureMenuItem x:Name="OpenDocument" Header="{lex:Loc MainMenu_FileMenu_OpenDocumentEntry}" Modifiers="Control" Key="O" />
+                <common:GestureMenuItem x:Name="QuickSaveDocument" Header="{lex:Loc MainMenu_FileMenu_QuickSaveDocumentEntry}" Modifiers="Control" Key="S" />
+                <common:GestureMenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}" />
                 <common:GestureMenuItem x:Name="Close" Header="{lex:Loc MainMenu_FileMenu_ApplicationExitEntry}" Modifiers="Alt" Key="F4" />
             </MenuItem>
-            <MenuItem Header="{lex:Loc MainMenu_Edit}"></MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_Edit}">
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_UndoEntry}" Command="Undo"></MenuItem>
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_RedoEntry}" Command="Redo"></MenuItem>
+                <Separator />
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_CutEntry}" Command="Cut"></MenuItem>
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_CopyEntry}" Command="Copy"></MenuItem>
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_PasteEntry}" Command="Paste"></MenuItem>
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_DeleteEntry}" Command="Delete"></MenuItem>
+                <Separator />
+                <MenuItem Header="{lex:Loc MainMenu_EditMenu_SelectAllEntry}" Command="SelectAll"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_Help}"></MenuItem>
         </Menu>
     </Grid>
 </UserControl>

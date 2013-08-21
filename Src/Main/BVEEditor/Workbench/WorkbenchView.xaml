@@ -1,17 +1,18 @@
-﻿<Window x:Class="BVEEditor.Workbench.WorkbenchView"
+﻿<Window 
+    x:Class="BVEEditor.Workbench.WorkbenchView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:core="http://funprogramming.ojaru.jp/BVEEditor/core"
     xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
     xmlns:local="clr-namespace:BVEEditor.Workbench"
     xmlns:workbench="clr-namespace:BVEEditor.Workbench;assembly=BVEEditor.Core"
+    xmlns:localAd="clr-namespace:BVEEditor.AvalonDock"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
     lex:LocalizeDictionary.DesignCulture="en"
     lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
     lex:ResxLocalizationProvider.DefaultDictionary="StringResources"
-    Title="{lex:Loc MainWindow_DialogName}"
     Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
 	AllowDrop="True"
 	FlowDirection="{Binding FlowDirection}"
@@ -20,6 +21,10 @@
 	Top="{Binding Path=RestoreBounds.Y, Mode=TwoWay}"
 	Width="{Binding Path=RestoreBounds.Width, Mode=TwoWay}"
 	Height="{Binding Path=RestoreBounds.Height, Mode=TwoWay}">
+    <Window.Resources>
+        <localAd:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+        <avalonDock:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="OnDragEnter">
             <cal:ActionMessage MethodName="OnDragEnter">
@@ -56,7 +61,7 @@
             Grid.Row="2"
 			AllowMixedOrientation="True"
 			AnchorablesSource="{Binding Pads}"
-			ActiveContent="{Binding ActiveViewContent, Mode=TwoWay}"
+			ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}"
 			DocumentsSource="{Binding ViewDocuments}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="DocumentClosed">
@@ -71,6 +76,19 @@
                     </cal:ActionMessage>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
+            <avalonDock:DockingManager.Theme>
+                <avalonDock:ExpressionLightTheme />
+            </avalonDock:DockingManager.Theme>
+            <avalonDock:DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type avalonDock:LayoutItem}">
+                    <Setter Property="Title" Value="{Binding Model.Title}" />
+                    <Setter Property="IconSource" Value="{Binding Model.Icon}" />
+                    <Setter Property="IsActive" Value="{Binding Model.IsActive}" />
+                    <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                    <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay,
+                        Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}" />
+                </Style>
+            </avalonDock:DockingManager.LayoutItemContainerStyle>
             <avalonDock:DockingManager.DocumentHeaderTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">

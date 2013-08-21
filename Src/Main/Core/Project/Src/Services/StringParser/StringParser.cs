@@ -21,17 +21,17 @@ namespace ICSharpCode.Core
 	/// </summary>
 	public static class StringParser
 	{
-		readonly static ConcurrentDictionary<string, IStringTagProvider> prefixedStringTagProviders
+		readonly static ConcurrentDictionary<string, IStringTagProvider> prefixed_string_tag_providers
 			= InitializePrefixedStringTagProviders();
 		
 		// not really a stack - we only use Add and GetEnumerator
-		readonly static ConcurrentStack<IStringTagProvider> stringTagProviders = new ConcurrentStack<IStringTagProvider>();
+		readonly static ConcurrentStack<IStringTagProvider> string_tag_providers = new ConcurrentStack<IStringTagProvider>();
 		
 		static ConcurrentDictionary<string, IStringTagProvider> InitializePrefixedStringTagProviders()
 		{
 			var dict = new ConcurrentDictionary<string, IStringTagProvider>(StringComparer.OrdinalIgnoreCase);
 			
-			// entryAssembly == null might happen in unit test mode
+			// entry_assembly == null might happen in unit test mode
 			Assembly entry_assembly = Assembly.GetEntryAssembly();
 			if(entry_assembly != null){
 				string exe_name = entry_assembly.Location;
@@ -53,7 +53,7 @@ namespace ICSharpCode.Core
 		}
 
         /// <summary>
-        /// Replaces all occurrences of a dot '.' with an underscore '_' in order to make the identifier valid.
+        /// Replaces all occurrences of a dot '.' with an underscore '_' in order to make the identifier valid in resource files.
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -78,7 +78,7 @@ namespace ICSharpCode.Core
 			if(tagProvider == null)
 				throw new ArgumentNullException("tagProvider");
 			
-            stringTagProviders.Push(tagProvider);
+            string_tag_providers.Push(tagProvider);
 		}
 		
 		public static void RegisterStringTagProvider(string prefix, IStringTagProvider tagProvider)
@@ -88,7 +88,7 @@ namespace ICSharpCode.Core
 			if(tagProvider == null)
 				throw new ArgumentNullException("tagProvider");
 			
-            prefixedStringTagProviders[prefix] = tagProvider;
+            prefixed_string_tag_providers[prefix] = tagProvider;
 		}
 		
 		//readonly static Regex pattern = new Regex(@"\$\{([^\}]*)\}", RegexOptions.Compiled | RegexOptions.CultureInvariant);
@@ -96,6 +96,10 @@ namespace ICSharpCode.Core
 		/// <summary>
 		/// Expands ${xyz} style property values.
 		/// </summary>
+        /// <remarks>
+        /// Because it uses WPFLocalizeExtension as it underlying string resource parser, all string resource names must be
+        /// fully qualified like "${res:(assembly-name):(resource-file-name):(resource-name)}".
+        /// </remarks>
 		public static string Parse(string input, params StringTagPair[] customTags)
 		{
 			if(input == null)
@@ -188,7 +192,7 @@ namespace ICSharpCode.Core
 				if(propertyName.Equals("CONFIGDIRECTORY", StringComparison.OrdinalIgnoreCase))
 					return IoC.Get<IPropertyService>().ConfigDirectory;
 				
-				foreach(IStringTagProvider provider in stringTagProviders){
+				foreach(IStringTagProvider provider in string_tag_providers){
 					string result = provider.ProvideString(propertyName, customTags);
 					if(result != null)
 						return result;
@@ -239,7 +243,7 @@ namespace ICSharpCode.Core
 
 					default:
 						IStringTagProvider provider;
-						if(prefixedStringTagProviders.TryGetValue(prefix, out provider))
+						if(prefixed_string_tag_providers.TryGetValue(prefix, out provider))
 							return provider.ProvideString(propertyName, customTags);
 						else
 							return null;

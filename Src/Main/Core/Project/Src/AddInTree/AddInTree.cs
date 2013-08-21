@@ -35,11 +35,11 @@ namespace ICSharpCode.Core
 	/// </summary>
 	public class AddInTreeImpl : IAddInTree
 	{
-		List<AddIn>   addIns   = new List<AddIn>();
-		AddInTreeNode rootNode = new AddInTreeNode();
+		List<AddIn>   add_ins   = new List<AddIn>();
+		AddInTreeNode root_node = new AddInTreeNode();
 		
 		ConcurrentDictionary<string, IDoozer> doozers = new ConcurrentDictionary<string, IDoozer>();
-		ConcurrentDictionary<string, IConditionEvaluator> conditionEvaluators = new ConcurrentDictionary<string, IConditionEvaluator>();
+		ConcurrentDictionary<string, IConditionEvaluator> condition_evaluators = new ConcurrentDictionary<string, IConditionEvaluator>();
 		
 		public AddInTreeImpl(ApplicationStateInfoService applicationStateService)
 		{
@@ -52,35 +52,35 @@ namespace ICSharpCode.Core
 			doozers.TryAdd("Include", new IncludeDoozer());
 			doozers.TryAdd("Service", new ServiceDoozer());
 			
-			conditionEvaluators.TryAdd("Compare", new CompareConditionEvaluator());
-			conditionEvaluators.TryAdd("Ownerstate", new OwnerStateConditionEvaluator());
+			condition_evaluators.TryAdd("Compare", new CompareConditionEvaluator());
+			condition_evaluators.TryAdd("Ownerstate", new OwnerStateConditionEvaluator());
 			
-			if (applicationStateService != null)
+			if(applicationStateService != null)
 				applicationStateService.RegisterStateGetter("Installed 3rd party AddIns", GetInstalledThirdPartyAddInsListAsString);
 		}
 		
 		string GetInstalledThirdPartyAddInsListAsString()
 		{
 			System.Text.StringBuilder sb = new System.Text.StringBuilder();
-			foreach (AddIn addIn in AddIns) {
+			foreach(AddIn add_in in AddIns){
 				// Skip preinstalled AddIns (show only third party AddIns)
-				if (addIn.IsPreinstalled)
+				if(add_in.IsPreinstalled)
 					continue;
 				
-				if (sb.Length > 0) sb.Append(", ");
+				if(sb.Length > 0) sb.Append(", ");
 				sb.Append("[");
-				sb.Append(addIn.Name);
-				if (addIn.Version != null) {
+				sb.Append(add_in.Name);
+				if(add_in.Version != null){
 					sb.Append(' ');
-					sb.Append(addIn.Version.ToString());
+					sb.Append(add_in.Version.ToString());
 				}
-				if (!addIn.Enabled) {
+				if(!add_in.Enabled){
 					sb.Append(", Enabled=");
-					sb.Append(addIn.Enabled);
+					sb.Append(add_in.Enabled);
 				}
-				if (addIn.Action != AddInAction.Enable) {
+				if(add_in.Action != AddInAction.Enable){
 					sb.Append(", Action=");
-					sb.Append(addIn.Action.ToString());
+					sb.Append(add_in.Action.ToString());
 				}
 				sb.Append("]");
 			}
@@ -92,7 +92,7 @@ namespace ICSharpCode.Core
 		/// </summary>
 		public IReadOnlyList<AddIn> AddIns {
 			get {
-				return addIns;
+				return add_ins;
 			}
 		}
 		
@@ -110,7 +110,7 @@ namespace ICSharpCode.Core
 		/// </summary>
 		public ConcurrentDictionary<string, IConditionEvaluator> ConditionEvaluators {
 			get {
-				return conditionEvaluators;
+				return condition_evaluators;
 			}
 		}
 		
@@ -125,20 +125,20 @@ namespace ICSharpCode.Core
 		/// </param>
 		public AddInTreeNode GetTreeNode(string path, bool throwOnNotFound = true)
 		{
-			if (path == null || path.Length == 0) {
-				return rootNode;
-			}
-			string[] splittedPath = path.Split('/');
-			AddInTreeNode curPath = rootNode;
-			for (int i = 0; i < splittedPath.Length; i++) {
-				if (!curPath.ChildNodes.TryGetValue(splittedPath[i], out curPath)) {
-					if (throwOnNotFound)
+			if(path == null || path.Length == 0)
+				return root_node;
+			
+			string[] split_path = path.Split('/');
+			AddInTreeNode cur_path = root_node;
+			for(int i = 0; i < split_path.Length; i++){
+				if(!cur_path.ChildNodes.TryGetValue(split_path[i], out cur_path)){
+					if(throwOnNotFound)
 						throw new TreePathNotFoundException(path);
 					else
 						return null;
 				}
 			}
-			return curPath;
+			return cur_path;
 		}
 		
 		/// <summary>
@@ -173,7 +173,7 @@ namespace ICSharpCode.Core
 		public IReadOnlyList<T> BuildItems<T>(string path, object parameter, bool throwOnNotFound = true)
 		{
 			AddInTreeNode node = GetTreeNode(path, throwOnNotFound);
-			if (node == null)
+			if(node == null)
 				return new List<T>();
 			else
 				return node.BuildChildItems<T>(parameter);
@@ -181,86 +181,82 @@ namespace ICSharpCode.Core
 		
 		AddInTreeNode CreatePath(AddInTreeNode localRoot, string path)
 		{
-			if (path == null || path.Length == 0) {
+			if(path == null || path.Length == 0)
 				return localRoot;
-			}
-			string[] splittedPath = path.Split('/');
-			AddInTreeNode curPath = localRoot;
+			
+			string[] split_path = path.Split('/');
+			AddInTreeNode cur_path = localRoot;
 			int i = 0;
-			while (i < splittedPath.Length) {
-				if (!curPath.ChildNodes.ContainsKey(splittedPath[i])) {
-					curPath.ChildNodes[splittedPath[i]] = new AddInTreeNode();
-				}
-				curPath = curPath.ChildNodes[splittedPath[i]];
+			while(i < split_path.Length){
+				if(!cur_path.ChildNodes.ContainsKey(split_path[i]))
+					cur_path.ChildNodes[split_path[i]] = new AddInTreeNode();
+				
+				cur_path = cur_path.ChildNodes[split_path[i]];
 				++i;
 			}
 			
-			return curPath;
+			return cur_path;
 		}
 		
 		void AddExtensionPath(ExtensionPath path)
 		{
-			AddInTreeNode treePath = CreatePath(rootNode, path.Name);
-			foreach (IEnumerable<Codon> innerCodons in path.GroupedCodons)
-				treePath.AddCodons(innerCodons);
+			AddInTreeNode tree_path = CreatePath(root_node, path.Name);
+			foreach(IEnumerable<Codon> inner_codons in path.GroupedCodons)
+				tree_path.AddCodons(inner_codons);
 		}
 		
 		/// <summary>
 		/// The specified AddIn is added to the <see cref="AddIns"/> collection.
 		/// If the AddIn is enabled, its doozers, condition evaluators and extension
-		/// paths are added to the AddInTree and its resources are added to the
-		/// <see cref="ResourceService"/>.
+		/// paths are added to the AddInTree.
 		/// </summary>
 		public void InsertAddIn(AddIn addIn)
 		{
-			if (addIn.Enabled) {
-				foreach (ExtensionPath path in addIn.Paths.Values) {
+			if(addIn.Enabled){
+				foreach(ExtensionPath path in addIn.Paths.Values)
 					AddExtensionPath(path);
-				}
 				
-				foreach (Runtime runtime in addIn.Runtimes) {
-					if (runtime.IsActive) {
-						foreach (var pair in runtime.DefinedDoozers) {
-							if (!doozers.TryAdd(pair.Key, pair.Value))
+				foreach(Runtime runtime in addIn.Runtimes){
+					if(runtime.IsActive){
+						foreach(var pair in runtime.DefinedDoozers){
+							if(!doozers.TryAdd(pair.Key, pair.Value))
 								throw new AddInLoadException("Duplicate doozer: " + pair.Key);
 						}
-						foreach (var pair in runtime.DefinedConditionEvaluators) {
-							if (!conditionEvaluators.TryAdd(pair.Key, pair.Value))
+						foreach(var pair in runtime.DefinedConditionEvaluators){
+							if(!condition_evaluators.TryAdd(pair.Key, pair.Value))
 								throw new AddInLoadException("Duplicate condition evaluator: " + pair.Key);
 						}
 					}
 				}
 				
-				string addInRoot = Path.GetDirectoryName(addIn.FileName);
-				foreach(string bitmapResource in addIn.BitmapResources)
-				{
-					string path = Path.Combine(addInRoot, bitmapResource);
+				string add_in_root = Path.GetDirectoryName(addIn.FileName);
+				/*foreach(string bitmapResource in addIn.BitmapResources){
+					string path = Path.Combine(add_in_root, bitmapResource);
 					ResourceManager resourceManager = ResourceManager.CreateFileBasedResourceManager(Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path), null);
 					IoC.Get<IResourceService>().RegisterNeutralImages(resourceManager);
 				}
 				
-				foreach(string stringResource in addIn.StringResources)
-				{
-					string path = Path.Combine(addInRoot, stringResource);
+				foreach(string stringResource in addIn.StringResources){
+					string path = Path.Combine(add_in_root, stringResource);
 					ResourceManager resourceManager = ResourceManager.CreateFileBasedResourceManager(Path.GetFileNameWithoutExtension(path), Path.GetDirectoryName(path), null);
 					IoC.Get<IResourceService>().RegisterNeutralStrings(resourceManager);
-				}
+				}*/
 			}
-			addIns.Add(addIn);
+			add_ins.Add(addIn);
 		}
 		
 		/// <summary>
 		/// The specified AddIn is removed to the <see cref="AddIns"/> collection.
 		/// This is only possible for disabled AddIns, enabled AddIns require
-		/// a restart of the application to be removed.
+		/// the application to restart before it gets removed.
 		/// </summary>
 		/// <exception cref="ArgumentException">Occurs when trying to remove an enabled AddIn.</exception>
 		public void RemoveAddIn(AddIn addIn)
 		{
-			if (addIn.Enabled) {
+			if(addIn.Enabled)
 				throw new ArgumentException("Cannot remove enabled AddIns at runtime.");
-			}
-			addIns.Remove(addIn);
+
+			add_ins.Remove(addIn);
 		}
 		
 		// used by Load(): disables an addin and removes it from the dictionaries.
@@ -289,76 +285,78 @@ namespace ICSharpCode.Core
 			List<AddIn> list = new List<AddIn>();
 			Dictionary<string, Version> dict = new Dictionary<string, Version>();
 			Dictionary<string, AddIn> addInDict = new Dictionary<string, AddIn>();
-			var nameTable = new System.Xml.NameTable();
-			foreach (string fileName in addInFiles) {
-				AddIn addIn;
-				try {
-					addIn = AddIn.Load(this, fileName, nameTable);
-				} catch (AddInLoadException ex) {
+			var name_table = new System.Xml.NameTable();
+			foreach(string file_name in addInFiles){
+				AddIn add_in;
+				try{
+					add_in = AddIn.Load(this, file_name, name_table);
+				}catch(AddInLoadException ex){
 					DebugLogger.Instance.Error(ex);
-					if (ex.InnerException != null) {
-						MessageService.ShowError("Error loading AddIn " + fileName + ":\n"
+					if(ex.InnerException != null){
+                        IoC.Get<IMessageService>().ShowError("Error loading AddIn " + file_name + ":\n"
 						                         + ex.InnerException.Message);
-					} else {
-						MessageService.ShowError("Error loading AddIn " + fileName + ":\n"
+					}else{
+                        IoC.Get<IMessageService>().ShowError("Error loading AddIn " + file_name + ":\n"
 						                         + ex.Message);
 					}
-					addIn = new AddIn(this);
-					addIn.addInFileName = fileName;
-					addIn.CustomErrorMessage = ex.Message;
+					add_in = new AddIn(this);
+					add_in.addInFileName = file_name;
+					add_in.CustomErrorMessage = ex.Message;
 				}
-				if (addIn.Action == AddInAction.CustomError) {
-					list.Add(addIn);
+				if(add_in.Action == AddInAction.CustomError){
+					list.Add(add_in);
 					continue;
 				}
-				addIn.Enabled = true;
-				if (disabledAddIns != null && disabledAddIns.Count > 0) {
-					foreach (string name in addIn.Manifest.Identities.Keys) {
-						if (disabledAddIns.Contains(name)) {
-							addIn.Enabled = false;
+				add_in.Enabled = true;
+				if(disabledAddIns != null && disabledAddIns.Count > 0){
+					foreach(string name in add_in.Manifest.Identities.Keys){
+						if(disabledAddIns.Contains(name)){
+							add_in.Enabled = false;
 							break;
 						}
 					}
 				}
-				if (addIn.Enabled) {
-					foreach (KeyValuePair<string, Version> pair in addIn.Manifest.Identities) {
-						if (dict.ContainsKey(pair.Key)) {
-							MessageService.ShowError("Name '" + pair.Key + "' is used by " +
-							                         "'" + addInDict[pair.Key].FileName + "' and '" + fileName + "'");
-							addIn.Enabled = false;
-							addIn.Action = AddInAction.InstalledTwice;
+
+				if(add_in.Enabled){
+					foreach(KeyValuePair<string, Version> pair in add_in.Manifest.Identities){
+						if(dict.ContainsKey(pair.Key)){
+							IoC.Get<IMessageService>().ShowError("Name '" + pair.Key + "' is used by " +
+							                         "'" + addInDict[pair.Key].FileName + "' and '" + file_name + "'");
+							add_in.Enabled = false;
+							add_in.Action = AddInAction.InstalledTwice;
 							break;
-						} else {
+						}else{
 							dict.Add(pair.Key, pair.Value);
-							addInDict.Add(pair.Key, addIn);
+							addInDict.Add(pair.Key, add_in);
 						}
 					}
 				}
-				list.Add(addIn);
+				list.Add(add_in);
 			}
 		checkDependencies:
-			for (int i = 0; i < list.Count; i++) {
+			for(int i = 0; i < list.Count; i++){
 				AddIn addIn = list[i];
-				if (!addIn.Enabled) continue;
+				if(!addIn.Enabled) continue;
 				
 				Version versionFound;
 				
-				foreach (AddInReference reference in addIn.Manifest.Conflicts) {
-					if (reference.Check(dict, out versionFound)) {
-						MessageService.ShowError(addIn.Name + " conflicts with " + reference.ToString()
+				foreach(AddInReference reference in addIn.Manifest.Conflicts){
+					if(reference.Check(dict, out versionFound)){
+						IoC.Get<IMessageService>().ShowError(addIn.Name + " conflicts with " + reference.ToString()
 						                         + " and has been disabled.");
 						DisableAddin(addIn, dict, addInDict);
 						goto checkDependencies; // after removing one addin, others could break
 					}
 				}
-				foreach (AddInReference reference in addIn.Manifest.Dependencies) {
-					if (!reference.Check(dict, out versionFound)) {
-						if (versionFound != null) {
-							MessageService.ShowError(addIn.Name + " has not been loaded because it requires "
+
+				foreach(AddInReference reference in addIn.Manifest.Dependencies){
+					if(!reference.Check(dict, out versionFound)){
+						if(versionFound != null){
+							IoC.Get<IMessageService>().ShowError(addIn.Name + " has not been loaded because it requires "
 							                         + reference.ToString() + ", but version "
 							                         + versionFound.ToString() + " is installed.");
-						} else {
-							MessageService.ShowError(addIn.Name + " has not been loaded because it requires "
+						}else{
+							IoC.Get<IMessageService>().ShowError(addIn.Name + " has not been loaded because it requires "
 							                         + reference.ToString() + ".");
 						}
 						DisableAddin(addIn, dict, addInDict);
@@ -366,12 +364,13 @@ namespace ICSharpCode.Core
 					}
 				}
 			}
-			foreach (AddIn addIn in list) {
-				try {
+
+			foreach(AddIn addIn in list){
+				try{
 					InsertAddIn(addIn);
-				} catch (AddInLoadException ex) {
+				}catch(AddInLoadException ex){
 					DebugLogger.Instance.Error(ex);
-					MessageService.ShowError("Error loading AddIn " + addIn.FileName + ":\n"
+                    IoC.Get<IMessageService>().ShowError("Error loading AddIn " + addIn.FileName + ":\n"
 					                         + ex.Message);
 				}
 			}

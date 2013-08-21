@@ -14,9 +14,16 @@ namespace BVEEditor.Events
     public class ViewDocumentAddedEvent
     {
         public ViewDocumentViewModel Document{get; private set;}
-        public ViewDocumentAddedEvent(ViewDocumentViewModel document)
+        public bool ShowOnAdded{get; private set;}
+        /// <summary>
+        /// Creates a new <see cref="BVEEditor.Events.ViewDocumentAddedEvent"/> instance.
+        /// </summary>
+        /// <param name="document">The ViewDocument being added</param>
+        /// <param name="showOnAdded">If true, the ViewDocument will be shown when added</param>
+        public ViewDocumentAddedEvent(ViewDocumentViewModel document, bool showOnAdded = true)
         {
             Document = document;
+            ShowOnAdded = showOnAdded;
         }
     }
 }

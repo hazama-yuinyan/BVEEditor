@@ -16,18 +16,18 @@ namespace ICSharpCode.Core
 		List<AddInReference> dependencies = new List<AddInReference>();
 		List<AddInReference> conflicts = new List<AddInReference>();
 		Dictionary<string, Version> identities = new Dictionary<string, Version>();
-		Version primaryVersion;
-		string primaryIdentity;
+		Version primary_version;
+		string primary_identity;
 		
 		public string PrimaryIdentity {
 			get {
-				return primaryIdentity;
+				return primary_identity;
 			}
 		}
 		
 		public Version PrimaryVersion {
 			get {
-				return primaryVersion;
+				return primary_version;
 			}
 		}
 		
@@ -51,55 +51,59 @@ namespace ICSharpCode.Core
 		
 		void AddIdentity(string name, string version, string hintPath)
 		{
-			if (name.Length == 0)
+			if(name.Length == 0)
 				throw new AddInLoadException("Identity needs a name");
-			foreach (char c in name) {
-				if (!char.IsLetterOrDigit(c) && c != '.' && c != '_') {
+			
+            foreach(char c in name){
+				if(!char.IsLetterOrDigit(c) && c != '.' && c != '_')
 					throw new AddInLoadException("Identity name contains invalid character: '" + c + "'");
-				}
 			}
 			Version v = AddInReference.ParseVersion(version, hintPath);
-			if (primaryVersion == null) {
-				primaryVersion = v;
-			}
-			if (primaryIdentity == null) {
-				primaryIdentity = name;
-			}
+			if(primary_version == null)
+				primary_version = v;
+			
+			if(primary_identity == null)
+				primary_identity = name;
+			
 			identities.Add(name, v);
 		}
 		
 		public void ReadManifestSection(XmlReader reader, string hintPath)
 		{
-			if (reader.AttributeCount != 0) {
+			if(reader.AttributeCount != 0)
 				throw new AddInLoadException("Manifest node cannot have attributes.");
-			}
-			if (reader.IsEmptyElement) {
+			if(reader.IsEmptyElement)
 				throw new AddInLoadException("Manifest node cannot be empty.");
-			}
-			while (reader.Read()) {
-				switch (reader.NodeType) {
-					case XmlNodeType.EndElement:
-						if (reader.LocalName == "Manifest") {
-							return;
-						}
-						break;
-					case XmlNodeType.Element:
-						string nodeName = reader.LocalName;
-						Properties properties = Properties.ReadFromAttributes(reader);
-						switch (nodeName) {
-							case "Identity":
-								AddIdentity(properties["name"], properties["version"], hintPath);
-								break;
-							case "Dependency":
-								dependencies.Add(AddInReference.Create(properties, hintPath));
-								break;
-							case "Conflict":
-								conflicts.Add(AddInReference.Create(properties, hintPath));
-								break;
-							default:
-								throw new AddInLoadException("Unknown node in Manifest section:" + nodeName);
-						}
-						break;
+			
+			while(reader.Read()){
+				switch(reader.NodeType){
+                case XmlNodeType.EndElement:
+					if(reader.LocalName == "Manifest")
+						return;
+
+					break;
+				
+                case XmlNodeType.Element:
+                    string node_name = reader.LocalName;
+					Properties properties = Properties.ReadFromAttributes(reader);
+					
+                    switch(node_name){
+                    case "Identity":
+                        AddIdentity(properties["name"], properties["version"], hintPath);
+                        break;
+						
+                    case "Dependency":
+                        dependencies.Add(AddInReference.Create(properties, hintPath));
+                        break;
+						
+                    case "Conflict":
+                        conflicts.Add(AddInReference.Create(properties, hintPath));
+                        break;
+						
+                    default:
+                        throw new AddInLoadException("Unknown node in Manifest section:" + node_name);
+                    }
+                    break;
 				}
 			}
 		}

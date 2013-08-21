@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,13 +16,14 @@ namespace BVEEditor.Views
     /// <summary>
     /// The view model for the main menu.
     /// </summary>
-    public class MainMenuViewModel : PropertyChangedBase, IHandle<ActiveViewContentChangedEvent>
+    public class MainMenuViewModel : PropertyChangedBase, IHandle<ActiveViewDocumentChangedEvent>
     {
+        const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
+
         readonly IResultFactory result_factory;
         readonly IFileDialogStrategies file_strategies;
         readonly IEventAggregator event_aggregator;
         readonly IDisplayBindingService display_binding;
-        readonly Func<ErrorDocumentViewModel> error_doc_factory;
 
         ViewDocumentViewModel active_doc;
         ViewDocumentViewModel ActiveDocument{
@@ -35,14 +37,14 @@ namespace BVEEditor.Views
         }
 
         public MainMenuViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
-            Func<ErrorDocumentViewModel> errorDocumentFactory)
+            IDisplayBindingService displayBindingService)
         {
             eventAggregator.Subscribe(this);
 
             result_factory = resultFactory;
             file_strategies = fileStrategies;
             event_aggregator = eventAggregator;
-            error_doc_factory = errorDocumentFactory;
+            display_binding = displayBindingService;
         }
 
         public void NewDocument()
@@ -57,11 +59,12 @@ namespace BVEEditor.Views
 
         internal void CreateViewDocumentViewModel(string filePath)
         {
-            var new_doc = error_doc_factory()
-                .Configure(FileName.Create("Untitled"));
+            FileName filename = FileName.Create(filePath);
+            var new_doc = display_binding.GetBindingPerFileName(filename)
+                .CreateViewModelForFile(filename);
             
-            //if(!string.IsNullOrEmpty(filePath))
-            //    new
+            if(!string.IsNullOrEmpty(filePath))
+                new_doc.Load(filePath);
 
             event_aggregator.Publish(new ViewDocumentAddedEvent(new_doc));
         }
@@ -84,7 +87,7 @@ namespace BVEEditor.Views
         void SaveInternel(ViewDocumentViewModel viewDoc, string path)
         {
             viewDoc.FilePath = FileName.Create(path);
-
+            viewDoc.Save(path);
         }
 
         public IEnumerable<IResult> QuickSaveDocument()
@@ -98,11 +101,11 @@ namespace BVEEditor.Views
         }
 
         public bool CanQuickSaveDocument{
-            get{return CanSaveDocument;}
+            get{return CanSaveDocument && active_doc.IsDirty;}
         }
 
         public bool IsPathSet{
-            get{return !string.IsNullOrEmpty(active_doc.FileName);}
+            get{return !active_doc.IsUntitled;}
         }
 
         public bool CanSaveDocument{
@@ -114,13 +117,24 @@ namespace BVEEditor.Views
             yield return result_factory.Close();
         }
 
-        #region IHandle<ActiveViewContentChangedEvent> メンバー
+        #region IHandle<ActiveViewDocumentChangedEvent> メンバー
 
-        public void Handle(ActiveViewContentChangedEvent message)
+        public void Handle(ActiveViewDocumentChangedEvent message)
         {
-            active_doc = message.Content.ViewDocument;
+            if(ActiveDocument != null)
+                ActiveDocument.PropertyChanged -= ViewDocumentPropertyChanged;
+
+            ActiveDocument = message.ViewDocument;
+            ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
         }
 
         #endregion
+
+        void ViewDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "is_dirty"){
+                NotifyOfPropertyChange(() => CanQuickSaveDocument);
+            }
+        }
     }
 }

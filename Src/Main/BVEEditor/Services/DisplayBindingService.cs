@@ -11,14 +11,17 @@ namespace BVEEditor.Services
 {
     public class DisplayBindingService : IDisplayBindingService
     {
-        const string DisplayBindingPath = "BVEEditor/Workbench/DisplayBindings";
+        const string DisplayBindingPath = "/BVEEditor/Workbench/DisplayBindings";
         List<DisplayBindingDescriptor> descriptors;
         ICSharpCode.Core.Properties display_binding_properties;
-        IMessageLoop main_thread;
+        readonly IMessageLoop main_thread;
+        readonly Func<ErrorDocumentDisplayBinding> error_doc_display_binding_factory;
 
-        public DisplayBindingService(IPropertyService propertyService, IMessageLoop mainThread)
+        public DisplayBindingService(IPropertyService propertyService, IMessageLoop mainThread,
+            Func<ErrorDocumentDisplayBinding> errorDocDisplayBindingFactory)
         {
             main_thread = mainThread;
+            error_doc_display_binding_factory = errorDocDisplayBindingFactory;
 
             descriptors = AddInTree.BuildItems<DisplayBindingDescriptor>(DisplayBindingPath, null, true);
             display_binding_properties = propertyService.NestedProperties("DisplayBindingService");
@@ -30,25 +33,27 @@ namespace BVEEditor.Services
         {
             main_thread.VerifyAccess();
 
-            if(FileUtility.IsUrl(filename)){
+            if(filename != null && FileUtility.IsUrl(filename)){
                 // The normal display binding dispatching code can't handle URLs (e.g. because it uses Path.GetExtension),
                 // so we'll directly return null at the moment.
                 return null;
             }
 
             var codon = GetDefaultCodonPerFileName(filename);
-            return (codon == null) ? null : codon.Binding;
+            return (codon == null) ? error_doc_display_binding_factory() : codon.Binding;
         }
 
         public DisplayBindingDescriptor GetDefaultCodonPerFileName(FileName filename)
         {
             main_thread.VerifyAccess();
 
-            var default_command_id = display_binding_properties.Get("Default" + Path.GetExtension(filename).ToLowerInvariant(), string.Empty);
-            if(!string.IsNullOrEmpty(default_command_id)){
-                foreach(var descriptor in descriptors){
-                    if(descriptor.Id == default_command_id && IsValidBindingForFileName(descriptor, filename))
-                        return descriptor;
+            if(filename != null){
+                var default_command_id = display_binding_properties.Get("Default" + Path.GetExtension(filename).ToLowerInvariant(), string.Empty);
+                if(!string.IsNullOrEmpty(default_command_id)){
+                    foreach(var descriptor in descriptors){
+                        if(descriptor.Id == default_command_id && IsValidBindingForFileName(descriptor, filename))
+                            return descriptor;
+                    }
                 }
             }
 

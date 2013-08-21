@@ -1,0 +1,1945 @@
+﻿<AddIn name        = "BVEEditor"
+       author      = "HAZAMA"
+       copyright   = "prj:///doc/copyright.txt"
+       url         = "http://funprogramming.ojaru.jp"
+       description = "BVEEditor main module"
+       addInManagerHidden = "true">
+	
+	<Manifest>
+		<Identity name = "BVEEditor" version = "@BVEEditorCoreVersion"/>
+	</Manifest>
+	
+	<Runtime>
+		<Import assembly=":BVEEditor.Core">
+			<ConditionEvaluator name="ActiveContentExtension" class="BVEEditor.ConditionEvaluators.ActiveContentExtensionConditionEvaluator"/>
+			<ConditionEvaluator name="ActiveViewContentUntitled" class="BVEEditor.ConditionEvaluators.ActiveViewContentUntitledConditionEvaluator"/>
+			<ConditionEvaluator name="ActiveWindowState" class="BVEEditor.ConditionEvaluators.ActiveWindowStateConditionEvaluator"/>
+			<!--<ConditionEvaluator name="SolutionOpen" class="BVEEditor.SolutionOpenConditionEvaluator"/>-->
+			<ConditionEvaluator name="OpenWindowState" class="BVEEditor.ConditionEvaluators.OpenWindowStateConditionEvaluator"/>
+			<ConditionEvaluator name="WindowActive" class="BVEEditor.ConditionEvaluators.WindowActiveConditionEvaluator"/>
+			<ConditionEvaluator name="WindowOpen" class="BVEEditor.ConditionEvaluators.WindowOpenConditionEvaluator"/>
+			<!--<ConditionEvaluator name="WriteableProject" class="BVEEditor.WriteableProjectConditionEvaluator"/>
+			<ConditionEvaluator name="WriteableSolution" class="BVEEditor.WriteableSolutionConditionEvaluator"/>
+			<ConditionEvaluator name="ProjectActive" class="BVEEditor.ProjectActiveConditionEvaluator"/>-->
+			<ConditionEvaluator name="TextContent" class="BVEEditor.Editor.TextContentConditionEvaluator"/>
+			<!--<ConditionEvaluator name="BrowserLocation" class="BVEEditor.BrowserDisplayBinding.BrowserLocationConditionEvaluator"/>
+			<ConditionEvaluator name="RefactoringProviderSupports" class="BVEEditor.Refactoring.RefactoringProviderSupportsConditionEvaluator"/>
+			<ConditionEvaluator name="CanNavigateBack" class="BVEEditor.CanNavigateBackConditionEvaluator"/>
+			<ConditionEvaluator name="CanNavigateForward" class="BVEEditor.CanNavigateForwardConditionEvaluator"/>
+			<ConditionEvaluator name="CompareProjectProperty" class="BVEEditor.CompareProjectPropertyConditionEvaluator"/>
+			<ConditionEvaluator name="ProjectItem" class="BVEEditor.Project.ProjectItemConditionEvaluator"/>-->
+			<ConditionEvaluator name="IsTextSelected" class="BVEEditor.Editor.TextSelectedCondition"/>
+			<!--<ConditionEvaluator name="ViewInBrowser" class="BVEEditor.ViewInBrowserConditionEvaluator"/>
+			<ConditionEvaluator name="ProjectBehaviorSupported" class="BVEEditor.Project.ProjectBehaviorSupportedConditionEvaluator"/>-->
+			
+			<!--<Doozer name="CustomProperty" class="BVEEditor.Project.CustomPropertyDoozer"/>
+			<Doozer name="OptionPanel" class="BVEEditor.OptionPanelDoozer"/>-->
+			<Doozer name="DisplayBinding" class="BVEEditor.Workbench.DisplayBindingDoozer"/>
+			<Doozer name="Pad" class="BVEEditor.PadDoozer"/>
+			<!--<Doozer name="ProjectBinding" class="BVEEditor.ProjectBindingDoozer"/>
+			<Doozer name="LanguageBinding" class="BVEEditor.LanguageBindingDoozer"/>-->
+			<Doozer name="TextEditorExtension" class="BVEEditor.Editor.TextEditorExtensionDoozer"/>
+			<!--<Doozer name="CodeCompletionBinding" class="BVEEditor.Editor.CodeCompletion.CodeCompletionBindingDoozer"/>-->
+			<Doozer name="Directory" class="BVEEditor.DirectoryDoozer"/>
+			<!--<Doozer name="TemplateFile" class="BVEEditor.Templates.TemplateFileDoozer"/>
+			<Doozer name="TemplateCategory" class="BVEEditor.Templates.TemplateCategoryDoozer"/>-->
+		</Import>
+		<Import assembly=":BVEEditor">
+			<!--<Doozer name="Parser" class="BVEEditor.Parser.ParserDoozer"/>-->
+		</Import>
+	</Runtime>
+	
+	<Path name="/BVEEditor/Services">
+		<!--<Service id="BVEEditor.Parser.IGlobalAssemblyCacheService"
+		         class="BVEEditor.Parser.GlobalAssemblyCacheService"/>
+		<Service id="BVEEditor.Parser.IParserService"
+		         class="BVEEditor.Parser.ParserService"/>
+		<Service id="BVEEditor.Parser.IAssemblyParserService"
+		         class="BVEEditor.Parser.AssemblyParserService"/>-->
+		<Service id="BVEEditor.Workbench.IFileService"
+		         class="BVEEditor.Workbench.FileService"/>
+		<Service id="BVEEditor.Workbench.IDisplayBindingService"
+		         class="BVEEditor.Workbench.DisplayBindingService"/>
+		<!--<Service id="BVEEditor.Dom.ITreeNodeFactory"
+		         class="BVEEditor.Dom.TreeNodeFactoryService"/>
+		<Service id="BVEEditor.Dom.IModelFactory"
+		         class="BVEEditor.Dom.ModelFactory"/>
+		<Service id="BVEEditor.IClipboard"
+		         class="BVEEditor.ClipboardWrapper"/>
+		<Service id="BVEEditor.IFileSystem"
+		         class="BVEEditor.FileSystem"/>
+		<Service id="BVEEditor.Templates.ITemplateService"
+		         class="BVEEditor.Templates.TemplateService"/>
+		<Service id="BVEEditor.Project.IBuildService"
+		         class="BVEEditor.Project.BuildService"/>
+		<Service id="BVEEditor.Project.IProjectService"
+		         class="BVEEditor.Project.SDProjectService"/>-->
+		<!--<Service id="BVEEditor.ILanguageService"
+		         class="BVEEditor.SDLanguageService"/>
+		<Service id="BVEEditor.Project.IMSBuildEngine"
+		         class="BVEEditor.Project.MSBuildEngine"/>
+		<Service id="BVEEditor.Editor.Bookmarks.IBookmarkManager"
+		         class="BVEEditor.Editor.Bookmarks.BookmarkManager"/>
+		<Service id="BVEEditor.IUIService"
+		         class="BVEEditor.UIService"/>-->
+		
+		<Service id="BVEEditor.WinForms.IWinFormsService"
+		         class="BVEEditor.WinForms.WinFormsService"/>
+		<Service id="BVEEditor.WinForms.IWinFormsMenuService"
+		         class="BVEEditor.WinForms.WinFormsMenuService"/>
+		<Service id="BVEEditor.WinForms.IWinFormsToolbarService"
+		         class="BVEEditor.WinForms.WinFormsToolbarService"/>
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/Ambiences">
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/DisplayBindings">
+		<!--<DisplayBinding id    = "Browser"
+		                title = "${res:Gui.ProjectBrowser.OpenWith.Bindings.WebBrowser}"
+		                class = "BVEEditor.BrowserDisplayBinding.BrowserDisplayBinding"/>
+		<DisplayBinding id    = "AutoDetect"
+		                title = "Auto-detect file type"
+		                class = "BVEEditor.Workbench.AutoDetectDisplayBinding"/>
+		<DisplayBinding id    = "ShellExecute"
+		                title = "${res:Gui.ProjectBrowser.OpenWith.Bindings.DefaultWindowsApplication}"
+		                class = "BVEEditor.Workbench.ShellExecuteDisplayBinding" />-->
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/FileFilter">
+		<FileFilter id         = "AllFiles"
+		            name       = "${res:BVEEditor.FileFilter.AllFiles}"
+		            extensions = "*.*"/>
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/Pads">
+		<!--<Pad id       = "ProjectBrowser"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ProjectScoutLabel}"
+		     icon     = "PadIcons.ProjectBrowser"
+		     class    = "BVEEditor.Project.ProjectBrowserPad"
+		     defaultPosition = "Left" />
+		
+		
+		<Pad id       = "ClassBrowser"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ClassScoutLabel}"
+		     icon     = "PadIcons.ClassBrowser"
+		     class    = "BVEEditor.Gui.ClassBrowser.ClassBrowserPad"
+		     defaultPosition = "Right" />
+	
+		
+		<Pad id       = "SideBar"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ToolbarLabel}"
+		     icon     = "PadIcons.Toolbar"
+		     class    = "BVEEditor.Gui.ToolsPad"
+		     defaultPosition = "Left" />
+		
+		<Pad id       = "OutlinePad"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.OutlinePad}"
+		     icon     = "PadIcons.Toolbar"
+		     class    = "BVEEditor.Gui.OutlinePad"
+		     defaultPosition = "Left, Hidden" />
+		
+		<Pad id       = "ErrorList"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.ErrorList}"
+		     icon     = "PadIcons.ErrorList"
+		     class    = "BVEEditor.Gui.ErrorListPad"
+		     defaultPosition = "Bottom" />
+		
+		<Pad id       = "TaskList"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.TaskList}"
+		     icon     = "PadIcons.TaskList"
+		     class    = "BVEEditor.Gui.TaskListPad"
+		     defaultPosition = "Bottom" />
+		
+		<Pad id       = "CompilerMessageView"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.OutputWindow}"
+		     icon     = "PadIcons.Output"
+		     class    = "BVEEditor.Gui.CompilerMessageView"
+		     defaultPosition = "Bottom" />
+		
+		<Pad id       = "PropertyPad"
+		     category = "Main"
+		     title    = "${res:MainWindow.Windows.PropertiesScoutLabel}"
+		     icon     = "Icons.16x16.PropertiesIcon"
+		     shortcut = "F4"
+		     class    = "BVEEditor.Gui.PropertyPad"
+		     defaultPosition = "Right" />
+		
+		<Pad id       = "FileScout"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.FileScoutLabel}"
+		     icon     = "PadIcons.FileBrowser"
+		     class    = "BVEEditor.Gui.FileScout"
+		     defaultPosition = "Left, Hidden" />
+		
+		<Pad id       = "SearchResults"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.SearchResultsLabel}"
+		     icon     = "PadIcons.FindResults"
+		     class    = "BVEEditor.Editor.Search.SearchResultsPad"
+		     defaultPosition = "Bottom, Hidden" />
+		
+		<Pad id       = "Bookmarks"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.BookmarksLabel}"
+		     icon     = "PadIcons.Bookmarks"
+		     class    = "BVEEditor.Editor.Bookmarks.BookmarkPad"
+		     defaultPosition = "Bottom, Hidden" />
+		
+		<Pad id       = "DefinitionView"
+		     category = "Tools"
+		     title    = "${res:MainWindow.Windows.DefinitionViewLabel}"
+		     icon     = "PadIcons.DefinitionView"
+		     class    = "BVEEditor.Gui.DefinitionViewPad"
+		     defaultPosition = "Bottom, Hidden" />-->
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/Combine/FileFilter">
+		<!--<FileFilter id         = "Solution"
+		            name       = "${res:SharpDevelop.FileFilter.SolutionFiles}"
+		            extensions = "*.sln"/>-->
+		
+		<FileFilter id         = "AllFiles"
+		            name       = "${res:BVEEditor.FileFilter.AllFiles}"
+		            extensions = "*.*"/>
+	</Path>
+	
+	<!-- Project browser Paths -->
+	<!--<Path name = "/SharpDevelop/Pads/ProjectBrowser/ToolBar/Standard">
+		<Condition name = "SolutionOpen" action="Disable">
+			<ToolbarItem id      = "Properties"
+			             icon    = "Icons.16x16.PropertiesIcon"
+			             tooltip = "${res:MainWindow.Windows.PropertiesScoutLabel}"
+			             class   = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+			<ToolbarItem id = "PropertySeparator" type = "Separator"/>
+			<ToolbarItem id      = "ShowAll"
+			             type    = "CheckBox"
+			             icon    = "ProjectBrowser.Toolbar.ShowHiddenFiles"
+			             tooltip = "${res:Gui.ProjectBrowser.ShowAllFiles}"
+			             class   = "BVEEditor.Project.Commands.ToggleShowAll"/>
+			<ToolbarItem id      = "Refresh"
+			             icon    = "ProjectBrowser.Toolbar.Refresh"
+			             tooltip = "${res:Global.Refresh}"
+			             class   = "BVEEditor.Project.Commands.RefreshProjectBrowser"/>
+			<ToolbarItem id = "PropertySeparator" type = "Separator"/>
+			<ToolbarItem id      = "Collapse"
+			             icon    = "Icons.16x16.Assembly"
+			             tooltip = "${res:MainWindow.Windows.SearchResultPanel.CollapseAll.ToolTip}"
+			             class   = "BVEEditor.Project.Commands.CollapseAllProjectBrowser"/>
+		</Condition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ToolBar/File">
+		<ToolbarItem id      = "OpenFile"
+		             icon    = "Icons.16x16.OpenFileIcon"
+		             tooltip = "${res:Gui.ProjectBrowser.Open}"
+		             class   = "BVEEditor.Project.Commands.OpenFileFromProjectBrowser"/>
+	</Path>
+	
+	<Path path = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionNode">
+		<MenuItem id = "Build"
+		          label = "${res:XML.MainMenu.BuildMenu.BuildSolution}"
+		          shortcut = "F8"
+		          icon  = "Icons.16x16.BuildCombine"
+		          class = "BVEEditor.Project.Commands.Build"/>
+		<MenuItem id = "Rebuild"
+		          label = "${res:XML.MainMenu.BuildMenu.RebuildSolution}"
+		          shortcut = "Alt|F8"
+		          class = "BVEEditor.Project.Commands.Rebuild"/>
+		<MenuItem id = "Clean"
+		          label = "${res:XML.MainMenu.BuildMenu.CleanSolution}"
+		          class = "BVEEditor.Project.Commands.Clean"/>
+		<MenuItem id = "CombineBuildGroupSeparator" type = "Separator"/>
+		
+		<Condition name="WriteableSolution" action="Disable">
+			<MenuItem id = "CombineAddMenu" label = "${res:ProjectComponent.ContextMenu.AddMenu}" type = "Menu">
+				<MenuItem id    = "AddNewProjectToSolution"
+				          label = "${res:ProjectComponent.ContextMenu.NewProject}"
+				          icon  = "Icons.16x16.NewProjectIcon"
+				          class = "BVEEditor.Project.Commands.AddNewProjectToSolution"/>
+				<MenuItem id    = "AddExitingProjectToSolution"
+				          label = "${res:ProjectComponent.ContextMenu.ExistingProject}"
+				          class = "BVEEditor.Project.Commands.AddExistingProjectToSolution"/>
+				<MenuItem id    = "Separator1" type = "Separator" />
+				<MenuItem id    = "AddItem"
+				          label = "${res:ProjectComponent.ContextMenu.AddItem}"
+				          class = "BVEEditor.Project.Commands.AddExistingItemToSolution"/>
+				<MenuItem id    = "AddNewSolutionFolderToSolution"
+				          icon  = "ProjectBrowser.SolutionFolder.CreateNew"
+				          label = "${res:ProjectComponent.ContextMenu.NewSolutionFolder}"
+				          class = "BVEEditor.Project.Commands.AddNewSolutionFolderToSolution"/>
+			</MenuItem>
+		</Condition>
+		
+		<MenuItem id = "AddSeparator" type = "Separator"/>
+		<MenuItem id = "OpenFolderContainingFile"
+		          label = "${res:Gui.ProjectBrowser.OpenFolderInExplorer}"
+		          class = "BVEEditor.Project.Commands.OpenFolderContainingFile"/>
+		<MenuItem id = "OpenCommandPromptHere"
+		          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+		          class = "BVEEditor.Project.Commands.OpenCommandPromptHere"/>
+		<MenuItem id = "OpenSeparator" type = "Separator"/>
+		<MenuItem id    = "CollapseAll"
+		          label = "${res:ProjectComponent.ContextMenu.CollapseAll}"
+		          class = "BVEEditor.Project.Commands.CollapseAll"/>
+		<MenuItem id    = "Paste"
+		          label = "${res:XML.MainMenu.EditMenu.Paste}"
+		          icon  = "Icons.16x16.PasteIcon"
+		          loadclasslazy = "false"
+		          class = "BVEEditor.Project.Commands.PasteProjectBrowserNode"/>
+		<MenuItem id       = "Rename"
+		          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+		          shortcut = "F2"
+		          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		<MenuItem id = "Separator3" type = "Separator"/>
+		<MenuItem id    = "Properties"
+		          icon  = "Icons.16x16.PropertiesIcon"
+		          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+		          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+	</Path>
+	
+	<Path path = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionFolderNode">
+		<Include id = "CombineAddMenu" item="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionNode/CombineAddMenu"/>
+		
+		<Include id = "CollapseAll" item="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionNode/CollapseAll"/>
+		
+		<MenuItem id = "AddSeparator" type = "Separator"/>
+		<Include id="CutPasteRemoveRename" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutPasteRemoveRename"/>
+	</Path>
+	
+	<Path path = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionItemNode">
+		<MenuItem id = "OpenFile"
+		          label = "${res:ProjectComponent.ContextMenu.Open}"
+		          icon  = "Icons.16x16.OpenFileIcon"
+		          class = "BVEEditor.Project.Commands.OpenFileFromProjectBrowser"/>
+		<MenuItem id      = "OpenFileWith"
+		          label = "${res:Gui.ProjectBrowser.OpenWith}"
+		          class   = "BVEEditor.Project.Commands.OpenFileFromProjectBrowserWith"/>
+		<MenuItem id = "OpenFolderContainingFile"
+		          label = "${res:OpenFileTabEventHandler.FileContainingFolderInExplorer}"
+		          class = "BVEEditor.Project.Commands.OpenFolderContainingFile"/>
+		<MenuItem id = "OpenCommandPromptHere"
+		          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+		          class = "BVEEditor.Project.Commands.OpenCommandPromptHere"/>
+		<MenuItem id = "OpenSeparator" type = "Separator" />
+		<Include id="CutCopyRemoveRename" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutCopyRemoveRename"/>
+	</Path>
+	
+	<Path path = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ProjectNode">
+		<MenuItem id = "Build project"
+		          label = "${res:ProjectComponent.ContextMenu.Build}"
+		          icon  = "Icons.16x16.BuildCurrentSelectedProject"
+		          class = "BVEEditor.Project.Commands.BuildProject"/>
+		<MenuItem id = "Rebuild project"
+		          label = "${res:ProjectComponent.ContextMenu.Rebuild}"
+		          class = "BVEEditor.Project.Commands.RebuildProject"/>
+		<MenuItem id = "Clean project"
+		          label = "${res:ProjectComponent.ContextMenu.Clean}"
+		          class = "BVEEditor.Project.Commands.CleanProject"/>
+		<MenuItem id = "Publish project"
+		          label = "${res:XML.MainMenu.BuildMenu.PublishProject}"
+		          class = "BVEEditor.Project.Commands.PublishProject"/>
+		<MenuItem id = "CombineBuildGroupSeparator" type = "Separator"/>
+		
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "ProjectAddMenu" label = "${res:ProjectComponent.ContextMenu.AddMenu}" type = "Menu" >
+				<Include path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/FolderNode/Add"/>
+			</MenuItem>
+			
+			<MenuItem id    = "AddReference"
+			          label = "${res:ProjectComponent.ContextMenu.AddReference}"
+			          class = "BVEEditor.Project.Commands.AddReferenceToProject"/>
+			<MenuItem id    = "AddServiceReference"
+			          label = "Add Service Reference"
+			          class = "BVEEditor.Project.Commands.AddServiceReferenceToProject"/>
+			<MenuItem id    = "AddWebReference"
+			          label = "${res:ProjectComponent.ContextMenu.AddWebReference}"
+			          class = "BVEEditor.Project.Commands.AddWebReferenceToProject"/>
+			<MenuItem id = "AddSeparator" type = "Separator"/>
+		</Condition>
+		
+		<Include id = "CollapseAll" item="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionNode/CollapseAll"/>
+		
+		<MenuItem id    = "OpenProjectWith"
+		          label = "${res:Gui.ProjectBrowser.OpenWith}"
+		          class = "BVEEditor.Project.Commands.OpenFileFromProjectBrowserWith"/>
+		
+		<Include id = "ProjectActions" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ProjectActions"/>
+		<MenuItem id = "Separator2" type = "Separator"/>
+		<Include id="inc" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutPasteRemoveRename"/>
+		<MenuItem id = "CutCopyPasteSeparator" type = "Separator"/>
+		<MenuItem id    = "Properties"
+		          icon  = "Icons.16x16.PropertiesIcon"
+		          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+		          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/MissingProjectNode">
+		<Include id="inc" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutPasteRemoveRename"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/UnknownProjectNode">
+		<MenuItem id    = "OpenProjectWith"
+		          label = "${res:Gui.ProjectBrowser.OpenWith}"
+		          class = "BVEEditor.Project.Commands.OpenFileFromProjectBrowserWith"/>
+		<MenuItem id = "OpenSeparator" type = "Separator" />
+		
+		<Include id="inc" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutPasteRemoveRename"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ProjectActions">
+		<MenuItem id = "OpenFolder"
+		          label = "${res:Gui.ProjectBrowser.OpenFolderInExplorer}"
+		          class = "BVEEditor.Project.Commands.OpenProjectFolder"/>
+		<MenuItem id = "OpenProjectOutputFolder"
+		          label = "${res:ProjectComponent.ContextMenu.OpenProjectOutputFolder}"
+		          class = "BVEEditor.Project.Commands.OpenProjectOutputFolder"/>
+		<MenuItem id = "OpenCommandPromptHere"
+		          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+		          class = "BVEEditor.Project.Commands.OpenCommandPromptHere"/>
+		<Condition name="IsProcessRunning" isprocessrunning="False" isdebugging="False" action="Disable">
+			<MenuItem id          = "Run"
+			          label       = "${res:ProjectComponent.ContextMenu.RunProject}"
+			          icon        = "Icons.16x16.RunProgramIcon"
+			          class       = "BVEEditor.Project.Commands.RunProject"/>
+		</Condition>
+		<MenuItem id          = "RunWithoutDebugger"
+		          label       = "${res:ProjectComponent.ContextMenu.RunProjectWithoutDebugger}"
+		          icon        = "Icons.16x16.Debug.StartWithoutDebugging"
+		          class       = "BVEEditor.Project.Commands.RunProjectWithoutDebugger"/>
+		<MenuItem id    = "SetAsStartupProject"
+		          label = "${res:ProjectComponent.ContextMenu.SetAsStartupProject}"
+		          class = "BVEEditor.Project.Commands.SetAsStartupProject"/>
+		<MenuItem id = "GenerateDocumentation"
+		          label = "${res:ProjectComponent.ContextMenu.GenerateDocumentation}"
+		          class = "BVEEditor.Project.Commands.GenerateProjectDocumentation"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ReferenceFolderNode">
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id    = "AddReference"
+			          label = "${res:ProjectComponent.ContextMenu.AddReference}"
+			          class = "BVEEditor.Project.Commands.AddReferenceToProject"/>
+			<MenuItem id    = "AddServiceReference"
+			          label = "Add Service Reference"
+			          class = "BVEEditor.Project.Commands.AddServiceReferenceToProject"/>
+			<MenuItem id    = "AddWebReference"
+			          label = "${res:ProjectComponent.ContextMenu.AddWebReference}"
+			          class = "BVEEditor.Project.Commands.AddWebReferenceToProject"/>
+		</Condition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/FileNode">
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id = "OpenFile"
+			          label = "${res:ProjectComponent.ContextMenu.Open}"
+			          icon  = "Icons.16x16.OpenFileIcon"
+			          class = "BVEEditor.Project.Commands.OpenFileFromProjectBrowser"/>
+			<MenuItem id      = "OpenFileWith"
+			          label = "${res:Gui.ProjectBrowser.OpenWith}"
+			          class   = "BVEEditor.Project.Commands.OpenFileFromProjectBrowserWith"/>
+			<MenuItem id = "OpenFolderContainingFile"
+			          label = "${res:OpenFileTabEventHandler.FileContainingFolderInExplorer}"
+			          class = "BVEEditor.Project.Commands.OpenFolderContainingFile"/>
+			<MenuItem id = "OpenCommandPromptHere"
+			          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+			          class = "BVEEditor.Project.Commands.OpenCommandPromptHere"/>
+		</ComplexCondition>
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "Remove"
+			          label = "${res:Global.RemoveButtonText}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<Condition name="WriteableProject" action="Disable">
+				<MenuItem id = "OpenSeparator" type = "Separator" />
+				
+				<Condition name = "Ownerstate" ownerstate = "InProject">
+					<MenuItem id = "Add" label = "${res:ProjectComponent.ContextMenu.AddMenu}" type="Menu">
+						<Include path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/FolderNode/Add"/>
+						<MenuItem id    = "AddDependentSeparator"
+						          type  = "Separator" />
+						<MenuItem id    = "NewDependentItem"
+						          label = "${res:ProjectComponent.ContextMenu.NewDependentItem}"
+						          icon  = "ProjectBrowser.CodeBehind"
+						          class = "BVEEditor.Project.Commands.AddNewDependentItemsToProject"/>
+						<MenuItem id    = "ExistingItemAsDependent"
+						          label = "${res:ProjectComponent.ContextMenu.ExistingItemAsDependent}"
+						          icon  = "ProjectBrowser.CodeBehind"
+						          class = "BVEEditor.Project.Commands.AddExistingItemsToProjectAsDependent"/>
+					</MenuItem>
+					<MenuItem id = "AddSeparator" type = "Separator"  />
+				</Condition>
+			</Condition>
+			
+			<ComplexCondition>
+				<Or>
+					<Condition name = "Ownerstate" ownerstate = "InProject"/>
+					<Condition name = "Ownerstate" ownerstate = "None"/>
+					<Condition name = "Ownerstate" ownerstate = "BehindFile"/>
+				</Or>
+				<ComplexCondition>
+					<Or>
+						<Condition name = "Ownerstate" ownerstate = "InProject"/>
+						<Condition name = "Ownerstate" ownerstate = "BehindFile"/>
+					</Or>
+					<Condition name="WriteableProject" action="Disable">
+						<MenuItem id    = "ExcludeFile"
+						          label = "${res:ProjectComponent.ContextMenu.ExcludeFileFromProject}"
+						          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+					</Condition>
+					<MenuItem id     = "ExecuteCustomTool"
+					          label  = "${res:ProjectComponent.ContextMenu.ExecuteCustomTool}"
+					          class  = "BVEEditor.Project.ExecuteCustomToolCommand"/>
+				</ComplexCondition>
+				
+				<Condition name = "Ownerstate" ownerstate = "None">
+					<MenuItem id    = "IncludeFile"
+					          label = "${res:ProjectComponent.ContextMenu.IncludeFileInProject}"
+					          class = "BVEEditor.Project.Commands.IncludeFileInProject"/>
+				</Condition>
+				<MenuItem id = "ExcludeSeparator" type = "Separator" />
+			</ComplexCondition>
+			
+			<ComplexCondition>
+				<And>
+					<Condition name = "Ownerstate" ownerstate = "InProject"/>
+					<Not>
+						<Condition name = "Ownerstate" ownerstate = "BehindFile"/>
+					</Not>
+					<Condition name="IsProcessRunning" isprocessrunning="False" isdebugging="False"/>
+					<Condition name = "ViewInBrowser" extensions="html,htm"/>
+				</And>
+				
+				<MenuItem id          = "ViewInBrowser"
+				          label       = "${res:ProjectComponent.ContextMenu.ViewInBrowser}"
+				          icon        = "Icons.22x22.Browser"
+				          class       = "BVEEditor.Project.Commands.ViewInBrowser"/>
+				<MenuItem id = "ExcludeSeparator_ViewInBrowser" type = "Separator" />
+			</ComplexCondition>
+			
+			<Include id="CutCopyPasteDeleteRename" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutCopyPasteDeleteRename"/>
+			<MenuItem id = "RenameSeparator" type = "Separator" />
+			<MenuItem id    = "Properties"
+			          icon  = "Icons.16x16.PropertiesIcon"
+			          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+			          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutCopyRemoveRename">
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "Cut"
+			          label = "${res:XML.MainMenu.EditMenu.Cut}"
+			          type = "Item"
+			          icon = "Icons.16x16.CutIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.CutProjectBrowserNode"/>
+		</Condition>
+		<MenuItem id = "Copy"
+		          label = "${res:XML.MainMenu.EditMenu.Copy}"
+		          type = "Item"
+		          icon = "Icons.16x16.CopyIcon"
+		          loadclasslazy = "false"
+		          class = "BVEEditor.Project.Commands.CopyProjectBrowserNode"/>
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "Remove"
+			          label = "${res:Global.RemoveButtonText}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		</Condition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutPasteRemoveRename">
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "Cut"
+			          label = "${res:XML.MainMenu.EditMenu.Cut}"
+			          type = "Item"
+			          icon = "Icons.16x16.CutIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.CutProjectBrowserNode"/>
+			<MenuItem id    = "Paste"
+			          label = "${res:XML.MainMenu.EditMenu.Paste}"
+			          type = "Item"
+			          icon  = "Icons.16x16.PasteIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.PasteProjectBrowserNode"/>
+		</Condition>
+		<MenuItem id = "Remove"
+		          label = "${res:Global.RemoveButtonText}"
+		          type = "Item"
+		          icon  = "Icons.16x16.DeleteIcon"
+		          loadclasslazy = "false"
+		          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		</Condition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutCopyPasteDeleteRename">
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id = "Cut"
+			          label = "${res:XML.MainMenu.EditMenu.Cut}"
+			          type = "Item"
+			          icon = "Icons.16x16.CutIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.CutProjectBrowserNode"/>
+		</Condition>
+		<MenuItem id = "Copy"
+		          label = "${res:XML.MainMenu.EditMenu.Copy}"
+		          type = "Item"
+		          icon = "Icons.16x16.CopyIcon"
+		          loadclasslazy = "false"
+		          class = "BVEEditor.Project.Commands.CopyProjectBrowserNode"/>
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id    = "Paste"
+			          label = "${res:XML.MainMenu.EditMenu.Paste}"
+			          type = "Item"
+			          icon  = "Icons.16x16.PasteIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.PasteProjectBrowserNode"/>
+			<MenuItem id = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          loadclasslazy = "false"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		</Condition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/FolderNode">
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "CreateMissing"
+			          label = "${res:ProjectComponent.ContextMenu.NewFolder}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.NewFolderIcon"
+			          class = "BVEEditor.Project.Commands.CreateMissingCommand"/>
+			<MenuItem id = "RemoveMissing"
+			          label = "${res:Global.RemoveButtonText}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id = "Add" label = "${res:ProjectComponent.ContextMenu.AddMenu}" type="Menu">
+				<MenuItem id    = "New Item"
+				          label = "${res:ProjectComponent.ContextMenu.NewItem}"
+				          icon  = "Icons.16x16.NewDocumentIcon"
+				          class = "BVEEditor.Project.Commands.AddNewItemsToProject"/>
+				<MenuItem id    = "Existing Item"
+				          label = "${res:ProjectComponent.ContextMenu.ExistingItem}"
+				          class = "BVEEditor.Project.Commands.AddExistingItemsToProject"/>
+				<MenuItem id    = "NewFolder"
+				          label = "${res:ProjectComponent.ContextMenu.NewFolder}"
+				          icon  = "Icons.16x16.NewFolderIcon"
+				          class = "BVEEditor.Project.Commands.AddNewFolderToProject"/>
+				<MenuItem id    = "ExistingFolder"
+				          label = "${res:ProjectComponent.ContextMenu.ExistingFolder}"
+				          class = "BVEEditor.Project.Commands.AddExistingFolderToProject"/>
+			</MenuItem>
+			<MenuItem id = "AddSeparator" type = "Separator"  />
+			<Include id = "CollapseAll" item="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/SolutionNode/CollapseAll"/>
+			<MenuItem id = "OpenFolder"
+			          label = "${res:Gui.ProjectBrowser.OpenFolderInExplorer}"
+			          class = "BVEEditor.Project.Commands.OpenFolder"/>
+			<MenuItem id = "OpenCommandPromptHere"
+			          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+			          class = "BVEEditor.Project.Commands.OpenCommandPromptHere"/>
+			<ComplexCondition>
+				<Or>
+					<Condition name = "Ownerstate" ownerstate = "InProject"/>
+					<Condition name = "Ownerstate" ownerstate = "None"/>
+				</Or>
+				<Condition name = "Ownerstate" ownerstate = "InProject">
+					<MenuItem id    = "ExcludeFile"
+					          label = "${res:ProjectComponent.ContextMenu.ExcludeFileFromProject}"
+					          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+				</Condition>
+				
+				<Condition name = "Ownerstate" ownerstate = "None">
+					<MenuItem id    = "IncludeFile"
+					          label = "${res:ProjectComponent.ContextMenu.IncludeFileInProject}"
+					          class = "BVEEditor.Project.Commands.IncludeFileInProject"/>
+				</Condition>
+				
+				<MenuItem id = "ExcludeSeparator" type = "Separator" />
+			</ComplexCondition>
+			
+			<Include id="CutCopyPasteDeleteRename" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/CutCopyPasteDeleteRename"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/WebReferencesFolderNode">
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "RemoveMissing"
+			          label = "${res:Global.RemoveButtonText}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id    = "AddWebReference"
+			          label = "${res:ProjectComponent.ContextMenu.AddWebReference}"
+			          class = "BVEEditor.Project.Commands.AddWebReferenceToProject"/>
+			<MenuItem id = "AddSeparator" type = "Separator"/>
+			<MenuItem id = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/WebReferenceNode">
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "RemoveMissing"
+			          label = "${res:Global.RemoveButtonText}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id = "Refresh"
+			          label = "${res:ProjectComponent.ContextMenu.RefreshWebReference}"
+			          type = "Item"
+			          class = "BVEEditor.Project.Commands.RefreshWebReference"/>
+			<MenuItem id = "RefreshSeparator" type = "Separator" />
+			<MenuItem id = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+			<MenuItem id = "PropertiesSeparator" type = "Separator" />
+			<MenuItem id = "Properties"
+			          icon  = "Icons.16x16.PropertiesIcon"
+			          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+			          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ServiceReferencesFolderNode">
+		<MenuItem id    = "AddServiceReference"
+		          label = "Add Service Reference"
+		          class = "BVEEditor.Project.Commands.AddServiceReferenceToProject"/>
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "RemoveMissing"
+			          label = "${res:Global.RemoveButtonText}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id    = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id       = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ServiceReferenceNode">
+		<Condition name = "Ownerstate" ownerstate = "Missing">
+			<MenuItem id = "RemoveMissing"
+			          label = "${res:Global.RemoveButtonText}"
+			          type  = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.ExcludeFileFromProject"/>
+		</Condition>
+		<ComplexCondition>
+			<Not>
+				<Condition name = "Ownerstate" ownerstate = "Missing"/>
+			</Not>
+			<MenuItem id = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          type = "Item"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+			<MenuItem id = "Rename"
+			          label    = "${res:ProjectComponent.ContextMenu.Rename}"
+			          shortcut = "F2"
+			          class    = "BVEEditor.Project.Commands.RenameEntryEvent"/>
+			<MenuItem id = "PropertiesSeparator" type = "Separator" />
+			<MenuItem id = "Properties"
+			          icon  = "Icons.16x16.PropertiesIcon"
+			          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+			          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+		</ComplexCondition>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ReferenceNode">
+		<MenuItem id    = "RefreshReference"
+		          icon  = "Icons.16x16.BrowserRefresh"
+		          label = "${res:Global.Refresh}"
+		          class = "BVEEditor.Project.Commands.RefreshReference"/>
+		<Condition name="WriteableProject" action="Disable">
+			<MenuItem id    = "Remove"
+			          label = "${res:Global.RemoveButtonText}"
+			          icon  = "Icons.16x16.DeleteIcon"
+			          class = "BVEEditor.Project.Commands.DeleteProjectBrowserNode"/>
+		</Condition>
+		<MenuItem id = "RemoveSeparator" type = "Separator" />
+		<MenuItem id    = "Properties"
+		          icon  = "Icons.16x16.PropertiesIcon"
+		          label = "${res:XML.MainMenu.FormatMenu.ShowProperties}"
+		          class = "BVEEditor.Project.Commands.ShowPropertiesForNode"/>
+	</Path>-->
+	
+	<!-- END Project Browser Paths-->
+	
+	<!--<Path name = "/SharpDevelop/Pads/ErrorList/Toolbar">
+		<ToolbarItem id      = "Errors"
+		             type    = "CheckBox"
+		             icon    = "Icons.16x16.Error"
+		             label   = "${res:MainWindow.Windows.ErrorList.ErrorButton.Label}"
+		             tooltip = "${res:MainWindow.Windows.ErrorList.ErrorButton.ToolTip}"
+		             class   = "BVEEditor.Gui.ShowErrorsToggleButton"/>
+		
+		<ToolbarItem id    = "ErrorsSeparator" type  = "Separator"/>
+		
+		<ToolbarItem id    = "Warnings"
+		             type  = "CheckBox"
+		             icon  = "Icons.16x16.Warning"
+		             label = "${res:MainWindow.Windows.ErrorList.WarningButton.Label}"
+		             tooltip = "${res:MainWindow.Windows.ErrorList.WarningButton.ToolTip}"
+		             class = "BVEEditor.Gui.ShowWarningsToggleButton"/>
+		<ToolbarItem id    = "WarningsSeparator" type  = "Separator"/>
+		
+		<ToolbarItem id    = "Messages"
+		             type  = "CheckBox"
+		             icon  = "Icons.16x16.Information"
+		             label = "${res:MainWindow.Windows.ErrorList.MessageButton.Label}"
+		             tooltip = "${res:MainWindow.Windows.ErrorList.MessageButton.ToolTip}"
+		             class = "BVEEditor.Gui.ShowMessagesToggleButton"/>
+	</Path>-->
+	
+	<!-- toolbars -->
+	<Path name = "/BVEEditor/Workbench/ToolBar/Standard">
+		<ToolbarItem id      = "New"
+		             icon    = "Icons.16x16.NewDocumentIcon"
+		             tooltip = "${res:XML.MainMenu.FileMenu.New.File.Description}"
+		             class   = "BVEEditor.Commands.CreateNewFile"/>
+		<ToolbarItem id      = "Open"
+		             icon    = "Icons.16x16.OpenFileIcon"
+		             tooltip = "${res:XML.MainMenu.FileMenu.Open.File.Description}"
+		             class   = "BVEEditor.Commands.OpenFile"/>
+		
+		<ToolbarItem id      = "OpenProject"
+		             tooltip = "${res:XML.MainMenu.FileMenu.Open.Project.Description}"
+		             icon    = "Icons.16x16.OpenProjectIcon"
+		             class   = "BVEEditor.Project.Commands.LoadSolution"
+		/>
+		
+		<Condition name = "ActiveWindowState" windowstate="Dirty,Untitled" nowindowstate="ViewOnly" action="Disable">
+			<ToolbarItem id      = "Save"
+			             icon    = "Icons.16x16.SaveIcon"
+			             tooltip = "${res:XML.MainMenu.FileMenu.Save.Description}"
+			             class   = "BVEEditor.Commands.SaveFile"/>
+		</Condition>
+		
+		<Condition name = "OpenWindowState" openwindowstate="Dirty" action="Disable">
+			<ToolbarItem id = "SaveAll"
+			             icon = "Icons.16x16.SaveAllIcon"
+			             tooltip = "${res:XML.MainMenu.FileMenu.SaveAll.Description}"
+			             class = "BVEEditor.Commands.SaveAllFiles"/>
+		</Condition>
+		
+		<ToolbarItem id = "Separator1" type = "Separator"/>
+		
+		<ToolbarItem id = "Cut"
+		             icon = "Icons.16x16.CutIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Cut.Description}"
+		             command = "Cut"/>
+		<ToolbarItem id = "Copy"
+		             icon = "Icons.16x16.CopyIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Copy.Description}"
+		             command = "Copy"/>
+		<ToolbarItem id = "Paste"
+		             icon = "Icons.16x16.PasteIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Paste.Description}"
+		             command = "Paste"/>
+		<ToolbarItem id = "Delete"
+		             icon = "Icons.16x16.DeleteIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Delete.Description}"
+		             command = "Delete"/>
+		<ToolbarItem id = "UndoRedoSeparator"  type = "Separator"/>
+		<ToolbarItem id      = "Undo"
+		             icon    = "Icons.16x16.UndoIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Undo.Description}"
+		             command = "Undo"/>
+		<ToolbarItem id      = "Redo"
+		             icon    = "Icons.16x16.RedoIcon"
+		             tooltip = "${res:XML.MainMenu.EditMenu.Redo.Description}"
+		             command = "Redo"/>
+		
+		<!--<ToolbarItem id = "ChooseConfigurationSeparator" type = "Separator"/>
+		
+		<ToolbarItem id    = "ChooseLayout"
+		             type  = "Custom"
+		             class = "BVEEditor.Workbench.ChooseLayoutComboBox" />
+		
+		<ToolbarItem id="NavigationSeparator" type="Separator"/>
+		<Condition name="CanNavigateBack" action="Disable">
+			<ToolbarItem id="NavigateBack"
+			             type="SplitButton"
+			             icon="Icons.16x16.NavigateBack"
+			             tooltip="${res:XML.MainMenu.Navigation.Back}"
+			             disabledIcon="Icons.16x16.NavigateBack"
+			             loadclasslazy="false"
+			             class="BVEEditor.Commands.NavigateBack"
+			>
+				<MenuItem id="NavigationHistoryBuilder"
+				          type="Builder"
+				          class="BVEEditor.Commands.NavigationHistoryMenuBuilder"/>
+			</ToolbarItem>
+		</Condition>
+		<Condition name="CanNavigateForward" action="Disable">
+			<ToolbarItem id="NavigateForward"
+			             icon="Icons.16x16.NavigateForward"
+			             tooltip="${res:XML.MainMenu.Navigation.Forward}"
+			             loadclasslazy="false"
+			             class="BVEEditor.Commands.NavigateForward"/>
+		</Condition>-->
+	</Path>
+	<!-- end toolbars -->
+	
+	<Path name = "/BVEEditor/Workbench/OpenFileTab/ContextMenu">
+		<MenuItem id = "Close"
+		          label = "${res:OpenFileTabEventHandler.ContextMenu.Close}"
+		          icon  = "Icons.16x16.CloseFileIcon"
+		          class = "BVEEditor.Commands.TabStrip.CloseFileTab"/>
+		<MenuItem id    = "CloseAll"
+		          icon  = "Icons.16x16.CloseAllDocuments"
+		          label = "${res:XML.MainMenu.FileMenu.CloseAll}"
+		          class = "BVEEditor.Commands.CloseAllWindows" />
+		<MenuItem id    = "CloseAllButThis"
+		          label = "${res:OpenFileTabEventHandler.ContextMenu.CloseAllButThis}"
+		          class = "BVEEditor.Commands.TabStrip.CloseAllButThisFileTab" />
+		
+		<MenuItem id = "CloseSeparator" type = "Separator" />
+		<ComplexCondition action="Disable">
+			<And>
+				<Condition name = "Ownerstate" ownerstate="FileDirty"/>
+				<Not>
+					<Condition name = "Ownerstate" ownerstate="FileUntitled"/>
+				</Not>
+			</And>
+			
+			<MenuItem id = "Save"
+			          label = "${res:OpenFileTabEventHandler.ContextMenu.Save}"
+			          icon  = "Icons.16x16.SaveIcon"
+			          class = "BVEEditor.Commands.TabStrip.SaveFileTab"/>
+		</ComplexCondition>
+		<MenuItem id = "SaveAs"
+		          label = "${res:OpenFileTabEventHandler.ContextMenu.SaveAs}"
+		          class = "BVEEditor.Commands.TabStrip.SaveFileAsTab"/>
+		<MenuItem id = "SaveSeparator" type = "Separator" />
+		<ComplexCondition action="Disable">
+			<Not>
+				<Condition name = "Ownerstate" ownerstate="FileUntitled,ViewContentWithoutFile" />
+			</Not>
+			<MenuItem id = "CopyPathName"
+			          label = "${res:OpenFileTabEventHandler.CopyPathName}"
+			          class = "BVEEditor.Commands.TabStrip.CopyPathName"/>
+			<MenuItem id = "NavigateToFileInProjectBrowser"
+			          label = "${res:BVEEditor.Commands.TabStrip.NavigateToFileInProjectBrowser}"
+			          class = "BVEEditor.Commands.TabStrip.NavigateToFileInProjectBrowser"/>
+			<MenuItem id = "OpenFolderContainingFileFromTab"
+			          label = "${res:OpenFileTabEventHandler.FileContainingFolderInExplorer}"
+			          class = "BVEEditor.Commands.TabStrip.OpenFolderContainingFile"/>
+			<MenuItem id = "OpenCommandPromptHereFromTab"
+			          label = "${res:OpenFileTabEventHandler.OpenCommandPromptHere}"
+			          class = "BVEEditor.Commands.TabStrip.OpenCommandPromptHere"/>
+		</ComplexCondition>
+	</Path>
+	
+	<!--<Path name = "/SharpDevelop/Views/PropertyPad/ContextMenu">
+		<MenuItem id    = "ResetProperty"
+		          label = "${res:BVEEditor.Gui.Pads.PropertyPad.ContextMenu.Reset}"
+		          class = "BVEEditor.Gui.PropertyPadResetCommand"/>
+		<MenuItem id = "Separator"  type = "Separator" />
+		<MenuItem id    = "ShowDescription"
+		          label = "${res:BVEEditor.Gui.Pads.PropertyPad.ContextMenu.ShowDescription}"
+		          class = "BVEEditor.Gui.PropertyPadShowDescriptionCommand"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Dialogs/OptionsDialog">
+		<OptionPanel id    = "UIOptions"
+		             label = "${res:Dialog.Options.TreeViewOptions.SharpDevelopOptionsText}">
+			<OptionPanel id    = "SelectCulture"
+			             label = "${res:Dialog.Options.IDEOptions.SelectCulture.PanelName}"
+			             class = "BVEEditor.Gui.OptionPanels.SelectCulturePanel"/>
+			<OptionPanel id    = "SelectStyle"
+			             label = "${res:Dialog.Options.IDEOptions.SelectVisualStyle.PanelName}"
+			             class = "BVEEditor.Gui.OptionPanels.SelectStylePanel"/>
+			<OptionPanel id    = "LoadSave"
+			             label = "${res:Dialog.Options.IDEOptions.LoadSaveOptions.PanelName}"
+			             class = "BVEEditor.OptionPanels.LoadSaveOptions"/>
+			
+			<OptionPanel id    = "TaskListOptions"
+			             label = "${res:Dialog.Options.IDEOptions.TaskListOptions.PanelName}"
+			             class = "BVEEditor.Gui.OptionPanels.TaskListXaml"/>
+			
+			
+			<OptionPanel id    = "OutputWindowOptions"
+			             label = "${res:Dialog.Options.IDEOptions.OutputPanel.Title}"
+			             class = "BVEEditor.Gui.OptionPanels.OutputWindowOptionsPanel"/>
+			
+			<OptionPanel id    = "ProjectAndSolutionOptions"
+			             label = "${res:Dialog.Options.IDEOptions.ProjectAndSolutionOptions.PanelName}"
+			             class = "BVEEditor.Gui.OptionPanels.ProjectAndSolutionOptions"/>
+		
+		</OptionPanel>
+		
+		<OptionPanel id    = "CodingOptions"
+		             label = "${res:Dialog.Options.IDEOptions.CodingOptionsText}">
+			
+			<OptionPanel id    = "CodeGeneration"
+			             label = "${res:Dialog.Options.IDEOptions.CodeGenerationOptionsPanel.Title}"
+			             class = "BVEEditor.Gui.OptionPanels.CodeGenerationPanel"/>
+			
+			<OptionPanel id    = "EditStandardHeaderPanel"
+			             label = "${res:Dialog.Options.IDEOptions.EditStandardHeaderPanel.Title}"
+			             class = "BVEEditor.Gui.OptionPanels.EditStandardHeaderPanel"/>
+		</OptionPanel>
+		
+		<OptionPanel id    = "ToolsOptions"
+		             label = "${res:Dialog.Options.IDEOptions.ToolsOptionsText}">
+			
+			<OptionPanel id    = "ExternalTools"
+			             label = "${res:Dialog.Options.ExternalToolsText}"
+			             class = "BVEEditor.Gui.OptionPanels.ExternalToolPanel"/>
+			
+			<OptionPanel id    = "ServiceReferences"
+			             label = "Service References"
+			             class = "BVEEditor.Gui.OptionPanels.ServiceReference.ServiceReferenceOptionsPanel"/>
+		</OptionPanel>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Workbench/SharpDevelopSideBar/ContextMenu">
+		<Condition name = "Ownerstate" ownerstate = "TabCanBeDeleted" action="Disable">
+			<MenuItem id     = "DeleteTab"
+			          label = "${res:SideBarComponent.ContextMenu.DeleteTab}"
+			          class = "BVEEditor.Commands.SideBarDeleteTabHeader"/>
+		</Condition>
+		
+		<Condition name = "Ownerstate" ownerstate="CanBeRenamed" action="Disable">
+			<MenuItem id    = "RenameTab"
+			          label = "${res:SideBarComponent.ContextMenu.RenameTab}"
+			          class = "BVEEditor.Commands.SideBarRenameTabHeader"/>
+		</Condition>
+		
+		<MenuItem id = "Separator1" type = "Separator" />
+		<MenuItem id    = "AddTab"
+		          label = "${res:SideBarComponent.ContextMenu.AddTab}"
+		          class = "BVEEditor.Commands.SideBarAddTabHeader"/>
+		
+		<MenuItem id = "Separator2" type = "Separator" />
+		<Condition name = "Ownerstate" ownerstate="CanMoveUp" action="Disable">
+			<MenuItem id    = "MoveTabUp"
+			          label = "${res:Global.MoveUp}"
+			          class = "BVEEditor.Commands.SideBarMoveTabUp"/>
+		</Condition>
+		
+		<Condition name = "Ownerstate" ownerstate="CanMoveDown" action="Disable">
+			<MenuItem id    = "MoveTabDown"
+			          label = "${res:Global.MoveDown}"
+			          class = "BVEEditor.Commands.SideBarMoveTabDown"/>
+		</Condition>
+		
+		<Include id="CommonContextMenu" path="/SharpDevelop/Workbench/SharpDevelopSideBar/CommonContextMenu"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Workbench/SharpDevelopSideBar/SideTab/ContextMenu">
+		<Condition name = "Ownerstate" ownerstate="TabCanBeDeleted" action="Disable">
+			<MenuItem id = "DeleteTabItem"
+			          label = "${res:SideBarComponent.ContextMenu.DeleteTabItem}"
+			          class = "BVEEditor.Commands.SideBarDeleteTabItem"/>
+		</Condition>
+		
+		<Condition name = "Ownerstate" ownerstate="CanBeRenamed" action="Disable">
+			<MenuItem id = "RenameTabItem"
+			          label = "${res:SideBarComponent.ContextMenu.RenameTabItem}"
+			          class = "BVEEditor.Commands.SideBarRenameTabItem" />
+		</Condition>
+		
+		<MenuItem id = "Separator1" type = "Separator" />
+		<Condition name = "Ownerstate" ownerstate="CanMoveItemUp" action="Disable">
+			<MenuItem id = "MoveItemUp"
+			          label = "${res:Global.MoveUp}"
+			          class = "BVEEditor.Commands.SideBarMoveActiveItemUp"/>
+		</Condition>
+		
+		<Condition name = "Ownerstate" ownerstate="CanMoveItemDown" action="Disable">
+			<MenuItem id = "MoveItemDown"
+			          label = "${res:Global.MoveDown}"
+			          class = "BVEEditor.Commands.SideBarMoveActiveItemDown"/>
+		</Condition>
+		
+		<Include id="CommonContextMenu" path="/SharpDevelop/Workbench/SharpDevelopSideBar/CommonContextMenu"/>
+	</Path>-->
+	
+	<!-- Main Menu -->
+	<Path name = "/SharpDevelop/Workbench/MainMenu">
+		<MenuItem id = "File" label    = "${res:XML.MainMenu.FileMenu}" type="Menu">
+			<MenuItem id = "New" label = "${res:XML.MainMenu.FileMenu.New}" type="Menu">
+				<MenuItem id           = "File"
+				          label        = "${res:XML.MainMenu.FileMenu.New.File}"
+				          icon         = "Icons.16x16.NewDocumentIcon"
+				          shortcut     = "Control|N"
+				          class        = "BVEEditor.Commands.CreateNewFile"/>
+				
+				<!--<Condition name="SolutionOpen" action="Disable">
+					<MenuItem id          = "Project"
+					          label       = "${res:XML.MainMenu.FileMenu.New.Project}"
+					          icon        = "Icons.16x16.NewProjectIcon"
+					          class       = "BVEEditor.Project.Commands.AddNewProjectToSolution"/>
+				</Condition>
+				
+				<MenuItem id          = "Solution"
+				          label       = "${res:XML.MainMenu.FileMenu.New.Solution}"
+				          icon        = "Icons.16x16.SolutionIcon"
+				          shortcut    = "Control|Shift|N"
+				          class       = "BVEEditor.Project.Commands.CreateNewSolution"/>-->
+			</MenuItem>
+			
+			
+			<MenuItem id = "Open" label = "${res:XML.MainMenu.FileMenu.Open}" type="Menu">
+				<MenuItem id          = "File"
+				          label       = "${res:XML.MainMenu.FileMenu.Open.File}"
+				          icon        = "Icons.16x16.OpenFileIcon"
+				          shortcut    = "Control|O"
+				          class       = "BVEEditor.Commands.OpenFile"/>
+				
+				<!--<MenuItem id          = "OpenWith"
+				          label       = "${res:Gui.ProjectBrowser.OpenWith}"
+				          class       = "BVEEditor.Commands.OpenFileWith"/>
+				
+				<MenuItem id = "Project"
+				          label = "${res:XML.MainMenu.FileMenu.Open.Project}"
+				          icon = "Icons.16x16.OpenProjectIcon"
+				          shortcut = "Control|Shift|O"
+				          class = "BVEEditor.Project.Commands.LoadSolution"/>-->
+			</MenuItem>
+			
+			<MenuItem id = "Close" label = "${res:XML.MainMenu.FileMenu.Close}" type="Menu">
+				<Condition name = "WindowActive" activewindow="*" action="Disable">
+					<MenuItem id = "CloseFile"
+					          label = "${res:XML.MainMenu.FileMenu.Close.File}"
+					          icon  = "Icons.16x16.CloseFileIcon"
+					          shortcut = "Control|F4"
+					          class ="BVEEditor.Commands.CloseFile"/>
+				</Condition>
+				<!--<Condition name = "SolutionOpen" action="Disable">
+					<MenuItem id = "CloseCombine"
+					          label = "${res:XML.MainMenu.FileMenu.Close.Project}"
+					          shortcut = "Control|Shift|F4"
+					          class = "BVEEditor.Project.Commands.CloseSolution"/>
+				</Condition>-->
+			</MenuItem>
+			
+			<!--<MenuItem id = "ReloadSeparator" type = "Separator"  />
+			<Condition name = "WindowActive" activewindow="*" action="Disable">
+				<MenuItem id = "Reloadfile"
+				          label = "${res:XML.MainMenu.FileMenu.Reload}"
+				          shortcut = "Shift|Control|U"
+				          class = "BVEEditor.Commands.ReloadFile" />
+			</Condition>-->
+			
+			<MenuItem id = "SaveSeparator" type = "Separator"  />
+			
+			<Condition name = "ActiveWindowState" windowstate="Dirty, Untitled" nowindowstate="ViewOnly" action="Disable">
+				<MenuItem id = "Save"
+				          label = "${res:XML.MainMenu.FileMenu.Save}"
+				          icon = "Icons.16x16.SaveIcon"
+				          shortcut = "Control|S"
+				          class = "BVEEditor.Commands.SaveFile"/>
+			</Condition>
+			
+			<Condition name = "ActiveWindowState" windowstate="None" nowindowstate="ViewOnly" action="Disable">
+				<MenuItem id = "SaveAs"
+				          label = "${res:XML.MainMenu.FileMenu.SaveAs}"
+				          class = "BVEEditor.Commands.SaveFileAs"/>
+			</Condition>
+			
+			<Condition name = "OpenWindowState" openwindowstate="Dirty" action="Disable">
+				<MenuItem id = "SaveAll"
+				          label = "${res:XML.MainMenu.FileMenu.SaveAll}"
+				          icon = "Icons.16x16.SaveAllIcon"
+				          shortcut = "Control|Shift|S"
+				          class = "BVEEditor.Commands.SaveAllFiles"/>
+			</Condition>
+			
+			<MenuItem id = "PrintSeparator" type = "Separator"  />
+			<Condition name = "WindowActive" activewindow="*" action="Disable">
+				<MenuItem id = "Print"
+				          label = "${res:XML.MainMenu.FileMenu.Print}"
+				          icon = "Icons.16x16.Print"
+				          shortcut = "Control|P"
+				          command = "Print"/>
+				<MenuItem id = "PrintPreview"
+				          label = "${res:XML.MainMenu.FileMenu.PrintPreview}"
+				          icon = "Icons.16x16.PreView"
+				          command = "PrintPreview"/>
+			</Condition>
+			
+			<MenuItem id = "RecentSeparator" type = "Separator"  />
+			<MenuItem id = "RecentFiles"    attribute = "RecentFiles" label = "${res:XML.MainMenu.FileMenu.RecentFiles}" type="Menu">
+				<MenuItem id = "RecentFilesBuilder" type = "Builder" class = "BVEEditor.Commands.RecentFilesMenuBuilder" />
+				<MenuItem id = "RecentFilesSeparator" type = "Separator"  />
+				<MenuItem id = "ClearRecentFiles"
+				          label = "${res:XML.MainMenu.FileMenu.ClearRecentFiles}"
+				          class = "BVEEditor.Commands.ClearRecentFiles" />
+			</MenuItem>
+			
+			<MenuItem id = "RecentProjects" attribute = "RecentProjects" label = "${res:XML.MainMenu.FileMenu.RecentProjects}" type="Menu">
+				<MenuItem id = "RecentProjectsBuilder" type = "Builder" class = "BVEEditor.Commands.RecentProjectsMenuBuilder" />
+				<MenuItem id = "RecentProjectsSeparator" type = "Separator"  />
+				<MenuItem id = "ClearRecentFiles"
+				          label = "${res:XML.MainMenu.FileMenu.ClearRecentProjects}"
+				          class = "BVEEditor.Commands.ClearRecentProjects" />
+			</MenuItem>
+			
+			<MenuItem id = "ExitSeparator" type = "Separator"  />
+			<MenuItem id = "Exit"
+			          label = "${res:XML.MainMenu.FileMenu.Exit}"
+			          icon = "Icons.16x16.CancelIcon"
+			          class = "BVEEditor.Commands.ExitWorkbenchCommand" />
+		</MenuItem> <!-- END File menu -->
+		
+		<MenuItem id = "Edit" label = "${res:XML.MainMenu.EditMenu}" type="Menu">
+			<!-- Do not specify shortcuts for built-in commands, those are bound automatically by WPF.
+			     The shortcuts work correctly in WinForms pads (e.g. label edit in tree view in WinForms project pad)
+			     only if they are not explicitly specified in the menu.
+			-->
+			<MenuItem id = "Undo"
+			          label = "${res:XML.MainMenu.EditMenu.Undo}"
+			          icon = "Icons.16x16.UndoIcon"
+			          type = "Item"
+			          command = "Undo"/>
+			<MenuItem id = "Redo"
+			          label = "${res:XML.MainMenu.EditMenu.Redo}"
+			          icon = "Icons.16x16.RedoIcon"
+			          type = "Item"
+			          command = "Redo"/>
+			<MenuItem id = "Separator1" type = "Separator"  />
+			<MenuItem id = "Cut"
+			          label = "${res:XML.MainMenu.EditMenu.Cut}"
+			          icon = "Icons.16x16.CutIcon"
+			          type = "Item"
+			          command = "Cut"/>
+			<MenuItem id = "Copy"
+			          label = "${res:XML.MainMenu.EditMenu.Copy}"
+			          icon = "Icons.16x16.CopyIcon"
+			          type = "Item"
+			          command = "Copy"/>
+			<MenuItem id = "Paste"
+			          label = "${res:XML.MainMenu.EditMenu.Paste}"
+			          icon = "Icons.16x16.PasteIcon"
+			          type = "Item"
+			          command = "Paste"/>
+			<MenuItem id = "Delete"
+			          label = "${res:XML.MainMenu.EditMenu.Delete}"
+			          icon = "Icons.16x16.DeleteIcon"
+			          type = "Item"
+			          command = "Delete"/>
+			<MenuItem id = "Separator2" type = "Separator"  />
+			<Condition name = "WindowActive" activewindow="BVEEditor.Editor.ITextEditorProvider" action="Disable">
+				<MenuItem id = "Insert" label = "${res:XML.MainMenu.EditMenu.Insert}" type="Menu">
+					<MenuItem id = "PasteAsComment"
+					          label = "${res:XML.MainMenu.EditMenu.Paste.AsComment}"
+					          class="BVEEditor.Editor.Commands.PasteAsCommentCommand"/>
+					<MenuItem id = "PasteAsString"
+					          label = "${res:XML.MainMenu.EditMenu.Paste.AsString}"
+					          class="BVEEditor.Editor.Commands.PasteAsStringCommand"/>
+					
+					<MenuItem id="Separator1" type="Separator"/>
+					
+					<MenuItem id = "InsertColor"
+					          label = "${res:XML.MainMenu.ToolMenu.InsColor}"
+					          class = "BVEEditor.Editor.Commands.ShowColorDialog"/>
+					<MenuItem id       = "InsertGuid"
+					          shortcut = "Control|Shift|G"
+					          label    = "${res:XML.MainMenu.ToolMenu.InsGUID}"
+					          class    = "BVEEditor.Editor.Commands.InsertGuidCommand"/>
+				</MenuItem>
+			</Condition>
+			<MenuItem id = "SelectAll"
+			          label = "${res:XML.MainMenu.EditMenu.SelectAll}"
+			          type = "Item"
+			          command = "SelectAll"/>
+			<MenuItem id = "Separator4" type = "Separator"  />
+			<ComplexCondition action="Disable">
+				<Or>
+					<Condition name = "WindowActive" activewindow="*"/>
+					<Condition name = "SolutionOpen"/>
+				</Or>
+				<MenuItem id = "WordCount"
+				          label = "${res:XML.MainMenu.EditMenu.WordCount}"
+				          class = "BVEEditor.Commands.WordCount"/>
+			</ComplexCondition>
+		</MenuItem> <!-- end EDIT menu -->
+		
+		<MenuItem id = "View" label = "${res:XML.MainMenu.ViewMenu}" type="Menu">
+			<MenuItem id    = "MainViewMenuBuilder"
+			          type  = "Builder"
+			          class = "BVEEditor.Commands.MainViewMenuBuilder" />
+			
+			<MenuItem id = "Tools" label = "${res:XML.MainMenu.ViewMenu.ToolsMenu}" type="Menu">
+				<MenuItem id    = "ToolsViewMenuBuilder"
+				          type  = "Builder"
+				          class = "BVEEditor.Commands.ToolsViewMenuBuilder" />
+			</MenuItem>
+			
+			<MenuItem id = "ViewItemsSeparator" type = "Separator" />
+			<MenuItem id = "FullScreen"
+			          label         = "${res:XML.MainMenu.ViewMenu.FullScreen}"
+			          icon        = "Icons.16x16.FullScreen"
+			          class       = "BVEEditor.Commands.ToggleFullscreenCommand" />
+		</MenuItem> <!-- end VIEW menu -->
+		
+		<Condition name="RefactoringProviderSupports" supports="*">
+			<MenuItem id = "Refactor" label = "${res:XML.MainMenu.RefactorMenu}" type="Menu">
+				<MenuItem id    = "Rename"
+				          label = "${res:SharpDevelop.Refactoring.RenameCommand}"
+				          class = "BVEEditor.Refactoring.RenameCommand"
+				          shortcut = "Control|R" />
+				<Condition name="RefactoringProviderSupports" supports="FindUnusedUsingDeclarations">
+					<MenuItem id    = "RemoveUnusedUsings"
+					          label = "${res:SharpDevelop.Refactoring.RemoveUnusedImports}"
+					          class = "BVEEditor.Refactoring.RemoveUnusedUsingsCommand" />
+				</Condition>
+			</MenuItem>
+		</Condition> <!-- end REFACTOR menu -->
+		
+		<Condition name = "ProjectActive" activeproject="*">
+			<MenuItem id = "Project" label = "${res:XML.MainMenu.ProjectMenu}" type="Menu">
+				<MenuItem id = "ProjectAddMenu" label = "${res:ProjectComponent.ContextMenu.AddMenu}" type = "Menu" >
+					<Include path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/FolderNode/Add"/>
+				</MenuItem>
+				<MenuItem id    = "AddReference"
+				          label = "${res:ProjectComponent.ContextMenu.AddReference}"
+				          class = "BVEEditor.Project.Commands.AddReferenceToProject"/>
+				<MenuItem id    = "AddWebReference"
+				          label = "${res:ProjectComponent.ContextMenu.AddWebReference}"
+				          class = "BVEEditor.Project.Commands.AddWebReferenceToProject"/>
+				<MenuItem id = "AddSeparator" type = "Separator"/>
+				<Include id = "ProjectActions" path="/SharpDevelop/Pads/ProjectBrowser/ContextMenu/ProjectActions"/>
+				<MenuItem id = "Separator2" type = "Separator" />
+				<MenuItem id = "Options"
+				          label = "${res:XML.MainMenu.ProjectMenu.Options}"
+				          class = "BVEEditor.Project.Commands.ViewProjectOptions"/>
+			</MenuItem>
+		</Condition> <!-- end PROJECT menu -->
+		
+		<MenuItem id = "Build" label = "${res:XML.MainMenu.BuildMenu}" type="Menu">
+			<Condition name = "SolutionOpen" action="Disable">
+				<MenuItem id       = "Build"
+				          label    = "${res:XML.MainMenu.BuildMenu.BuildSolution}"
+				          shortcut = "F8"
+				          icon     = "Icons.16x16.BuildCombine"
+				          class    = "BVEEditor.Project.Commands.Build"/>
+				<MenuItem id       = "Rebuild"
+				          label    = "${res:XML.MainMenu.BuildMenu.RebuildSolution}"
+				          shortcut = "Alt|F8"
+				          class    = "BVEEditor.Project.Commands.Rebuild"/>
+				<MenuItem id    = "Clean"
+				          label = "${res:XML.MainMenu.BuildMenu.CleanSolution}"
+				          class = "BVEEditor.Project.Commands.Clean"/>
+				<Condition name = "ProjectActive" activeproject="*">
+					<MenuItem id = "Separator1" type = "Separator" />
+					<MenuItem id       = "Build project"
+					          label    = "${res:XML.MainMenu.BuildMenu.BuildProject}"
+					          shortcut = "F9"
+					          icon     = "Icons.16x16.BuildCurrentSelectedProject"
+					          class    = "BVEEditor.Project.Commands.BuildProject"/>
+					<MenuItem id       = "Rebuild project"
+					          label    = "${res:XML.MainMenu.BuildMenu.RebuildProject}"
+					          shortcut = "Alt|F9"
+					          class    = "BVEEditor.Project.Commands.RebuildProject"/>
+					<MenuItem id    = "Clean project"
+					          label = "${res:XML.MainMenu.BuildMenu.CleanProject}"
+					          class = "BVEEditor.Project.Commands.CleanProject"/>
+					<!--<MenuItem id    = "Publish project"
+					          label = "${res:XML.MainMenu.BuildMenu.PublishProject}"
+					          class = "BVEEditor.Project.Commands.PublishProject"/>-->
+				</Condition>
+				<MenuItem id = "Separator2" type = "Separator" />
+				<MenuItem id="AbortBuild"
+				          label="${res:XML.MainMenu.BuildMenu.AbortBuild}"
+				          shortcut="Pause"
+				          class="BVEEditor.Project.Commands.AbortBuild"
+				          loadclasslazy="false"/>
+				<MenuItem id = "Separator3" type = "Separator" />
+				<MenuItem id = "SetConfiguration"
+				          label = "${res:XML.MainMenu.BuildMenu.SetConfiguration}"
+				          type = "Menu">
+					<MenuItem id = "ConfigurationBuilder" type = "Builder" class = "BVEEditor.Project.Commands.SetConfigurationMenuBuilder"/>
+				</MenuItem>
+				<MenuItem id = "SetPlatform"
+				          label = "${res:XML.MainMenu.BuildMenu.SetPlatform}"
+				          type = "Menu">
+					<MenuItem id = "PlatformBuilder" type = "Builder" class = "BVEEditor.Project.Commands.SetPlatformMenuBuilder"/>
+				</MenuItem>
+				<MenuItem id = "EditConfigurations"
+				          label = "${res:XML.MainMenu.BuildMenu.EditConfigurationsPlatforms}"
+				          class = "BVEEditor.Project.Commands.EditConfigurationsCommand"/>
+			</Condition>
+		</MenuItem> <!-- end BUILD menu -->
+		
+		<!--<MenuItem id = "Search" label = "${res:XML.MainMenu.SearchMenu}" type="Menu">
+			<MenuItem id = "SearchSeparator" type = "Separator" />
+			<Condition name = "WindowActive" activewindow="BVEEditor.Editor.ITextEditorProvider" action="Disable">
+				<MenuItem id = "ToggleBookmark"
+				          label = "${res:XML.MainMenu.SearchMenu.ToggleBookmark}"
+				          shortcut = "Control|M"
+				          icon = "Bookmarks.ToggleMark"
+				          class = "BVEEditor.Editor.Bookmarks.ToggleBookmark"/>
+				<MenuItem id = "PrevBookmark"
+				          label = "${res:XML.MainMenu.SearchMenu.PrevBookmark}"
+				          shortcut = "Control|OemComma"
+				          icon = "Bookmarks.GotoPrevInFile"
+				          class = "BVEEditor.Editor.Bookmarks.PrevBookmark"/>
+				<MenuItem id = "NextBookmark"
+				          label = "${res:XML.MainMenu.SearchMenu.NextBookmark}"
+				          shortcut = "Control|OemPeriod"
+				          icon = "Bookmarks.GotoNextInFile"
+				          class = "BVEEditor.Editor.Bookmarks.NextBookmark"/>
+				<MenuItem id = "ClearBookmarks"
+				          label = "${res:XML.MainMenu.SearchMenu.ClrBookmark}"
+				          icon = "Bookmarks.ClearAll"
+				          class = "BVEEditor.Editor.Bookmarks.ClearBookmarks"/>
+			</Condition>
+			<MenuItem id = "Separator2" type = "Separator" />
+			
+			<MenuItem id = "GotoLineNr"
+			          label = "${res:XML.MainMenu.SearchMenu.Goto}"
+			          shortcut = "Control|G"
+			          class = "BVEEditor.Editor.Commands.GotoLineNumber"/>
+			
+			<MenuItem id = "GotoDefinition"
+			          label = "${res:ICSharpCode.NAntAddIn.GotoDefinitionMenuLabel}"
+			          shortcut = "Control|Return"
+			          icon="Icons.16x16.SelectionArrow"
+			          class = "BVEEditor.Editor.Commands.GoToDefinition"/>
+			
+			<MenuItem id = "FindReferences"
+			          label = "${res:SharpDevelop.Refactoring.FindReferences}"
+			          shortcut = "F12"
+			          icon="Icons.16x16.SelectionArrow"
+			          class = "BVEEditor.Editor.Commands.FindReferencesCommand"/>
+			
+			<MenuItem id = "Rename"
+			          label = "${res:SharpDevelop.Refactoring.RenameCommand}"
+			          shortcut="Ctrl+R"
+			          class = "BVEEditor.Editor.Commands.RenameSymbolCommand"/>
+			
+			<MenuItem id = "GotoBrace"
+			          label = "${res:XML.MainMenu.SearchMenu.GotoBrace}"
+			          shortcut = "Control|B"
+			          class = "BVEEditor.Editor.Commands.GoToMatchingBrace"/>
+						</Condition>
+		</MenuItem>-->
+		
+		<!--<MenuItem id="Analysis" label="${res:XML.MainMenu.Analysis}" type="Menu">
+			<MenuItem id="Separator1" type="Separator" />
+		</MenuItem>
+		
+		<MenuItem id = "Tools" label = "${res:XML.MainMenu.ToolMenu}" type="Menu">
+			<MenuItem id = "ToolBuilder" type="Builder" class = "BVEEditor.Commands.ToolMenuBuilder" />
+			<MenuItem id = "Separator1" type = "Separator" />
+			<Include id = "ToolList" path = "/SharpDevelop/Workbench/Tools" />
+			<MenuItem id = "Separator2" type = "Separator" />
+			
+			<Condition name = "WindowActive" activewindow="BVEEditor.Editor.ITextEditorProvider">
+				<MenuItem id = "ConvertCode" label = "${res:XML.MainMenu.ToolMenu.ConvertCodeTo}" type="Menu">
+					<Condition name="ActiveContentExtension" activeextension=".vb" action = "Disable">
+						<MenuItem id = "CSharp"
+						          label = "C#"
+						          class = "BVEEditor.Commands.CSharpConvertBuffer"/>
+					</Condition>
+					<Condition name="ActiveContentExtension" activeextension=".cs" action = "Disable">
+						<MenuItem id = "VBNet"
+						          label = "VB.NET"
+						          class = "BVEEditor.Commands.VBConvertBuffer"/>
+					</Condition>
+				</MenuItem>
+			</Condition>
+			
+			<Condition name = "SolutionOpen" action="Disable">
+				<MenuItem id = "Upgrade"
+				          label = "${res:BVEEditor.Project.UpgradeView.Title}"
+				          class = "BVEEditor.Project.Converter.ShowUpgradeView"/>
+			</Condition>
+			
+			<MenuItem id = "LastSeparator" type = "Separator" />
+			
+			<MenuItem id = "Options"
+			          label = "${res:XML.MainMenu.ToolMenu.Options}"
+			          icon = "Icons.16x16.Options"
+			          class = "BVEEditor.Commands.OptionsCommand"/>
+		</MenuItem>--> <!-- end TOOLS menu -->
+		
+		<MenuItem id = "Window" label = "${res:XML.MainMenu.WindowMenu}" type="Menu">
+			<Condition name = "WindowActive" activewindow="*"  action="Disable">
+				<MenuItem id  = "NextWindow"
+				          label = "${res:XML.MainMenu.WindowMenu.NxtWindow}"
+				          icon = "Icons.16x16.NextWindowIcon"
+				          shortcut = "Control|Tab"
+				          class = "BVEEditor.Commands.SelectNextWindow" />
+				<MenuItem id = "PrevWindow"
+				          label = "${res:XML.MainMenu.WindowMenu.PrvWindow}"
+				          icon = "Icons.16x16.PrevWindowIcon"
+				          shortcut = "Shift|Control|Tab"
+				          class = "BVEEditor.Commands.SelectPrevWindow" />
+				<MenuItem id ="NxtPrvSeparator" type = "Separator" />
+				<MenuItem id = "SplitView"
+				          label = "${res:XML.MainMenu.WindowMenu.Split}"
+				          icon  = "Icons.16x16.SplitWindow"
+				          command = "BVEEditor.SharpDevelopRoutedCommands.SplitView"/>
+				<MenuItem id    = "CloseAll"
+				          label = "${res:XML.MainMenu.FileMenu.CloseAll}"
+				          icon  = "Icons.16x16.CloseAllDocuments"
+				          class = "BVEEditor.Commands.CloseAllWindows" />
+			</Condition>
+			<MenuItem id = "ContentBuilder"  type="Builder" class="BVEEditor.Commands.OpenContentsMenuBuilder"/>
+		</MenuItem>	 <!-- end WINDOW menu -->
+		
+		<!--<MenuItem id = "Help" label = "${res:XML.MainMenu.HelpMenu}" type="Menu">
+			<MenuItem id = "ContextHelp"
+			          label = "${res:XML.MainMenu.HelpMenu.ContextHelp}"
+			          icon = "Icons.16x16.HelpIcon"
+			          shortcut = "F1"
+			          command = "Help"/>
+			<MenuItem id = "Help"
+			          label = "${res:XML.MainMenu.HelpMenu.Topics}"
+			          shortcut = "Alt|F1"
+			          link = "http://wiki.sharpdevelop.net/"/>
+			<MenuItem id = "Separator1" type = "Separator" />
+			<MenuItem id    = "ViewReadme"
+			          label = "${res:XML.MainMenu.HelpMenu.ReadMe}"
+			          link  = "home://doc/ReadMe.rtf" />
+			<MenuItem id = "Web" label = "${res:XML.MainMenu.HelpMenu.WebMenu}" type="Menu">
+				<MenuItem id = "SharpDevelop" label = "SharpDevelop" type="Menu">
+					<MenuItem id = "Downloads" label = "Downloads" icon = "Icons.16x16.WebSearchIcon" link = "http://www.sharpdevelop.net/OpenSource/SD/Download/" />
+					<MenuItem id = "Forum" label = "Community Forums" icon = "Icons.16x16.WebSearchIcon" link = "http://community.sharpdevelop.net/forums/" />
+					<MenuItem id = "Announcement" label = "Announcement List" icon = "Icons.16x16.WebSearchIcon" link = "http://www.sharpdevelop.net/OpenSource/SD/AnnouncementList.aspx" />
+					<MenuItem id = "Mail" label = "Send Us a Mail" icon = "Icons.16x16.WebSearchIcon" link = "http://www.sharpdevelop.net/OpenSource/SD/ContactUs.asp" />
+				</MenuItem>
+				<MenuItem id = "C#" label = "C#" type="Menu">
+					<MenuItem id = "C# Help" label = "C# Help" icon = "Icons.16x16.WebSearchIcon" link = "http://www.csharphelp.com" />
+					<MenuItem id = "CodeProject" label = "CodeProject" icon = "Icons.16x16.WebSearchIcon" link = "http://www.codeproject.com" />
+					<MenuItem id = "C# Corner" label = "C# Corner" icon = "Icons.16x16.WebSearchIcon" link = "http://www.c-sharpcorner.com" />
+					<MenuItem id = "GotDotNet" label = "GotDotNet" icon = "Icons.16x16.WebSearchIcon" link = "http://www.gotdotnet.com/" />
+				</MenuItem>
+				<MenuItem id = "IntegratedProjects" label = "Integrated Projects" type="Menu">
+					<MenuItem id = "AvalonDock" label = "AvalonDock" icon = "Icons.16x16.WebSearchIcon" link = "http://www.codeplex.com/AvalonDock/" />
+					<MenuItem id = "NUnit" label = "NUnit" icon = "PadIcons.NUnitTest" link = "http://www.nunit.org/" />
+					<MenuItem id = "WiX" label = "WiX" icon = "Icons.16x16.WebSearchIcon" link = "http://sourceforge.net/projects/wix/" />
+					<MenuItem id = "SHFB" label = "Sandcastle Help File Builder" icon = "Icons.16x16.WebSearchIcon" link = "http://www.codeplex.com/SHFB" />
+					<MenuItem id = "#ZipLib" label = "#ZipLib" icon = "Icons.16x16.WebSearchIcon" link = "http://www.sharpdevelop.net/OpenSource/SharpZipLib/" />
+				</MenuItem>
+				<MenuItem id = "NETPlatforms" label = ".NET Platforms" type="Menu">
+					<MenuItem id = "MSNET"  label = "MS .NET" icon = "Icons.16x16.WebSearchIcon" link = "http://msdn.microsoft.com/net" />
+					<MenuItem id = "Mono"   label = "Mono Project" icon = "Icons.16x16.WebSearchIcon" link = "http://www.mono-project.com/" />
+					<MenuItem id = "DotGNU" label = "DotGNU" icon = "Icons.16x16.WebSearchIcon" link = "http://www.dotgnu.org" />
+				</MenuItem>
+			</MenuItem>
+			<MenuItem id = "Separator2" type = "Separator" />
+			<MenuItem id = "About"
+			          label = "${res:XML.MainMenu.HelpMenu.About}"
+			          icon = "Icons.16x16.AboutIcon"
+			          class = "BVEEditor.Commands.AboutSharpDevelop" />
+		</MenuItem>--> <!-- end HELP menu -->
+	</Path> <!-- end Main Menu -->
+	
+	<!-- create empty /SharpDevelop/Workbench/Tools path - it's included by the main menu -->
+	<Path name = "/BVEEditor/Workbench/Tools"/>
+	
+	<!-- TEXT EDITOR -->
+	
+	<!--<Path name = "/BVEdDitor/EntityContextMenu">
+		<MenuItem id = "FindReferences"
+		          label = "${res:SharpDevelop.Refactoring.FindReferencesCommand}"
+		          class = "BVEEditor.Editor.Commands.FindReferencesCommand"/>
+	</Path>-->
+	
+	<!--
+	<Path name = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Common">
+		<MenuItem id = "Rename"
+		          label = "${res:SharpDevelop.Refactoring.RenameCommand}"
+		          class = "BVEEditor.Refactoring.RenameLocalVariableCommand"/>
+		<MenuItem id = "FindReferences"
+		          label = "${res:SharpDevelop.Refactoring.FindReferencesCommand}"
+		          class = "BVEEditor.Refactoring.FindLocalVariableReferencesCommand"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/LocalVariableDefinition">
+		<Include id = "Common" path = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Common"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/LocalVariable">
+		<Include id = "Common" path = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Common"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/ParameterDefinition">
+		<Include id = "Common" path = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Common"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Parameter">
+		<Include id = "Common" path = "/SharpDevelop/ViewContent/DefaultTextEditor/Refactoring/Common"/>
+	</Path>-->
+	
+	<Path name = "/BVEEditor/ViewContent/TextEditor/ContextMenu">
+		<Include id = "Cut" item = "/BVEEditor/Workbench/MainMenu/Edit/Cut"/>
+		<Include id = "Copy" item = "/BVEEditor/Workbench/MainMenu/Edit/Copy"/>
+		<Include id = "Paste" item = "/BVEEditor/Workbench/MainMenu/Edit/Paste"/>
+		<Include id = "Delete" item = "/BVEEditor/Workbench/MainMenu/Edit/Delete"/>
+		<MenuItem id = "Separator1" type = "Separator" />
+		
+		<MenuItem id = "Comment"
+		          icon  = "Icons.16x16.CommentRegion"
+		          label = "${res:XML.TextAreaContextMenu.CommentUncommentSelection}"
+		          shortcut="Control|OemQuestion"
+		          class = "BVEEditor.Editor.Commands.CommentRegion"/>
+		<MenuItem id = "Indent"
+		          label = "${res:XML.TextAreaContextMenu.Indent}"
+		          shortcut = "Control|I"
+		          class = "BVEEditor.Editor.Commands.IndentSelection" />
+	</Path>
+	
+	<!--<Path name = "/SharpDevelop/ViewContent/TextEditor/ToolTips">
+		<Class id = "DefaultDebuggerToolTips" class = "BVEEditor.Debugging.DebuggerTextAreaToolTipProvider"/>
+	</Path>-->
+	
+	<Path name = "/BVEEditor/Workbench/ToolBar/Standard">
+		<ToolbarItem id = "SearchSeparator" type = "Separator"/>
+		<Condition name = "WindowActive" activewindow="BVEEditor.Editor.ITextEditorProvider" action="Disable">
+			<ToolbarItem id = "Comment"
+			             icon = "Icons.16x16.CommentRegion"
+			             tooltip = "${res:XML.TextAreaContextMenu.CommentUncommentSelection}"
+			             class = "BVEEditor.Editor.Commands.CommentRegion"/>
+			<!--<ToolbarItem id = "Uncomment"
+				         icon = "Icons.16x16.UnCommentRegion"
+				         tooltip = "${res:XML.TextAreaContextMenu.UncommentSelection}"
+				         class = "BVEEditor.DefaultEditor.Commands.UncommentRegion"/>-->
+		</Condition>
+	</Path>
+	
+	<Path name = "/BVEEditor/Workbench/MainMenu/Edit">
+		<MenuItem insertafter = "Delete" id = "Separator2" type = "Separator" />
+		<MenuItem id = "Format" label = "${res:XML.MainMenu.EditMenu.FormatMenu}" type="Menu">
+			<MenuItem id = "Separator4" type = "Separator" />
+			<Include id = "Comment" item = "/BVEEditor/ViewContent/TextEditor/ContextMenu/Comment" />
+			<Include id = "Indent" item = "/BVEEditor/ViewContent/TextEditor/ContextMenu/Indent" />
+		</MenuItem>
+		<MenuItem insertbefore = "SelectAll" id = "Separator3" type = "Separator" />
+	</Path>
+	
+	<!--<Path name = "/SharpDevelop/ViewContent/Browser/Toolbar">
+		<ToolbarItem id      = "Back"
+		             icon    = "Icons.16x16.BrowserBefore"
+		             tooltip = "${res:AddIns.HtmlHelp2.Back}"
+		             class   = "BVEEditor.BrowserDisplayBinding.GoBack"/>
+		
+		<ToolbarItem id      = "Forward"
+		             icon    = "Icons.16x16.BrowserAfter"
+		             tooltip = "${res:AddIns.HtmlHelp2.Forward}"
+		             class   = "BVEEditor.BrowserDisplayBinding.GoForward"/>
+		
+		<ToolbarItem id      = "Stop"
+		             icon    = "Icons.16x16.BrowserCancel"
+		             tooltip = "${res:AddIns.HtmlHelp2.Stop}"
+		             class   = "BVEEditor.BrowserDisplayBinding.Stop"/>
+		
+		<ToolbarItem id      = "Refresh"
+		             icon    = "Icons.16x16.BrowserRefresh"
+		             tooltip = "${res:Global.Refresh}"
+		             class   = "BVEEditor.BrowserDisplayBinding.Refresh"/>
+		
+		<ToolbarItem id = "Separator" type  = "Separator"/>
+		
+		<ToolbarItem id      = "GoHome"
+		             icon    = "Icons.16x16.BrowserHome"
+		             tooltip = "${res:AddIns.HtmlHelp2.Homepage}"
+		             class   = "BVEEditor.BrowserDisplayBinding.GoHome"/>
+		
+		<ToolbarItem id      = "GoSearch"
+		             icon    = "Icons.16x16.FindIcon"
+		             tooltip = "${res:AddIns.HtmlHelp2.Search}"
+		             class   = "BVEEditor.BrowserDisplayBinding.GoSearch"/>
+		
+		<ToolbarItem id      = "UrlComboBox"
+		             type    = "Builder"
+		             tooltip = "${res:AddIns.HtmlHelp2.EnterURL}"
+		             class   = "BVEEditor.BrowserDisplayBinding.UrlComboBoxBuilder"/>
+		
+		<ToolbarItem id      = "NewWindow"
+		             icon    = "Icons.16x16.BrowserWindow"
+		             tooltip = "${res:AddIns.HtmlHelp2.NewWindow}"
+		             class   = "BVEEditor.BrowserDisplayBinding.NewWindow"/>
+	</Path>
+	
+	<Path name = "/BVEEditor/Dialogs/OptionsDialog/TextEditorOptions">
+		<OptionPanel id = "CodeCompletion"
+		             insertafter="Behavior"
+		             label = "${res:Dialog.Options.IDEOptions.TextEditor.CodeCompletion.PanelName}"
+		             class = "BVEEditor.Editor.CodeCompletion.CodeCompletionPanel"/>
+	</Path>-->
+	
+	<Path name = "/BVEEditor/Pads/SearchResultPad/Toolbar">
+		<ToolbarItem id      = "ShowLast"
+		             type    = "DropDownButton"
+		             icon    = "Icons.16x16.FindIcon"
+		             tooltip = "${res:MainWindow.Windows.SearchResultPanel.ShowLast.ToolTip}">
+			<MenuItem id="RecentList" type="Builder" class="BVEEditor.Editor.Search.LastSearchResultsBuilder"/>
+			<MenuItem id="Separator" type="Separator"/>
+			<MenuItem id="ClearRecentList"
+			          type="Item"
+			          label="${res:MainWindow.Windows.SearchResultPanel.ClearHistory}"
+			          class="BVEEditor.Editor.Search.ClearSearchResultsList" />
+		</ToolbarItem>
+	</Path>
+	
+	<!--
+	<Path name = "/SharpDevelop/Pads/SearchResultPanel/Toolbar">
+		<Condition name = "Ownerstate" ownerstate = "DefaultMode" action = "Exclude">
+			<ToolbarItem id      = "ExpandAll"
+			             icon    = "Icons.16x16.OpenAssembly"
+			             tooltip = "${res:MainWindow.Windows.SearchResultPanel.ExpandAll.ToolTip}"
+			             class   = "SearchAndReplace.ExpandAll"/>
+			
+			<ToolbarItem id      = "CollapseAll"
+			             icon    = "Icons.16x16.Assembly"
+			             tooltip = "${res:MainWindow.Windows.SearchResultPanel.CollapseAll.ToolTip}"
+			             class   = "SearchAndReplace.CollapseAll"/>
+			<ToolbarItem id = "ExpandCollapseSeparator" type = "Separator" />
+		</Condition>
+		
+		<ToolbarItem id      = "ShowLast"
+		             type    = "DropDownButton"
+		             icon    = "Icons.16x16.FindIcon"
+		             tooltip = "${res:MainWindow.Windows.SearchResultPanel.ShowLast.ToolTip}"
+		             class   = "SearchAndReplace.ShowLastSearchResults"/>
+		
+		<Condition name = "Ownerstate" ownerstate = "DefaultMode" action = "Exclude">
+			<ToolbarItem id      = "SelectViewMode"
+			             type    = "DropDownButton"
+			             icon    = "Icons.16x16.FindIcon"
+			             tooltip = "${res:MainWindow.Windows.SearchResultPanel.SelectViewMode.ToolTip}"
+			             class   = "SearchAndReplace.SelectViewMode"/>
+		</Condition>
+	</Path>
+	-->
+	
+	<Path name = "/Workspace/Icons">
+		<!-- Resources -->
+		<Icon id         = "ResourceFileIcon"
+		      extensions = ".resources;.resx"
+		      resource   = "Icons.16x16.ResourceFileIcon" />
+		
+		<!-- XML -->
+		<Icon id         = "XmlFileIcon"
+		      extensions = ".xml"
+		      resource   = "FileIcons.XmlIcon" />
+		
+		<Icon id         = "DtdFileIcon"
+		      extensions = ".dtd"
+		      resource   = "Icons.16x16.DTDIcon"/>
+		
+		<Icon id         = "XsdFileIcon"
+		      extensions = ".xsd"
+		      resource   = "Icons.16x16.XSDIcon"/>
+		
+		<Icon id         = "XslFileIcon"
+		      extensions = ".xsl"
+		      resource   = "Icons.16x16.XSLIcon"/>
+		
+		<Icon id         = "HtmlFileIcon"
+		      extensions = ".html;.htm"
+		      resource   = "Icons.16x16.HTMLIcon"/>
+		
+		<Icon id         = "AspFileIcon"
+		      extensions = ".asp;.aspx"
+		      resource   = "Icons.16x16.ASPFileIcon"/>
+		
+		<Icon id         = "AddInFileIcon"
+		      extensions = ".addin"
+		      resource   = "Icons.16x16.AddInIcon" />
+		
+		<!-- TextFiles -->
+		<Icon id         = "TextFileIcon"
+		      extensions = ".txt;.doc"
+		      resource   = "Icons.16x16.TextFileIcon"/>
+		
+		<Icon id= "CssFileIcon"
+		      extensions = ".css"
+		      resource   = "Icons.16x16.CSSIcon"/>
+		<Icon id         = "StrongNameKeyFileIcon"
+		      extensions = ".snk"
+		      resource   = "Icons.16x16.StrongNameKeyFileIcon"/>
+	</Path>
+	
+	<!--<Path name = "/SharpDevelop/Views/ProjectBrowser/NodeBuilders">
+		<Class id = "DefaultBuilder"
+		       class = "BVEEditor.Project.DefaultDotNetNodeBuilder"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Views/ClassBrowser/ProjectNodeBuilders">
+		<Class id = "DefaultProjectBuilder"
+		       class = "BVEEditor.Gui.ClassBrowser.DefaultProjectNodeBuilder"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Views/ClassBrowser/ClassNodeBuilders">
+		<Class id = "DefaultClassBuilder"
+		       class = "BVEEditor.Gui.ClassBrowser.DefaultClassNodeBuilder"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Workbench/DependentFileExtensions">
+		<String id = "FormsDesignerGeneratedCode" text=".Designer${Extension}"/>
+		<String id = "FormsDesignerResources"     text=".resx"/>
+	</Path>-->
+	
+	<Path name="/SharpDevelop/BackendBindings/ProjectOptions/AllManaged">
+		<!-- put project option panels valid for all .NET projects here -->
+		<OptionPanel id          = "CustomTool"
+		             label       = "${res:BVEEditor.Internal.Project.ProjectFile.CustomTool}"
+		             class       = "BVEEditor.Gui.OptionPanels.ProjectCustomToolOptionsPanel"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/ErrorList/TaskContextMenu">
+		<MenuItem id = "Copy"
+		          label = "${res:XML.MainMenu.EditMenu.Copy}"
+		          type = "Item"
+		          icon = "Icons.16x16.CopyIcon"
+		          command = "Copy"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/TaskList/Toolbar">
+		<ToolbarItem id = "SelectScope"
+		             class = "BVEEditor.Gui.SelectScopeComboBox"
+		             type = "Custom"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/TaskList/TaskContextMenu">
+		<MenuItem id = "Copy"
+		          label = "${res:XML.MainMenu.EditMenu.Copy}"
+		          type = "Item"
+		          icon = "Icons.16x16.CopyIcon"
+		          command = "Copy"/>
+	</Path>
+	
+	<Path name="/SharpDevelop/Pads/CommonConsole/ToolBar">
+		<ToolbarItem id = "ClearConsole"
+		             tooltip = "Clear console"
+		             class = "BVEEditor.Gui.ClearConsoleCommand"
+		             icon = "OutputPad.Toolbar.ClearOutputWindow" />
+		<ToolbarItem id = "DeleteHistory"
+		             tooltip = "Delete history"
+		             class = "BVEEditor.Gui.DeleteHistoryCommand"
+		             icon = "Icons.16x16.DeleteHistory" />
+		<ToolbarItem type="Separator" />
+		<ToolbarItem id      = "ToggleWordWrap"
+		             type    = "CheckBox"
+		             icon    = "OutputPad.Toolbar.ToggleWordWrap"
+		             tooltip = "${res:MainWindow.Windows.CompilerMessageView.ToggleWordWrapButton.ToolTip}"
+		             class   = "BVEEditor.Gui.ToggleConsoleWordWrapCommand"/>
+	</Path>
+	
+	<!--<Path name = "/BVEEditor/BackendBindings/Templates">
+		<TemplateFile path="../data/templates" />
+	</Path>
+	
+	<Path name = "/BVEEditor/BackendBindings/TemplateCommands">
+		<Class id="CheckPortableLibraryInstalled"
+		       class="BVEEditor.Project.PortableLibrary.CheckPortableLibraryInstalled"/>
+	</Path>
+	
+	<Path name = "/SharpDevelop/Views/ProjectBrowser/ContextSpecificProperties">
+		<ComplexCondition>
+			<Not>
+				<Condition name = "ProjectItem" property = "Generator" value = ""/>
+			</Not>
+			<CustomProperty id = "CustomToolNamespace"
+			                name = "CustomToolNamespace"
+			                displayName = "${res:BVEEditor.Internal.Project.ProjectFile.CustomToolNamespace}"
+			                description = "${res:BVEEditor.Internal.Project.ProjectFile.CustomToolNamespace.Description}"
+			                runCustomTool="True" />
+		</ComplexCondition>
+		<Condition name = "ProjectItem" itemType = "EmbeddedResource">
+			<CustomProperty id = "EmbeddedResourceLogicalName"
+			                name = "LogicalName"
+			                displayName = "${res:BVEEditor.Internal.Project.ProjectFile.LogicalName}"
+			                description = "${res:BVEEditor.Internal.Project.ProjectFile.LogicalName.Description}" />
+		</Condition>
+	</Path>-->
+	
+	<Path name = "/SharpDevelop/Workbench/ProjectBehaviors">
+		<Condition name="ProjectBehaviorSupported" guid="{786C830F-07A1-408B-BD7F-6EE04809D6DB}">
+			<Class id="PortableLibraryBehavior" class="BVEEditor.Project.PortableLibrary.PortableLibraryProjectBehavior" />
+		</Condition>
+		<ComplexCondition>
+			<And>
+				<Not> <!-- not already portable -->
+					<Condition name="ProjectBehaviorSupported" guid="{786C830F-07A1-408B-BD7F-6EE04809D6DB}" />
+				</Not>
+				<Or> <!-- and either a C# or VB project -->
+					<Condition name = "ProjectActive" activeproject="C#" />
+					<Condition name = "ProjectActive" activeproject="VBNet" />
+				</Or>
+			</And>
+			<Class id="ConvertToPortableLibraryBehavior" class="BVEEditor.Project.PortableLibrary.ConvertToPortableLibraryProjectBehavior" />
+		</ComplexCondition>
+	</Path>
+</AddIn>

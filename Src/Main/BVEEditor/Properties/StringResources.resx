@@ -118,64 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
-    <value>@MainMenu_FileMenu_SaveAll_Description</value>
+    <value>Save all the files that are open</value>
   </data>
   <data name="MainMenu_FileMenu_Save_Description" xml:space="preserve">
-    <value>@MainMenu_FileMenu_Save_Description</value>
+    <value>Save current file</value>
   </data>
   <data name="MainMenu_FileMenu_Open_Project_Description" xml:space="preserve">
-    <value>@MainMenu_FileMenu_OpenProject_Description</value>
+    <value>Open a project</value>
   </data>
   <data name="MainWindow_DialogName" xml:space="preserve">
-    <value>@MainWindow_DialogName</value>
+    <value>BVEEditor</value>
   </data>
   <data name="MainMenu_EditMenu_Paste_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Paste_Description</value>
+    <value>Paste item from clipboard</value>
   </data>
   <data name="MainWindow_StatusBar_ReadyMessage" xml:space="preserve">
-    <value>@MainWindow_StatusBar_ReadyMessage</value>
+    <value>Ready</value>
   </data>
   <data name="MainMenu_EditMenu_Copy_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Copy_Description</value>
+    <value>Copy selected item</value>
   </data>
   <data name="Common_ErrorText" xml:space="preserve">
-    <value>@Error</value>
+    <value>Error</value>
   </data>
   <data name="Common_TextUndefined" xml:space="preserve">
-    <value>@Common_TextUndefined</value>
+    <value>Undefined</value>
   </data>
   <data name="MainMenu_EditMenu_Undo_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Undo_Description</value>
+    <value>Undo last action</value>
   </data>
   <data name="MainMenu_EditMenu_Delete_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Delete_Description</value>
+    <value>Delete selected item</value>
   </data>
   <data name="Common_TextYes" xml:space="preserve">
-    <value>@Common_TextYes</value>
+    <value>Yes</value>
   </data>
   <data name="Common_TextNo" xml:space="preserve">
-    <value>@Common_TextNo</value>
+    <value>No</value>
   </data>
   <data name="MainMenu_EditMenu_Cut_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Cut_Description</value>
+    <value>Cut out selected item</value>
   </data>
   <data name="MainMenu_FileMenu_New_File_Description" xml:space="preserve">
-    <value>@MainMenu_FileMenu_NewFile_Description</value>
+    <value>Create a new file</value>
   </data>
   <data name="MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
-    <value>@MainMenu_FileMenu_OpenFile_Description</value>
+    <value>Open a file</value>
   </data>
   <data name="MainMenu_EditMenu_Redo_Description" xml:space="preserve">
-    <value>@MainMenu_EditMenu_Redo_Description</value>
+    <value>Redo last undo action</value>
   </data>
   <data name="Common_TextNonInteger" xml:space="preserve">
-    <value>@Common_TextNonInteger</value>
+    <value>${0} is not an integer!</value>
   </data>
   <data name="Common_TextNonNumber" xml:space="preserve">
-    <value>@Common_TextNonNumber</value>
+    <value>${0} is not a number!</value>
   </data>
   <data name="BVEEditor_FileFilter_AllFiles" xml:space="preserve">
-    <value>@BVEEditor_FileFilter_AllFiles</value>
+    <value>All files *.*|*</value>
   </data>
   <data name="MainMenu_Edit" xml:space="preserve">
     <value>Edit</value>
@@ -209,5 +209,47 @@
   </data>
   <data name="Common_SearchReplace_SearchStringNotFound" xml:space="preserve">
     <value>Search string not found!</value>
+  </data>
+  <data name="MainMenu_FileMenu_QuickSaveDocumentEntry" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainMenu_FileMenu_SaveDocumentAsEntry" xml:space="preserve">
+    <value>Save as...</value>
+  </data>
+  <data name="MainMenu_EditMenu_CopyEntry" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="MainMenu_EditMenu_CutEntry" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="MainMenu_EditMenu_DeleteEntry" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MainMenu_EditMenu_PasteEntry" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="MainMenu_EditMenu_RedoEntry" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="MainMenu_EditMenu_SelectAllEntry" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="MainMenu_EditMenu_UndoEntry" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="MainMenu_Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Open" xml:space="preserve">
+    <value>Open file</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Save" xml:space="preserve">
+    <value>Save file as...</value>
+  </data>
+  <data name="Common_Dialogs_Captions_SaveBeforeClose" xml:space="preserve">
+    <value>Save before closing?</value>
+  </data>
+  <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
+    <value>${0} is modified. Do you want to save it before quitting the application?</value>
   </data>
 </root>

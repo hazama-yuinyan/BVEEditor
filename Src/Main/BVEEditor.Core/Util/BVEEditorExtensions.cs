@@ -842,20 +842,6 @@ namespace BVEEditor
 		}*/
 		
 		/// <summary>
-		/// Gets an image source from a resource.
-		/// </summary>
-		/// <exception cref="ResourceNotFoundException">The resource with the specified name does not exist</exception>
-		public static ImageSource GetImageSource(this IResourceService resourceService, string resourceName)
-		{
-			if(resourceService == null)
-				throw new ArgumentNullException("resourceService");
-			if(resourceName == null)
-				throw new ArgumentNullException("resourceName");
-			
-            return PresentationResourceService.GetBitmapSource(resourceName);
-		}
-		
-		/// <summary>
 		/// Creates a new image for the image source.
 		/// </summary>
 		/*public static Image CreateImage(this IImage image)

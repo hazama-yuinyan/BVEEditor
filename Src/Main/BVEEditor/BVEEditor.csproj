@@ -79,6 +79,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AvalonDock\ActiveDocumentConverter.cs" />
     <Compile Include="AvalonDock\DocumentContext.cs" />
     <Compile Include="AvalonDock\IDockingManagerProvider.cs" />
     <Compile Include="Misc\BVEEditorStringTagProvider.cs" />
@@ -91,12 +92,14 @@
     <Compile Include="Services\DispatcherMessageLoop.cs" />
     <Compile Include="Services\DisplayBindingService.cs" />
     <Compile Include="Services\FileSystem.cs" />
+    <Compile Include="Services\WPFMessageService.cs" />
     <Compile Include="Startup\BVEEditorBootstrapper.cs" />
     <Compile Include="Startup\ServiceBootstrapper.cs" />
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
     <None Include="Workbench\FileServiceOpenedFile.cs" />
+    <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Views\Main\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,7 @@
     <Compile Include="Workbench\ErrorDocumentViewModel.cs" />
     <Compile Include="Workbench\LayoutInitializer.cs" />
     <Compile Include="Workbench\RecentOpen.cs" />
+    <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
     <Page Include="Views\Main\MainMenuView.xaml">
       <SubType>Designer</SubType>
@@ -147,12 +151,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\StringResources.ja.resx" />
+    <EmbeddedResource Include="Properties\StringResources.ja.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StringResources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\StringResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StringResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\StringResources.en.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -185,9 +191,7 @@
       <Name>ICSharpCode.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

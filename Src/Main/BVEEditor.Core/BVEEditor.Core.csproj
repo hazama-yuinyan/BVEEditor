@@ -87,6 +87,7 @@
     <Compile Include="Editor\OnDiskTextSourceVersion.cs" />
     <Compile Include="Editor\TextNavigationPoint.cs" />
     <Compile Include="Events\ActiveViewContentChangedEvent.cs" />
+    <Compile Include="Events\ActiveViewDocumentChangedEvent.cs" />
     <Compile Include="Events\ApplicationExitingEvent.cs" />
     <Compile Include="Events\CursorPositionChangedEvent.cs" />
     <Compile Include="Events\JumpLocationEvent.cs" />
@@ -115,7 +116,7 @@
     <Compile Include="Strategies\IFileDialogStrategies.cs" />
     <Compile Include="Util\BVEEditorExtensions.cs" />
     <Compile Include="Util\ICanBeDirty.cs" />
-    <None Include="Util\IImage.cs" />
+    <None Include="BVEEditor.addin" />
     <Compile Include="Util\NativeMethods.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="Workbench\AutobinderTemplateSelector.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="Workbench\DisplayBinding\ExternalProcessDisplayBinding.cs" />
     <Compile Include="Workbench\DisplayBinding\IDisplayBinding.cs" />
     <Compile Include="Workbench\DisplayBinding\IDisplayBindingService.cs" />
-    <Compile Include="Workbench\DisplayBinding\ISecondaryDisplayBinding.cs" />
+    <None Include="Workbench\DisplayBinding\ISecondaryDisplayBinding.cs" />
     <Compile Include="Workbench\File\FileEvents.cs" />
     <None Include="Workbench\File\IFileService.cs" />
     <Compile Include="Workbench\File\IRecentOpen.cs" />
@@ -164,6 +165,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)BVEEditor.addin" "$(SolutionDir)AddIns"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

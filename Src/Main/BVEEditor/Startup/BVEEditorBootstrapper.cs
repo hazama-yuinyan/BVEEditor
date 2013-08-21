@@ -47,6 +47,7 @@ namespace BVEEditor.Startup
             kernel.Bind<IWorkbench>().To<WorkbenchViewModel>().InSingletonScope();
             kernel.Bind<IMessageLoop>().ToConstant(msg_loop).InSingletonScope();
             kernel.Bind<IDisplayBindingService>().To<DisplayBindingService>().InSingletonScope();
+            kernel.Bind<IMessageService>().To<WPFMessageService>().InSingletonScope();
 
             SetupCustomMessageBindings();
 			
@@ -94,14 +95,35 @@ namespace BVEEditor.Startup
 		{
             kernel.Inject(instance);
 		}
+
+        protected override void OnUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            Log(e.Exception);
+            base.OnUnhandledException(sender, e);
+        }
+
+        void Log(Exception e)
+        {
+            if(e == null)
+                return;
+
+            var file_system = kernel.Get<IFileSystem>();
+            var property_service = kernel.Get<IPropertyService>();
+            var log = string.Format("{0} - {1}: {2}{3}{3}", DateTime.Now, e.Message, e.StackTrace, Environment.NewLine);
+            file_system.AppendAllText(property_service.DataDirectory.CombineFile("BVEEditor.log"), log);
+            Log4netLogger.Instance.Debug(log);
+
+            Log(e.InnerException);
+        }
 		
 		protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
 		{
-            Log4netLogger.Instance.Info("Run OnStartup...");
-            StringParser.RegisterStringTagProvider(new BVEEditorStringTagProvider(IoC.Get<IWorkbench>()));
-            Log4netLogger.Instance.Info("Initializing AddinTree...");
+            Log4netLogger.Instance.Info("Initializing AddInTree...");
             addin_initializer();
             addin_initializer = null;
+
+            Log4netLogger.Instance.Info("Run OnStartup...");
+            StringParser.RegisterStringTagProvider(new BVEEditorStringTagProvider(IoC.Get<IWorkbench>()));
 
             init_status = InitStatus.Busy;
 			base.OnStartup(sender, e);
@@ -139,12 +161,6 @@ namespace BVEEditor.Startup
 		#region Initialize Core
 		public void InitBVEEditorCore(StartupSettings properties)
 		{
-			// Initialize the most important services:
-			/*var container = new BVEEditorServiceContainer(ServiceSingleton.FallbackServiceProvider);
-			container.AddService(typeof(IMessageService), new BVEEditorMessageService());
-			container.AddService(typeof(ILoggingService), new log4netLoggingService());
-			ServiceSingleton.ServiceProvider = container;*/
-			
 			Log4netLogger.Instance.Info("InitBVEEditor...");
 			CoreStartup startup = new CoreStartup(properties.ApplicationName);
 			/*if (properties.UseSharpDevelopErrorHandler) {

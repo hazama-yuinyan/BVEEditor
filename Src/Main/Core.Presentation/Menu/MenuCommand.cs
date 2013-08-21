@@ -78,7 +78,7 @@ namespace Core.Presentation
 			base.OnClick();
 			string feature = GetFeatureName();
 			if (!string.IsNullOrEmpty(feature)) {
-				ServiceSingleton.GetRequiredService<IAnalyticsMonitor>().TrackFeature(feature, ActivationMethod);
+				//ServiceSingleton.GetRequiredService<IAnalyticsMonitor>().TrackFeature(feature, ActivationMethod);
 			}
 		}
 		
@@ -102,7 +102,7 @@ namespace Core.Presentation
 			
 			public void Execute(object parameter)
 			{
-				ServiceSingleton.GetRequiredService<IAnalyticsMonitor>().TrackFeature(featureName, "Shortcut");
+				//ServiceSingleton.GetRequiredService<IAnalyticsMonitor>().TrackFeature(featureName, "Shortcut");
 				baseCommand.Execute(parameter);
 			}
 			

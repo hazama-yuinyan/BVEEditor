@@ -9,7 +9,6 @@ namespace ICSharpCode.Core
 	/// <summary>
 	/// Interface for the MessageService.
 	/// </summary>
-	[SDService("SD.MessageService", FallbackImplementation = typeof(FallbackMessageService))]
 	public interface IMessageService
 	{
 		/// <summary>
@@ -103,11 +102,6 @@ namespace ICSharpCode.Core
 		/// and allow him to retry/save under alternative name.
 		/// </summary>
 		ChooseSaveErrorResult ChooseSaveError(FileName fileName, string message, string dialogName, Exception exceptionGot, bool chooseLocationEnabled);
-	}
-	
-	sealed class FallbackMessageService : TextWriterMessageService
-	{
-		public FallbackMessageService() : base(Console.Out) {}
 	}
 	
 	public sealed class ChooseSaveErrorResult

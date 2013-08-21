@@ -99,7 +99,7 @@ namespace BVEEditor.Commands
 					
 				case "CURLINE":
 					{
-						IPositionable positionable = workbench.ActiveViewContent as IPositionable;
+						IPositionable positionable = workbench.ActiveDocument as IPositionable;
 						if(positionable != null)
 							return positionable.Line.ToString();
 						
@@ -107,7 +107,7 @@ namespace BVEEditor.Commands
 					}
 				case "CURCOL":
 					{
-						IPositionable positionable = workbench.ActiveViewContent as IPositionable;
+						IPositionable positionable = workbench.ActiveDocument as IPositionable;
 						if(positionable != null)
 							return positionable.Column.ToString();
 						
@@ -115,7 +115,7 @@ namespace BVEEditor.Commands
 					}
 				case "CURTEXT":
 					{
-						ITextEditor editor = workbench.ActiveViewContent as ITextEditor;
+						ITextEditor editor = workbench.ActiveDocument as ITextEditor;
 						if(editor != null)
 							return editor.SelectedText;
 						

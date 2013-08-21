@@ -210,4 +210,46 @@
   <data name="Common_SearchReplace_SearchStringNotFound" xml:space="preserve">
     <value>指定した文字列は見つかりませんでした！</value>
   </data>
+  <data name="MainMenu_FileMenu_QuickSaveDocumentEntry" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="MainMenu_FileMenu_SaveDocumentAsEntry" xml:space="preserve">
+    <value>名前をつけて保存...</value>
+  </data>
+  <data name="MainMenu_EditMenu_CopyEntry" xml:space="preserve">
+    <value>コピー</value>
+  </data>
+  <data name="MainMenu_EditMenu_CutEntry" xml:space="preserve">
+    <value>切り取り</value>
+  </data>
+  <data name="MainMenu_EditMenu_DeleteEntry" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="MainMenu_EditMenu_PasteEntry" xml:space="preserve">
+    <value>貼り付け</value>
+  </data>
+  <data name="MainMenu_EditMenu_RedoEntry" xml:space="preserve">
+    <value>やり直す</value>
+  </data>
+  <data name="MainMenu_EditMenu_SelectAllEntry" xml:space="preserve">
+    <value>すべて選択</value>
+  </data>
+  <data name="MainMenu_EditMenu_UndoEntry" xml:space="preserve">
+    <value>元に戻す</value>
+  </data>
+  <data name="MainMenu_Help" xml:space="preserve">
+    <value>ヘルプ</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Open" xml:space="preserve">
+    <value>ファイルを開く</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Save" xml:space="preserve">
+    <value>名前をつけてファイルを保存</value>
+  </data>
+  <data name="Common_Dialogs_Captions_SaveBeforeClose" xml:space="preserve">
+    <value>閉じる前に保存しますか？</value>
+  </data>
+  <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
+    <value>${0}は変更されています\nアプリケーションを終了する前に保存しますか？</value>
+  </data>
 </root>

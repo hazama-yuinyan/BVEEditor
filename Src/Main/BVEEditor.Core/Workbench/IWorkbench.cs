@@ -25,14 +25,6 @@ namespace BVEEditor.Workbench
 		//bool FullScreen { get; set; }
 		
 		/// <summary>
-		/// The title shown in the title bar.
-		/// </summary>
-		string Title {
-			get;
-			set;
-		}
-		
-		/// <summary>
 		/// A collection in which all opened view contents (including all secondary view contents) are saved.
 		/// </summary>
 		ICollection<ViewContentViewModel> ViewContentCollection {
@@ -55,13 +47,6 @@ namespace BVEEditor.Workbench
 		
 		IList<ViewDocumentViewModel> ViewDocuments{
 			get;
-		}
-		
-		/// <summary>
-		/// The active view content inside the active workbench window.
-		/// </summary>
-		ViewContentViewModel ActiveViewContent {
-			get; set;
 		}
 		
 		/// <summary>
@@ -96,39 +81,6 @@ namespace BVEEditor.Workbench
 		/*bool IsActiveWindow {
 			get;
 		}*/
-		
-		/// <summary>
-		/// Inserts a new <see cref="ViewDocumentViewModel"/> object in the workspace and switches to the new view.
-		/// </summary>
-		void AddDocument(ViewDocumentViewModel document);
-		
-		/// <summary>
-		/// Inserts a new <see cref="ViewDocumentViewModel"/> object in the workspace.
-		/// </summary>
-		void ShowDocument(ViewDocumentViewModel document, bool switchToOpenedView);
-		
-		/// <summary>
-		/// Activates the specified pad.
-		/// </summary>
-		void ActivatePad(PadDescriptor content);
-		
-		/// <summary>
-		/// Returns a pad from a specific type.
-		/// </summary>
-		PadViewModel GetPad(Type type);
-		
-		/// <summary>
-		/// Closes all views inside the workbench.
-		/// </summary>
-		void CloseAllViews();
-		
-		/// <summary>
-		/// 	Closes all views related to current solution.
-		/// </summary>
-		/// <returns>
-		/// 	True if all views were closed properly, false if closing was aborted.
-		/// </returns>
-		bool CloseAllSolutionViews(bool force);
 		
 		/// <summary>
 		/// Gets/Sets the name of the current layout configuration.

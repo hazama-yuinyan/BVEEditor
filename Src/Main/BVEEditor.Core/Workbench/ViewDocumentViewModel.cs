@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Media;
 using BVEEditor.Events;
 using BVEEditor.Result;
 using BVEEditor.Services;
@@ -38,18 +39,18 @@ namespace BVEEditor.Workbench
         /// <summary>
 		/// Gets the file name as string.
 		/// </summary>
-		public virtual string FileName{
+		public string FileName{
 			get{
-				return System.IO.Path.GetFileNameWithoutExtension(this.FilePath);
+				return System.IO.Path.GetFileName(this.FilePath);
 			}
 		}
 
-        public FileName FilePath{
+        public virtual FileName FilePath{
             get; set;
         }
 		
 		bool is_dirty;
-		public bool IsDirty{
+		public virtual bool IsDirty{
 			get{return is_dirty;}
             set{
                 if(is_dirty != value){
@@ -72,6 +73,17 @@ namespace BVEEditor.Workbench
 				}
 			}
 		}
+
+        bool is_untitled;
+        public bool IsUntitled{
+            get{return is_untitled;}
+            set{
+                if(is_untitled != value){
+                    is_untitled = value;
+                    NotifyOfPropertyChange(() => is_untitled);
+                }
+            }
+        }
 		#endregion
 		
 		public ViewDocumentViewModel(IFileSystem fileSystem, IEventAggregator eventAggregator, IResultFactory resultFactory)
@@ -97,25 +109,21 @@ namespace BVEEditor.Workbench
 		}
 		#endregion
 
-        public virtual ViewDocumentViewModel Configure(FileName fileToOpen)
+        public virtual ViewDocumentViewModel Configure(string fileToOpen)
         {
-            //File = file_service.GetOrCreateOpenedFile(fileToOpen);
+            FilePath = ICSharpCode.Core.FileName.Create(fileToOpen);
+            Title = System.IO.Path.GetFileName(fileToOpen);
+            IsUntitled = string.IsNullOrEmpty(fileToOpen);
             return this;
         }
 		
-		public void AddView()
-		{
-			
-		}
-
         /// <summary>
         /// Saves the content of this ViewDocument to the specified file.
         /// </summary>
         /// <param name="filePath">The file path to save the content to.</param>
         /// <returns></returns>
-        public virtual IEnumerable<IResult> Save(string filePath)
+        public virtual void Save(string filePath)
         {
-            return null;
         }
 
         /// <summary>
@@ -123,9 +131,8 @@ namespace BVEEditor.Workbench
         /// </summary>
         /// <param name="filePath">The file path to load the content from.</param>
         /// <returns></returns>
-        public virtual IEnumerable<IResult> Load(string filePath)
+        public virtual void Load(string filePath)
         {
-            return null;
         }
 		
 		public void Select()
@@ -140,6 +147,7 @@ namespace BVEEditor.Workbench
             if(!message.IsDirectory){
                 FilePath = ICSharpCode.Core.FileName.Create(message.TargetFile);
                 Title = System.IO.Path.GetFileName(FilePath);
+                IsUntitled = false;
             }
         }
 
