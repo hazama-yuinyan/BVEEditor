@@ -1,0 +1,65 @@
+﻿<UserControl
+    x:Class="BVEEditor.Views.AboutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    d:DesignHeight="400" d:DesignWidth="500"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
+    <Border>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="250" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Row="0" Grid.Column="0" Source="/../../../data/resources/icons/bveeditor_icon.png" Width="128" />
+            <TextBlock Grid.Column="1" FontSize="25" Margin="33,0,0,0" Height="41" VerticalAlignment="Top" Text="{lex:Loc Common_AppName}" />
+            <TextBlock Grid.Column="1" Margin="33,47,11,57" Text="{lex:Loc Common_AppDescription}" />
+            <TextBlock Grid.Column="1" Margin="33,0,11,23" VerticalAlignment="Bottom" Text="http://github.com/hazama_yuinyan/BVEEditor">
+                <Hyperlink NavigateUri="http://github.com/hazama_yuinyan/BVEEditor"
+                           x:Name="hyperlink"
+                           ToolTip="{Binding Path=NavigateUri, ElementName=hyperlink}" />
+            </TextBlock>
+            
+            <TabControl Grid.Row="2" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        MinWidth="450">
+                <TabItem Header="{lex:Loc AboutDialog_VersionInfoTabText}" Name="InfoTab">
+                    <Grid Margin="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" MinWidth="127.5" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Row="0" Content="{lex:Loc Common_TextVersion}" HorizontalAlignment="Right" Margin="3" />
+                        <Label Grid.Column="1" Grid.Row="0" Content="{Binding AppVersion, Mode=OneTime}" Margin="3" />
+                        
+                        <Label Grid.Row="1" Content="{lex:Loc Common_TextCopyright}" HorizontalAlignment="Right" Margin="3" />
+                        <Label Grid.Column="1" Grid.Row="1" Content="{Binding AssemblyCopyright, Mode=OneTime}" Margin="3" />
+                        
+                        <Label Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Right" Content="{lex:Loc AboutDialog_TextModule}" Margin="3" />
+                        <ListBox Grid.Column="1" Grid.Row="2" Margin="3"
+                                 ItemsSource="{Binding Modules, Mode=OneTime}"
+                                 DisplayMemberPath="Value" />
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </Border>
+</UserControl>

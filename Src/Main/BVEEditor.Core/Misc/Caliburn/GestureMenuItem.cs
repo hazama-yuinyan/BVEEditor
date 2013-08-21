@@ -34,7 +34,8 @@ namespace BVEEditor.Misc.Caliburn
 
         static readonly IEnumerable<ModifierKeys> ModifierKeyValues = Enum.GetValues(typeof(ModifierKeys)).Cast<ModifierKeys>().Except(new []{ModifierKeys.None});
         static readonly IDictionary<ModifierKeys, string> Translations = new Dictionary<ModifierKeys, string>{
-            {ModifierKeys.Control, "Ctrl"}
+            {ModifierKeys.Control, "Ctrl"},
+            {ModifierKeys.None, ""}
         };
 
         static string BuildInputGestureText(ModifierKeys modifiers, Key key)

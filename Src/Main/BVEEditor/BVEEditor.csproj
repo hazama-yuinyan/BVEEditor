@@ -100,6 +100,13 @@
     <None Include="Workbench\FileService.cs" />
     <None Include="Workbench\FileServiceOpenedFile.cs" />
     <Compile Include="Util\TaskUtils.cs" />
+    <Compile Include="Views\Help\AboutDialogView.xaml.cs">
+      <DependentUpon>AboutDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Help\AboutDialogViewModel.cs" />
+    <Compile Include="Views\Help\AboutView.xaml.cs">
+      <DependentUpon>AboutView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Main\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -116,6 +123,14 @@
     <Compile Include="Workbench\RecentOpen.cs" />
     <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
+    <Page Include="Views\Help\AboutDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Help\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Main\MainMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

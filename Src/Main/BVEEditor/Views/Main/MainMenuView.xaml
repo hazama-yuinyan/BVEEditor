@@ -30,7 +30,9 @@
                 <Separator />
                 <MenuItem Header="{lex:Loc MainMenu_EditMenu_SelectAllEntry}" Command="SelectAll"></MenuItem>
             </MenuItem>
-            <MenuItem Header="{lex:Loc MainMenu_Help}"></MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_Help}">
+                <common:GestureMenuItem x:Name="ShowAboutDialog" Header="{lex:Loc MainMenu_HelpMenu_ShowAboutEntry}" />
+            </MenuItem>
         </Menu>
     </Grid>
 </UserControl>

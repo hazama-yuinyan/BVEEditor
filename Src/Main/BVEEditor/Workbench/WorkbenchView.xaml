@@ -41,6 +41,11 @@
                 <cal:Parameter Value="$eventArgs" />
             </cal:ActionMessage>
         </i:EventTrigger>
+        <i:EventTrigger EventName="RequestNavigate">
+            <cal:ActionMessage MethodName="OnRequestNavigate">
+                <cal:Parameter Value="$eventArgs" />
+            </cal:ActionMessage>
+        </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo />

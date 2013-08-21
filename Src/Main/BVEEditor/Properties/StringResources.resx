@@ -252,4 +252,28 @@
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
     <value>${0} is modified. Do you want to save it before quitting the application?</value>
   </data>
+  <data name="Common_Dialogs_Captions_About" xml:space="preserve">
+    <value>About BVEEditor</value>
+  </data>
+  <data name="Common_AppName" xml:space="preserve">
+    <value>BVEEditor</value>
+  </data>
+  <data name="Common_AppDescription" xml:space="preserve">
+    <value>An open-source editor for BVE files.</value>
+  </data>
+  <data name="AboutDialog_TextModule" xml:space="preserve">
+    <value>Loaded Modules</value>
+  </data>
+  <data name="AboutDialog_VersionInfoTabText" xml:space="preserve">
+    <value>Version Info</value>
+  </data>
+  <data name="Common_TextCopyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="Common_TextVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="MainMenu_HelpMenu_ShowAboutEntry" xml:space="preserve">
+    <value>About</value>
+  </data>
 </root>

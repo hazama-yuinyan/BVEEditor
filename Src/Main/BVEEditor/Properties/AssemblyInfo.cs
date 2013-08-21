@@ -8,7 +8,7 @@ using System.Windows;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("BVEEditor")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Open-source editor for BVE files")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BVEEditor")]

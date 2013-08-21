@@ -252,4 +252,28 @@
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
     <value>${0}は変更されています\nアプリケーションを終了する前に保存しますか？</value>
   </data>
+  <data name="Common_Dialogs_Captions_About" xml:space="preserve">
+    <value>BVEEditorの情報</value>
+  </data>
+  <data name="Common_AppName" xml:space="preserve">
+    <value>BVEEditor</value>
+  </data>
+  <data name="Common_AppDescription" xml:space="preserve">
+    <value>BVEファイル編集用のオープンソースエディター。</value>
+  </data>
+  <data name="AboutDialog_TextModule" xml:space="preserve">
+    <value>読み込み済モジュール一覧</value>
+  </data>
+  <data name="AboutDialog_VersionInfoTabText" xml:space="preserve">
+    <value>バージョン情報</value>
+  </data>
+  <data name="Common_TextCopyright" xml:space="preserve">
+    <value>著作権</value>
+  </data>
+  <data name="Common_TextVersion" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="MainMenu_HelpMenu_ShowAboutEntry" xml:space="preserve">
+    <value>BVEEditorについて</value>
+  </data>
 </root>

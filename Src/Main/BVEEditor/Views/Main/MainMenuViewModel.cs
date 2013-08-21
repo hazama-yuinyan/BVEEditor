@@ -117,6 +117,11 @@ namespace BVEEditor.Views
             yield return result_factory.Close();
         }
 
+        public IEnumerable<IResult> ShowAboutDialog()
+        {
+            yield return result_factory.ShowDialogResult<AboutDialogViewModel>();
+        }
+
         #region IHandle<ActiveViewDocumentChangedEvent> メンバー
 
         public void Handle(ActiveViewDocumentChangedEvent message)

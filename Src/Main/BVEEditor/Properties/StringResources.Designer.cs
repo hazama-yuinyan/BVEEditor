@@ -61,11 +61,56 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Loaded Modules に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_TextModule {
+            get {
+                return ResourceManager.GetString("AboutDialog_TextModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Version Info に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_VersionInfoTabText {
+            get {
+                return ResourceManager.GetString("AboutDialog_VersionInfoTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   All files *.*|* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string BVEEditor_FileFilter_AllFiles {
             get {
                 return ResourceManager.GetString("BVEEditor_FileFilter_AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   An open-source editor for BVE files. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_AppDescription {
+            get {
+                return ResourceManager.GetString("Common_AppDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BVEEditor に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_AppName {
+            get {
+                return ResourceManager.GetString("Common_AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   About BVEEditor に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Captions_About {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Captions_About", resourceCulture);
             }
         }
         
@@ -151,6 +196,15 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Copyright に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_TextCopyright {
+            get {
+                return ResourceManager.GetString("Common_TextCopyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   No に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNo {
@@ -192,6 +246,15 @@ namespace BVEEditor.Properties {
         public static string Common_TextUndefined {
             get {
                 return ResourceManager.GetString("Common_TextUndefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Version に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_TextVersion {
+            get {
+                return ResourceManager.GetString("Common_TextVersion", resourceCulture);
             }
         }
         
@@ -435,6 +498,15 @@ namespace BVEEditor.Properties {
         public static string MainMenu_Help {
             get {
                 return ResourceManager.GetString("MainMenu_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   About に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_HelpMenu_ShowAboutEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_HelpMenu_ShowAboutEntry", resourceCulture);
             }
         }
         

@@ -363,6 +363,12 @@ namespace BVEEditor.Workbench
             }
         }
 
+        void OnRequestNavigate(RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
+        }
+
         void ViewDocConductorPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "ActiveItem"){
