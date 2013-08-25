@@ -61,6 +61,15 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Lists all assembly names that are currently loaded. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_Descriptions_LoadedModule {
+            get {
+                return ResourceManager.GetString("AboutDialog_Descriptions_LoadedModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Loaded Modules に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string AboutDialog_TextModule {
@@ -142,7 +151,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   ${0} is modified. Do you want to save it before quitting the application? に類似しているローカライズされた文字列を検索します。
+        ///   {0} is modified. Do you want to save it before quitting the application? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_Dialogs_Messages_SaveBeforeClose {
             get {
@@ -196,6 +205,15 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Close に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_TextClose {
+            get {
+                return ResourceManager.GetString("Common_TextClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Copyright に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextCopyright {
@@ -214,7 +232,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   ${0} is not an integer! に類似しているローカライズされた文字列を検索します。
+        ///   {0} is not an integer! に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNonInteger {
             get {
@@ -223,7 +241,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   ${0} is not a number! に類似しているローカライズされた文字列を検索します。
+        ///   {0} is not a number! に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_TextNonNumber {
             get {
@@ -475,7 +493,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Save all the files that are open に類似しているローカライズされた文字列を検索します。
+        ///   Save all the files that are currently open に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_SaveAll_Description {
             get {
@@ -520,20 +538,47 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   ln ${Line} col ${Column} ch ${Character} に類似しているローカライズされた文字列を検索します。
+        ///   ln ${line} col ${column} ch ${character} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string MainWindow_StatusBar_CursorPanelText {
+        public static string StatusBar_CursorPanelText {
             get {
-                return ResourceManager.GetString("MainWindow_StatusBar_CursorPanelText", resourceCulture);
+                return ResourceManager.GetString("StatusBar_CursorPanelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicates the encoding name of the current active document に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StatusBar_Descriptions_EncodingName {
+            get {
+                return ResourceManager.GetString("StatusBar_Descriptions_EncodingName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Successfully saved &quot;${fileName}&quot; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StatusBar_Messages_SavedFile {
+            get {
+                return ResourceManager.GetString("StatusBar_Messages_SavedFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Successfully saved the document as &quot;${newFileName}&quot; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StatusBar_Messages_SavedFileAs {
+            get {
+                return ResourceManager.GetString("StatusBar_Messages_SavedFileAs", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Ready に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string MainWindow_StatusBar_ReadyMessage {
+        public static string StatusBar_ReadyMessage {
             get {
-                return ResourceManager.GetString("MainWindow_StatusBar_ReadyMessage", resourceCulture);
+                return ResourceManager.GetString("StatusBar_ReadyMessage", resourceCulture);
             }
         }
     }

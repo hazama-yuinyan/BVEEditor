@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+using Caliburn.Micro;
 using ICSharpCode.Core;
 
 namespace BVEEditor.Workbench
@@ -69,6 +70,13 @@ namespace BVEEditor.Workbench
         IRecentOpen RecentOpen{
             get;
         }
+
+        /// <summary>
+        /// Attempts to save the ViewDocument and shows the save-as dialog if needed.
+        /// </summary>
+        /// <param name="document">The ViewDocument to be saved</param>
+        /// <param name="doQuickSave">Flag hinting that it should show the save-as dialog</param>
+        IEnumerable<IResult> SaveDocument(ViewDocumentViewModel document, bool doQuickSave);
 		
 		/// <summary>
 		/// Is called, when the active content has changed.

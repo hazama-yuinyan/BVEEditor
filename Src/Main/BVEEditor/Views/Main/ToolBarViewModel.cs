@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 using BVEEditor.Events;
 using BVEEditor.Result;
 using BVEEditor.Strategies;
-using BVEEditor.Views.Help;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
 
 namespace BVEEditor.Views.Main
 {
-    /// <summary>
-    /// The view model for the main menu.
-    /// </summary>
-    public class MainMenuViewModel : PropertyChangedBase, IHandle<ActiveViewDocumentChangedEvent>
+    public class ToolBarViewModel : PropertyChangedBase
     {
-        const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
+        const string ToolBarPath = "/BVEEditor/Workbench/ToolBar";
 
         readonly IResultFactory result_factory;
         readonly IFileDialogStrategies file_strategies;
@@ -41,7 +37,7 @@ namespace BVEEditor.Views.Main
         // because doing so creates a cyclic dependency.
         public IWorkbench Workbench{private get; set;}
 
-        public MainMenuViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
+        public ToolBarViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
             IDisplayBindingService displayBindingService)
         {
             eventAggregator.Subscribe(this);
@@ -81,7 +77,12 @@ namespace BVEEditor.Views.Main
 
         public IEnumerable<IResult> QuickSaveDocument()
         {
-            return Workbench.SaveDocument(active_doc, IsPathSet);
+            if(IsPathSet){
+                Workbench.SaveDocument(active_doc, true);
+                return null;
+            }
+            
+            return Workbench.SaveDocument(active_doc, false);
         }
 
         public bool CanQuickSaveDocument{
@@ -101,11 +102,6 @@ namespace BVEEditor.Views.Main
             yield return result_factory.Close();
         }
 
-        public IEnumerable<IResult> ShowAboutDialog()
-        {
-            yield return result_factory.ShowDialogResult<AboutDialogViewModel>();
-        }
-
         #region IHandle<ActiveViewDocumentChangedEvent> メンバー
 
         public void Handle(ActiveViewDocumentChangedEvent message)
@@ -114,9 +110,7 @@ namespace BVEEditor.Views.Main
                 ActiveDocument.PropertyChanged -= ViewDocumentPropertyChanged;
 
             ActiveDocument = message.ViewDocument;
-            
-            if(ActiveDocument != null)
-                ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
+            ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
         }
 
         #endregion

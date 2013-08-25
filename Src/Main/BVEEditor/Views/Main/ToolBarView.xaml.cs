@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BVEEditor.Views.Main
 {
     /// <summary>
-    /// MainMenuView.xaml の相互作用ロジック
+    /// ToolBarView.xaml の相互作用ロジック
     /// </summary>
-    public partial class MainMenuView : UserControl
+    public partial class ToolBarView : UserControl
     {
-        public MainMenuView()
+        public ToolBarView()
         {
             InitializeComponent();
         }

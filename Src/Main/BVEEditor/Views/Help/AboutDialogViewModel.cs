@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using BVEEditor.Result;
 using BVEEditor.Workbench;
+using Caliburn.Micro;
+using ICSharpCode.Core;
 
-namespace BVEEditor.Views
+namespace BVEEditor.Views.Help
 {
     public class AboutDialogViewModel : ShellPresentationViewModel
     {
@@ -48,10 +50,13 @@ namespace BVEEditor.Views
         #endregion
 
         public AboutDialogViewModel(IResultFactory resultFactory) : base(resultFactory)
-        {}
-
-        public void PressedOk()
         {
+            DisplayName = StringParser.Parse("${res:BVEEditor:StringResources:Common.Dialogs.Captions.About}");
+        }
+
+        public IEnumerable<IResult> PressedClose()
+        {
+            yield return Result.Close();
         }
     }
 }

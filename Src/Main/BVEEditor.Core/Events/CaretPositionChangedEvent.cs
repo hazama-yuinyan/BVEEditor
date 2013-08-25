@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BVEEditor.Events
 {
+    /// <summary>
+    /// Event fired when the caret is moved.
+    /// </summary>
     public class CaretPositionChangedEvent
     {
         public int Line{get; private set;}

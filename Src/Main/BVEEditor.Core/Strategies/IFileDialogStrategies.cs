@@ -13,7 +13,18 @@ namespace BVEEditor.Strategies
     /// </summary>
     public interface IFileDialogStrategies
     {
-        IEnumerable<IResult> SaveAs(ViewDocumentViewModel document, bool quickSave, Action<string> fileSelected);
-        IEnumerable<IResult> Open(Action<string> fileSelected);
+        /// <summary>
+        /// Saves the document to the specified file.
+        /// </summary>
+        /// <param name="document">The ViewDocument to be saved</param>
+        /// <param name="doQuickSave">Flag to indicate it should show a save-as dialog</param>
+        /// <param name="fileSelected">Delegate</param>
+        IEnumerable<IResult> Save(ViewDocumentViewModel document, bool doQuickSave, System.Action<string> fileSelected);
+
+        /// <summary>
+        /// Opens a document from a file.
+        /// </summary>
+        /// <param name="fileSelected"></param>
+        IEnumerable<IResult> Open(System.Action<string> fileSelected);
     }
 }

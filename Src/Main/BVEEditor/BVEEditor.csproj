@@ -70,6 +70,9 @@
     <Reference Include="Xceed.Wpf.AvalonDock">
       <HintPath>..\..\..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
     </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\..\..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.Expression">
       <HintPath>..\..\..\packages\AvalonDock.2.0.2000\lib\net40\Xceed.Wpf.AvalonDock.Themes.Expression.dll</HintPath>
     </Reference>
@@ -115,6 +118,10 @@
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Main\StatusBarViewModel.cs" />
+    <Compile Include="Views\Main\ToolBarView.xaml.cs">
+      <DependentUpon>ToolBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Main\ToolBarViewModel.cs" />
     <Compile Include="Workbench\ErrorDocumentView.xaml.cs">
       <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +130,10 @@
     <Compile Include="Workbench\RecentOpen.cs" />
     <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Help\AboutDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Main\StatusBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Main\ToolBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +211,10 @@
     <ProjectReference Include="..\BVEEditor.Core\BVEEditor.Core.csproj">
       <Project>{df868466-a67a-438d-85aa-e438597ba457}</Project>
       <Name>BVEEditor.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BVEEditor.Themes\BVEEditor.Themes.csproj">
+      <Project>{2eea953d-e2d9-4e2a-890e-63be7590a0b8}</Project>
+      <Name>BVEEditor.Themes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core.Presentation\Core.Presentation.csproj">
       <Project>{a8264efb-bf01-4901-9154-1839ae2b7276}</Project>

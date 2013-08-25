@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalonEdit.AddIn", "Src\Add
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.SharpDevelop.Widgets", "Src\Main\ICSharpCode.SharpDevelop.Widgets\Project\ICSharpCode.SharpDevelop.Widgets.csproj", "{8035765F-D51F-4A0C-A746-2FD100E19419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BVEEditor.Themes", "Src\Main\Themes\BVEEditor.Themes.csproj", "{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BVEEditor.Themes", "Src\Main\BVEEditor.Themes\BVEEditor.Themes.csproj", "{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,14 +101,14 @@ Global
 		{8035765F-D51F-4A0C-A746-2FD100E19419}.net_4_5_Release|Any CPU.Build.0 = Release|Any CPU
 		{8035765F-D51F-4A0C-A746-2FD100E19419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8035765F-D51F-4A0C-A746-2FD100E19419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.net_4_5_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.net_4_5_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.net_4_5_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.net_4_5_Release|Any CPU.Build.0 = Release|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE7C9125-372B-4941-A3F6-8FF6CAD8F692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.net_4_5_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.net_4_5_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.net_4_5_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.net_4_5_Release|Any CPU.Build.0 = Release|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EEA953D-E2D9-4E2A-890E-63BE7590A0B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

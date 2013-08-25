@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BitmapImage x:Key="ImageAbout" UriSource="/BVEEditor.Themes;component/Icons/bveeditor_icon.png" />
+
+    <BitmapImage x:Key="Undo" UriSource="/BVEEditor.Themes;component/Icons/Undo.png" />
+    <BitmapImage x:Key="Redo" UriSource="/BVEEditor.Themes;component/Icons/Redo.png" />
+    <BitmapImage x:Key="Cut" UriSource="/BVEEditor.Themes;component/Icons/Cut.png" />
+    <BitmapImage x:Key="Copy" UriSource="/BVEEditor.Themes;component/Icons/Copy.png" />
+    <BitmapImage x:Key="Paste" UriSource="/BVEEditor.Themes;component/Icons/Paste.png" />
+    <BitmapImage x:Key="Delete" UriSource="/BVEEditor.Themes;component/Icons/Delete.png" />
+
+    <BitmapImage x:Key="NewDocument" UriSource="/BVEEditor.Themes;component/Icons/NewDocument.png" />
+    <BitmapImage x:Key="OpenFile" UriSource="/BVEEditor.Themes;component/Icons/OpenFile.png" />
+    <BitmapImage x:Key="Save" UriSource="/BVEEditor.Themes;component/Icons/Save.png" />
+    <BitmapImage x:Key="SaveAs" UriSource="/BVEEditor.Themes;component/Icons/SaveAs.png" />
+    <BitmapImage x:Key="SaveAll" UriSource="/BVEEditor.Themes;component/Icons/SaveAll.png" />
+    <BitmapImage x:Key="ApplicationExit" UriSource="/BVEEditor.Themes;component/Icons/Exit.png" />
+
+    <BitmapImage x:Key="Indent" UriSource="/BVEEditor.Themes;component/Icons/Indent.png" />
+    <BitmapImage x:Key="Outdent" UriSource="/BVEEditor.Themes;component/Icons/Outdent.png" />
+
+    <BitmapImage x:Key="InsertMode" UriSource="/BVEEditor.Themes;component/Icons/InsertMode.png" />
+</ResourceDictionary>

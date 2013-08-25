@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/BVEEditor.Themes;component/Icons.xaml" />
                 <ResourceDictionary>
                     <startup:Bootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>

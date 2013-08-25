@@ -182,12 +182,6 @@ namespace BVEEditor.Startup
             foreach(var inst in core_services.Item2)
                 kernel.Bind(inst.Key).ToConstant(inst.Value);
 
-            //var resource_service = core_services.Item2.Select(inst => inst.;
-
-			//Assembly exe = Assembly.Load(properties.ResourceAssemblyName);
-			//resource_service.RegisterNeutralStrings(new ResourceManager("BVEEditor.Resources.StringResources", exe));
-			//resource_service.RegisterNeutralImages(new ResourceManager("BVEEditor.Resources.BitmapResources", exe));
-			
 			/*CommandWrapper.LinkCommandCreator = (link => new LinkCommand(link));
 			//CommandWrapper.WellKnownCommandCreator = Core.Presentation.MenuService.GetKnownCommand;
 			CommandWrapper.RegisterConditionRequerySuggestedHandler = (eh => CommandManager.RequerySuggested += eh);

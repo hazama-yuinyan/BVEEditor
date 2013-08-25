@@ -27,7 +27,7 @@ using BVEEditor.Result;
 using BVEEditor.Services;
 using BVEEditor.Startup;
 using BVEEditor.Strategies;
-using BVEEditor.Views;
+using BVEEditor.Views.Main;
 using Caliburn.Micro;
 //using Core.Presentation;
 using ICSharpCode.Core;
@@ -123,7 +123,15 @@ namespace BVEEditor.Workbench
 		}
 
         public MainMenuViewModel Menu{
-            get; set;
+            get; private set;
+        }
+
+        public ToolBarViewModel ToolBar{
+            get; private set;
+        }
+
+        public StatusBarViewModel StatusBar{
+            get; private set;
         }
 
         IRecentOpen recent_open;
@@ -133,7 +141,8 @@ namespace BVEEditor.Workbench
 		
 		public WorkbenchViewModel(/*IFileSystem fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
             IResultFactory resultFactory, IFileDialogStrategies fileStrategies, MainMenuViewModel mainMenuViewModel,
-            IMessageService messageService, ViewDocumentConductor viewDocConductor) : base(resultFactory)
+            IMessageService messageService, ViewDocumentConductor viewDocConductor, StatusBarViewModel statusBar,
+            ToolBarViewModel toolBar) : base(resultFactory)
 		{
             event_aggregator = eventAggregator;
             eventAggregator.Subscribe(this);
@@ -142,6 +151,11 @@ namespace BVEEditor.Workbench
             file_strategies = fileStrategies;
             msg_service = messageService;
             Menu = mainMenuViewModel;
+            StatusBar = statusBar;
+            ToolBar = toolBar;
+
+            mainMenuViewModel.Workbench = this;
+            toolBar.Workbench = this;
             
             viewdoc_conductor.ConductWith(this);
 
@@ -155,16 +169,6 @@ namespace BVEEditor.Workbench
 					//AddPad(content);
 			}
 			
-			/*main_menu.ItemsSource = MenuService.CreateMenuItems(this, this, MainMenuPath, activationMethod: "MainMenu", immediatelyExpandMenuBuildersForShortcuts: true);
-			
-			tool_bars = ToolBarService.CreateToolBars(this, this, "/BVEEditor/Workbench/ToolBar");
-			foreach(ToolBar tb in tool_bars){
-				DockPanel.SetDock(tb, Dock.Top);
-				dockPanel.Children.Insert(1, tb);
-			}
-			DockPanel.SetDock(status_bar, Dock.Bottom);
-			main_panel.Children.Insert(main_panel.Children.Count - 2, status_bar);*/
-			
 			//Core.WinForms.MenuService.ExecuteCommand = ExecuteCommand;
 			//UpdateMenu();
 			
@@ -173,25 +177,22 @@ namespace BVEEditor.Workbench
 			//SD.FileService.FileRemoved += ((RecentOpen)SD.FileService.RecentOpen).FileRemoved;
 			//SD.FileService.FileRenamed += ((RecentOpen)SD.FileService.RecentOpen).FileRenamed;
 			
-			requery_suggested_event_handler = new EventHandler(CommandManager_RequerySuggested);
-			CommandManager.RequerySuggested += requery_suggested_event_handler;
 			//resourceService.LanguageChanged += OnLanguageChanged;
             viewdoc_conductor.PropertyChanged += ViewDocConductorPropertyChanged;
-			
-			//SD.StatusBar.SetMessage("${res:MainWindow.StatusBar.ReadyMessage}");
 		}
 
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
             InitDocking();
+            event_aggregator.Publish(new StatusBarMessageChangedEvent("${res:BVEEditor:StringResources:StatusBar.ReadyMessage}"));
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)) {
+            foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)){
                 try {
                     command.Execute(null);
                 }
@@ -251,23 +252,6 @@ namespace BVEEditor.Workbench
             get{return (this.GetView() as IDockingManagerProvider).DockingManager;}
         }
 		
-		// keep a reference to the event handler to prevent it from being garbage collected
-		// (CommandManager.RequerySuggested only keeps weak references to the event handlers)
-		EventHandler requery_suggested_event_handler;
-
-		void CommandManager_RequerySuggested(object sender, EventArgs e)
-		{
-			UpdateMenu();
-		}
-		
-		void UpdateMenu()
-		{
-			/*MenuService.UpdateStatus(main_menu.ItemsSource);
-			
-			foreach(ToolBar tb in tool_bars)
-				ToolBarService.UpdateStatus(tb.ItemsSource);*/
-		}
-		
 		void OnLanguageChanged(object sender, EventArgs e)
 		{
 			//MenuService.UpdateText(main_menu.ItemsSource);
@@ -301,7 +285,7 @@ namespace BVEEditor.Workbench
                 }
             }
             catch(Exception ex){
-                //yield return Result.ShowMessageBox(StringParser.Parse("{res:Common.Dialogs.ExceptionRaised}"), ex.Message, MessageBoxButton.OK);
+                msg_service.ShowException(ex);
             }
         }
 
@@ -323,8 +307,9 @@ namespace BVEEditor.Workbench
             try {
                 if(data != null && data.GetDataPresent(DataFormats.FileDrop)){
                     string[] files = (string[])data.GetData(DataFormats.FileDrop);
-                    if(files != null) {
-                        foreach(string file in files) {
+                    
+                    if(files != null){
+                        foreach(string file in files){
                             if(File.Exists(file))
                                 return DragDropEffects.Link;
                         }
@@ -371,9 +356,22 @@ namespace BVEEditor.Workbench
 
         void ViewDocConductorPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            // We publish the ActiveDocumentChangedEvent here
+            // because ViewDocumentConductor does the real job.
             if(e.PropertyName == "ActiveItem"){
-                event_aggregator.Publish(new ActiveViewDocumentChangedEvent(viewdoc_conductor.ActiveItem));
-				NotifyOfPropertyChange(() => viewdoc_conductor.ActiveItem);
+                NotifyOfPropertyChange(() => viewdoc_conductor.ActiveItem);
+
+                // Ensure that no pending calls are in the dispatcher queue
+                // This makes sure that we are blocked until bindings are re-established
+                // (Bindings are, for example, required to scroll a selection into view for search/replace)
+                Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.SystemIdle, (System.Action)delegate{
+                    event_aggregator.Publish(new ActiveViewDocumentChangedEvent(viewdoc_conductor.ActiveItem));
+
+                    /*if(value != null && this.mShutDownInProgress == false) {
+                            if(value.IsFilePathReal == true)
+                                this.Config.LastActiveFile = value.FilePath;
+                    }*/
+                });
             }
         }
         #endregion
@@ -403,6 +401,10 @@ namespace BVEEditor.Workbench
 				return viewdoc_conductor.ActiveItem;
 			}
 			private set{
+                // Don't ever try to publish an ActiveDocumentChangedEvent here!
+                // Since we delegate the job of setting active document to ViewDocumentConductor
+                // it'll cause event re-publishing, ignorance of events or, in worst case, recursive calls
+                // and lead to stack overflow.
 				if(viewdoc_conductor.ActiveItem != value)
                     viewdoc_conductor.ActiveItem = value;
 			}
@@ -438,10 +440,21 @@ namespace BVEEditor.Workbench
 				if(res.Result == System.Windows.MessageBoxResult.Cancel){
 					yield return Result.Cancel(cancelCallback);
                 }else if(res.Result == System.Windows.MessageBoxResult.Yes){
-                    foreach(var result in file_strategies.SaveAs(document, true, null))
+                    foreach(var result in file_strategies.Save(document, true, null))
 					    yield return result;
                 }
 			}
+        }
+
+        public IEnumerable<IResult> SaveDocument(ViewDocumentViewModel document, bool doQuickSave)
+        {
+            return file_strategies.Save(document, doQuickSave, path => SaveInternal(document, path));
+        }
+
+        void SaveInternal(ViewDocumentViewModel document, string path)
+        {
+            document.FilePath = ICSharpCode.Core.FileName.Create(path);
+            document.Save(path);
         }
 		#endregion
 		
@@ -473,7 +486,7 @@ namespace BVEEditor.Workbench
 			                     FileUtility.NormalizePath(viewDocument.FileName).ToUpperInvariant());
 		}
 		
-		public bool LoadDocumentProperties {
+		public bool WillLoadDocumentProperties {
 			get { return property_service.Get("BVEEditor.LoadDocumentProperties", true); }
 			set { property_service.Set("BVEEditor.LoadDocumentProperties", value); }
 		}
@@ -485,7 +498,7 @@ namespace BVEEditor.Workbench
 		public void StoreMemento(ViewDocumentViewModel viewDocument)
 		{
 			IMementoCapable memento_capable = viewDocument as IMementoCapable;
-			if(memento_capable != null && LoadDocumentProperties){
+			if(memento_capable != null && WillLoadDocumentProperties){
 				if(viewDocument.FilePath == null)
 					return;
 				
@@ -502,7 +515,7 @@ namespace BVEEditor.Workbench
 		void LoadViewDocumentMemento(ViewDocumentViewModel viewDocument)
 		{
 			IMementoCapable memento_capable = viewDocument as IMementoCapable;
-			if(memento_capable != null && LoadDocumentProperties){
+			if(memento_capable != null && WillLoadDocumentProperties){
 				if(viewDocument.FileName == null)
 					return;
 				

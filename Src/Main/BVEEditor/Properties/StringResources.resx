@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
-    <value>Save all the files that are open</value>
+    <value>Save all the files that are currently open</value>
   </data>
   <data name="MainMenu_FileMenu_Save_Description" xml:space="preserve">
     <value>Save current file</value>
@@ -132,7 +132,7 @@
   <data name="MainMenu_EditMenu_Paste_Description" xml:space="preserve">
     <value>Paste item from clipboard</value>
   </data>
-  <data name="MainWindow_StatusBar_ReadyMessage" xml:space="preserve">
+  <data name="StatusBar_ReadyMessage" xml:space="preserve">
     <value>Ready</value>
   </data>
   <data name="MainMenu_EditMenu_Copy_Description" xml:space="preserve">
@@ -169,10 +169,10 @@
     <value>Redo last undo action</value>
   </data>
   <data name="Common_TextNonInteger" xml:space="preserve">
-    <value>${0} is not an integer!</value>
+    <value>{0} is not an integer!</value>
   </data>
   <data name="Common_TextNonNumber" xml:space="preserve">
-    <value>${0} is not a number!</value>
+    <value>{0} is not a number!</value>
   </data>
   <data name="BVEEditor_FileFilter_AllFiles" xml:space="preserve">
     <value>All files *.*|*</value>
@@ -198,8 +198,8 @@
   <data name="Common_TextOk" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="MainWindow_StatusBar_CursorPanelText" xml:space="preserve">
-    <value>ln ${Line} col ${Column} ch ${Character}</value>
+  <data name="StatusBar_CursorPanelText" xml:space="preserve">
+    <value>ln ${line} col ${column} ch ${character}</value>
   </data>
   <data name="Common_SearchReplace_MatchCase" xml:space="preserve">
     <value>Match case</value>
@@ -250,7 +250,7 @@
     <value>Save before closing?</value>
   </data>
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
-    <value>${0} is modified. Do you want to save it before quitting the application?</value>
+    <value>{0} is modified. Do you want to save it before quitting the application?</value>
   </data>
   <data name="Common_Dialogs_Captions_About" xml:space="preserve">
     <value>About BVEEditor</value>
@@ -275,5 +275,20 @@
   </data>
   <data name="MainMenu_HelpMenu_ShowAboutEntry" xml:space="preserve">
     <value>About</value>
+  </data>
+  <data name="StatusBar_Descriptions_EncodingName" xml:space="preserve">
+    <value>Indicates the encoding name of the current active document</value>
+  </data>
+  <data name="Common_TextClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="AboutDialog_Descriptions_LoadedModule" xml:space="preserve">
+    <value>Lists all assembly names that are currently loaded.</value>
+  </data>
+  <data name="StatusBar_Messages_SavedFile" xml:space="preserve">
+    <value>Successfully saved "${fileName}"</value>
+  </data>
+  <data name="StatusBar_Messages_SavedFileAs" xml:space="preserve">
+    <value>Successfully saved the document as "${newFileName}"</value>
   </data>
 </root>

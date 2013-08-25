@@ -50,7 +50,7 @@ namespace BVEEditor.Workbench
         }
 		
 		bool is_dirty;
-		public virtual bool IsDirty{
+		public bool IsDirty{
 			get{return is_dirty;}
             set{
                 if(is_dirty != value){
@@ -93,22 +93,6 @@ namespace BVEEditor.Workbench
             result_factory = resultFactory;
 		}
 		
-		#region Dispose
-		bool is_disposed;
-		public bool IsDisposed {
-			get{return is_disposed;}
-		}
-		
-		event EventHandler Disposed;
-		
-		public virtual void Dispose()
-		{
-			is_disposed = true;
-			if(Disposed != null)
-				Disposed(this, EventArgs.Empty);
-		}
-		#endregion
-
         public virtual ViewDocumentViewModel Configure(string fileToOpen)
         {
             FilePath = ICSharpCode.Core.FileName.Create(fileToOpen);

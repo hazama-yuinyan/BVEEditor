@@ -12,12 +12,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BVEEditor.Views
+namespace BVEEditor.Views.Help
 {
     /// <summary>
     /// AboutDialogView.xaml の相互作用ロジック
     /// </summary>
-    public partial class AboutDialogView : Window
+    public partial class AboutDialogView
     {
         public AboutDialogView()
         {

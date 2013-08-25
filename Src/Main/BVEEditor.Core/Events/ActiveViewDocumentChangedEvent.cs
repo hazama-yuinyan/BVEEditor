@@ -7,6 +7,9 @@ using BVEEditor.Workbench;
 
 namespace BVEEditor.Events
 {
+    /// <summary>
+    /// Event fired when the active ViewDocument is changed.
+    /// </summary>
     public class ActiveViewDocumentChangedEvent
     {
         public ViewDocumentViewModel ViewDocument{get; private set;}

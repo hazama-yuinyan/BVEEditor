@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainMenu_FileMenu_Save_Description" xml:space="preserve">
-    <value>このバッファーを保存する</value>
+    <value>現在アクティブなファイルを保存する</value>
   </data>
   <data name="MainMenu_EditMenu_Redo_Description" xml:space="preserve">
     <value>一個前に取り消した動作を再度行う</value>
@@ -133,7 +133,7 @@
     <value>プロジェクトを開く</value>
   </data>
   <data name="MainMenu_FileMenu_SaveAll_Description" xml:space="preserve">
-    <value>開いているすべてのバッファーを保存する</value>
+    <value>開いているすべてのファイルを保存する</value>
   </data>
   <data name="MainMenu_EditMenu_Cut_Description" xml:space="preserve">
     <value>選択されたテキストをカットする</value>
@@ -148,15 +148,15 @@
     <value>選択されたテキストをコピーする</value>
   </data>
   <data name="MainMenu_FileMenu_Open_File_Description" xml:space="preserve">
-    <value>ディスクからバッファーを開く</value>
+    <value>ディスクからファイルを開く</value>
   </data>
   <data name="MainMenu_EditMenu_Paste_Description" xml:space="preserve">
     <value>クリップボードのテキストを貼り付ける</value>
   </data>
   <data name="MainMenu_FileMenu_New_File_Description" xml:space="preserve">
-    <value>新しいバッファーを開く</value>
+    <value>新しいファイルを開く</value>
   </data>
-  <data name="MainWindow_StatusBar_ReadyMessage" xml:space="preserve">
+  <data name="StatusBar_ReadyMessage" xml:space="preserve">
     <value>準備完了</value>
   </data>
   <data name="BVEEditor_FileFilter_AllFiles" xml:space="preserve">
@@ -192,8 +192,8 @@
   <data name="MainMenu_FileMenu_OpenDocumentEntry" xml:space="preserve">
     <value>ファイルを開く...</value>
   </data>
-  <data name="MainWindow_StatusBar_CursorPanelText" xml:space="preserve">
-    <value>${Line}行 ${Column}列 ${Character}文字</value>
+  <data name="StatusBar_CursorPanelText" xml:space="preserve">
+    <value>${line}行 ${column}列 ${character}文字</value>
   </data>
   <data name="Common_TextCancel" xml:space="preserve">
     <value>キャンセル</value>
@@ -250,7 +250,7 @@
     <value>閉じる前に保存しますか？</value>
   </data>
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
-    <value>${0}は変更されています\nアプリケーションを終了する前に保存しますか？</value>
+    <value>{0}は変更されています\nアプリケーションを終了する前に保存しますか？</value>
   </data>
   <data name="Common_Dialogs_Captions_About" xml:space="preserve">
     <value>BVEEditorの情報</value>
@@ -275,5 +275,20 @@
   </data>
   <data name="MainMenu_HelpMenu_ShowAboutEntry" xml:space="preserve">
     <value>BVEEditorについて</value>
+  </data>
+  <data name="StatusBar_Descriptions_EncodingName" xml:space="preserve">
+    <value>現在アクティブなドキュメントのエンコーディング名を表示します</value>
+  </data>
+  <data name="Common_TextClose" xml:space="preserve">
+    <value>閉じる</value>
+  </data>
+  <data name="AboutDialog_Descriptions_LoadedModules" xml:space="preserve">
+    <value>現在読み込まれているすべてのモジュール名を一覧表示します</value>
+  </data>
+  <data name="StatusBar_Messages_SavedFile" xml:space="preserve">
+    <value>"${fileName}"を保存しました</value>
+  </data>
+  <data name="StatusBar_Messages_SavedFileAs" xml:space="preserve">
+    <value>ドキュメントを"${newFileName}"として保存しました</value>
   </data>
 </root>

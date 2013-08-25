@@ -60,7 +60,7 @@
         </Grid.RowDefinitions>
         
         <ContentControl x:Name="Menu" Grid.Row="0" />
-        <ContentControl x:Name="Toolbar" Grid.Row="1" />
+        <ContentControl x:Name="ToolBar" Grid.Row="1" />
         <avalonDock:DockingManager
 			x:Name="dock_manager"
             Grid.Row="2"
