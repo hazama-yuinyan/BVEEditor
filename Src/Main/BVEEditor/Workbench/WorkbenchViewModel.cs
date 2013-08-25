@@ -359,7 +359,7 @@ namespace BVEEditor.Workbench
             // We publish the ActiveDocumentChangedEvent here
             // because ViewDocumentConductor does the real job.
             if(e.PropertyName == "ActiveItem"){
-                NotifyOfPropertyChange(() => viewdoc_conductor.ActiveItem);
+                NotifyOfPropertyChange(() => ActiveDocument);
 
                 // Ensure that no pending calls are in the dispatcher queue
                 // This makes sure that we are blocked until bindings are re-established

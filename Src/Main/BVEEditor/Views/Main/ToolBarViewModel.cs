@@ -77,12 +77,7 @@ namespace BVEEditor.Views.Main
 
         public IEnumerable<IResult> QuickSaveDocument()
         {
-            if(IsPathSet){
-                Workbench.SaveDocument(active_doc, true);
-                return null;
-            }
-            
-            return Workbench.SaveDocument(active_doc, false);
+            return Workbench.SaveDocument(active_doc, IsPathSet);
         }
 
         public bool CanQuickSaveDocument{
@@ -110,14 +105,16 @@ namespace BVEEditor.Views.Main
                 ActiveDocument.PropertyChanged -= ViewDocumentPropertyChanged;
 
             ActiveDocument = message.ViewDocument;
-            ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
+
+            if(ActiveDocument != null)
+                ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
         }
 
         #endregion
 
         void ViewDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "is_dirty"){
+            if(e.PropertyName == "IsDirty"){
                 NotifyOfPropertyChange(() => CanQuickSaveDocument);
             }
         }

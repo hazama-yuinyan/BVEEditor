@@ -29,13 +29,14 @@
             </StatusBar.ItemsPanel>
             
             <StatusBarItem>
-                <TextBlock Text="{Binding MessageText, Mode=OneWay}"
+                <TextBlock Text="{Binding MessageText, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            Margin="0,0,3,0" HorizontalAlignment="Stretch" />
             </StatusBarItem>
             
             <StatusBarItem Grid.Column="1">
                 <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                      Visibility="{Binding IsTextFileActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                      Visibility="{Binding IsTextFileActive, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},
+                            UpdateSourceTrigger=PropertyChanged}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -45,9 +46,9 @@
                     <TextBlock Text="{Binding CursorPositionText, Mode=OneWay}" Margin="3,0" Grid.Column="0" />
                     <Image Source="{StaticResource InsertMode}"
                            Visibility="{Binding IsInsertMode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter},
-                                ConverterParameter={x:Static Visibility.Hidden}}"
+                                ConverterParameter={x:Static Visibility.Hidden}, UpdateSourceTrigger=PropertyChanged}"
                            Margin="3,0" Grid.Column="1"/>
-                    <TextBlock Text="{Binding EncodingName, Mode=OneWay}" Margin="3,0"
+                    <TextBlock Text="{Binding EncodingName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Margin="3,0"
                                ToolTip="{lex:Loc StatusBar_Descriptions_EncodingName}"
                                Grid.Column="2" />
                 </Grid>

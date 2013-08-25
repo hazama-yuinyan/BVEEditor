@@ -11,6 +11,9 @@ using System.Collections.Generic;
 
 namespace BVEEditor
 {
+    /// <summary>
+    /// Interface for OptionPanelDescriptor.
+    /// </summary>
 	public interface IOptionPanelDescriptor
 	{
 		/// <value>

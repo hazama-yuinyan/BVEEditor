@@ -23,7 +23,7 @@ namespace BVEEditor.Views.Main
             private set{
                 if(is_text_file_active != value){
                     is_text_file_active = value;
-                    NotifyOfPropertyChange(() => is_text_file_active);
+                    NotifyOfPropertyChange(() => IsTextFileActive);
                 }
             }
         }
@@ -34,7 +34,7 @@ namespace BVEEditor.Views.Main
             private set{
                 if(msg_text != value){
                     msg_text = value;
-                    NotifyOfPropertyChange(() => msg_text);
+                    NotifyOfPropertyChange(() => MessageText);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace BVEEditor.Views.Main
             private set{
                 if(cursor_info != value){
                     cursor_info = value;
-                    NotifyOfPropertyChange(() => cursor_info);
+                    NotifyOfPropertyChange(() => CursorPositionText);
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace BVEEditor.Views.Main
             private set{
                 if(is_insert_mode != value){
                     is_insert_mode = value;
-                    NotifyOfPropertyChange(() => is_insert_mode);
+                    NotifyOfPropertyChange(() => IsInsertMode);
                 }
             }
         }
@@ -67,7 +67,7 @@ namespace BVEEditor.Views.Main
             private set{
                 if(encoding_name != value){
                     encoding_name = value;
-                    NotifyOfPropertyChange(() => encoding_name);
+                    NotifyOfPropertyChange(() => EncodingName);
                 }
             }
         }

@@ -123,7 +123,7 @@ namespace BVEEditor.Views.Main
 
         void ViewDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "is_dirty"){
+            if(e.PropertyName == "IsDirty"){
                 NotifyOfPropertyChange(() => CanQuickSaveDocument);
             }
         }

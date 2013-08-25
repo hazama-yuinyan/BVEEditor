@@ -123,11 +123,9 @@
     <Compile Include="Workbench\AutobinderTemplateSelector.cs" />
     <Compile Include="Workbench\DisplayBinding\DisplayBindingDiscriptor.cs" />
     <Compile Include="Workbench\DisplayBinding\DisplayBindingDoozer.cs" />
-    <Compile Include="Workbench\DisplayBinding\DisplayBindingManager.cs" />
     <Compile Include="Workbench\DisplayBinding\ExternalProcessDisplayBinding.cs" />
     <Compile Include="Workbench\DisplayBinding\IDisplayBinding.cs" />
     <Compile Include="Workbench\DisplayBinding\IDisplayBindingService.cs" />
-    <None Include="Workbench\DisplayBinding\ISecondaryDisplayBinding.cs" />
     <Compile Include="Workbench\File\FileEvents.cs" />
     <None Include="Workbench\File\IFileService.cs" />
     <Compile Include="Workbench\File\IRecentOpen.cs" />

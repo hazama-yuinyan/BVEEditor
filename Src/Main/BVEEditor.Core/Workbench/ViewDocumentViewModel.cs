@@ -55,7 +55,7 @@ namespace BVEEditor.Workbench
             set{
                 if(is_dirty != value){
                     is_dirty = value;
-                    NotifyOfPropertyChange(() => is_dirty);
+                    NotifyOfPropertyChange(() => IsDirty);
                 }
             }
 		}
@@ -69,7 +69,7 @@ namespace BVEEditor.Workbench
 			set{
 				if(info_tip != value){
 					info_tip = value;
-					NotifyOfPropertyChange(() => info_tip);
+					NotifyOfPropertyChange(() => InfoTip);
 				}
 			}
 		}
@@ -80,7 +80,7 @@ namespace BVEEditor.Workbench
             set{
                 if(is_untitled != value){
                     is_untitled = value;
-                    NotifyOfPropertyChange(() => is_untitled);
+                    NotifyOfPropertyChange(() => IsUntitled);
                 }
             }
         }
