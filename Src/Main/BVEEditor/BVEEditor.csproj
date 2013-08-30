@@ -86,6 +86,14 @@
     <Compile Include="AvalonDock\DocumentContext.cs" />
     <Compile Include="AvalonDock\IDockingManagerProvider.cs" />
     <Compile Include="Misc\BVEEditorStringTagProvider.cs" />
+    <Compile Include="Options\AppearancePanelViewModel.cs" />
+    <Compile Include="Options\OptionsViewModel.cs" />
+    <Compile Include="Options\Views\AppearancePanelView.xaml.cs">
+      <DependentUpon>AppearancePanelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Options\Views\OptionsView.xaml.cs">
+      <DependentUpon>OptionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\StringResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,6 +138,14 @@
     <Compile Include="Workbench\RecentOpen.cs" />
     <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
+    <Page Include="Options\Views\AppearancePanelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Options\Views\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

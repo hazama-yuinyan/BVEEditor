@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BVEEditor
+namespace BVEEditor.Options
 {
     /// <summary>
     /// Interface for OptionPanelDescriptor.
@@ -34,19 +34,11 @@ namespace BVEEditor
 		IEnumerable<IOptionPanelDescriptor> ChildOptionPanelDescriptors {
 			get;
 		}
-		
-		/// <value>
-		/// Returns the dialog panel object
-		/// </value>
-		IOptionPanel OptionPanel {
-			get;
-		}
-		
-		/// <summary>
-		/// Gets whether the descriptor has an option panel (as opposed to having only child option panels)
-		/// </summary>
-		bool HasOptionPanel {
-			get;
-		}
+
+        /// <summary>
+        /// Creates a new instance of the view model specified in the node.
+        /// </summary>
+        /// <returns></returns>
+        OptionPanelViewModel CreateViewModel();
 	}
 }

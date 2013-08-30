@@ -25,6 +25,7 @@ using BVEEditor.Events;
 using BVEEditor.Logging;
 using BVEEditor.Result;
 using BVEEditor.Services;
+using BVEEditor.Settings;
 using BVEEditor.Startup;
 using BVEEditor.Strategies;
 using BVEEditor.Views.Main;
@@ -70,11 +71,13 @@ namespace BVEEditor.Workbench
 		
 		Conductor<PadViewModel>.Collection.AllActive pad_conductor = new Conductor<PadViewModel>.Collection.AllActive();
         ViewDocumentConductor viewdoc_conductor = new ViewDocumentConductor();
-        IEventAggregator event_aggregator;
+        readonly IEventAggregator event_aggregator;
         //IFileSystem file_system;
-        IPropertyService property_service;
-        IFileDialogStrategies file_strategies;
-        IMessageService msg_service;
+        readonly IPropertyService property_service;
+        readonly IFileDialogStrategies file_strategies;
+        readonly IMessageService msg_service;
+        readonly IDisplayBindingService display_binding;
+        readonly ISettingsManager settings_manager;
 		//EditorStatusBar status_bar = new EditorStatusBar();
         //ToolBar[] tool_bars;
 
@@ -142,7 +145,8 @@ namespace BVEEditor.Workbench
 		public WorkbenchViewModel(/*IFileSystem fileService, */IEventAggregator eventAggregator, IPropertyService propertyService,
             IResultFactory resultFactory, IFileDialogStrategies fileStrategies, MainMenuViewModel mainMenuViewModel,
             IMessageService messageService, ViewDocumentConductor viewDocConductor, StatusBarViewModel statusBar,
-            ToolBarViewModel toolBar) : base(resultFactory)
+            ToolBarViewModel toolBar, IDisplayBindingService displayBindingService,
+            ISettingsManager settingsManager) : base(resultFactory)
 		{
             event_aggregator = eventAggregator;
             eventAggregator.Subscribe(this);
@@ -153,6 +157,8 @@ namespace BVEEditor.Workbench
             Menu = mainMenuViewModel;
             StatusBar = statusBar;
             ToolBar = toolBar;
+            display_binding = displayBindingService;
+            settings_manager = settingsManager;
 
             mainMenuViewModel.Workbench = this;
             toolBar.Workbench = this;
@@ -169,15 +175,11 @@ namespace BVEEditor.Workbench
 					//AddPad(content);
 			}
 			
-			//Core.WinForms.MenuService.ExecuteCommand = ExecuteCommand;
-			//UpdateMenu();
-			
 			//Project.ProjectService.CurrentProjectChanged += SetProjectTitle;
 			
 			//SD.FileService.FileRemoved += ((RecentOpen)SD.FileService.RecentOpen).FileRemoved;
 			//SD.FileService.FileRenamed += ((RecentOpen)SD.FileService.RecentOpen).FileRenamed;
 			
-			//resourceService.LanguageChanged += OnLanguageChanged;
             viewdoc_conductor.PropertyChanged += ViewDocConductorPropertyChanged;
 		}
 
@@ -191,6 +193,10 @@ namespace BVEEditor.Workbench
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            // This causes the WPF Localization Extension library to synchronize its setting with System.Threading.Thread.CultureInfo
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
+
+            settings_manager.LoadSettings();
 
             foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)){
                 try {
@@ -211,10 +217,12 @@ namespace BVEEditor.Workbench
 
             event_aggregator.Publish(new ApplicationExitingEvent());
 
+            settings_manager.SaveSettings();
             DeinitDocking();
 
             var workbench_memento = CreateMemento();    //store workbench memento
             property_service.SetNestedProperties(WorkbenchMemento, workbench_memento);
+            property_service.Save();
         }
 
         #region Layout mainipulation
@@ -252,20 +260,6 @@ namespace BVEEditor.Workbench
             get{return (this.GetView() as IDockingManagerProvider).DockingManager;}
         }
 		
-		void OnLanguageChanged(object sender, EventArgs e)
-		{
-			//MenuService.UpdateText(main_menu.ItemsSource);
-			UpdateFlowDirection();
-		}
-		
-		void UpdateFlowDirection()
-		{
-			//UILanguage language = UILanguageService.GetLanguage(resource_service.Language);
-			//Core.WinForms.RightToLeftConverter.IsRightToLeft = language.IsRightToLeft;
-			//this.FlowDirection = language.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
-			//App.Current.Resources[GlobalStyles.FlowDirectionKey] = this.FlowDirection;
-		}
-
         /*void SetProjectTitle(object sender, Project.ProjectEventArgs e)
         {
             if (e.Project != null) {
@@ -337,7 +331,7 @@ namespace BVEEditor.Workbench
                             /*if (SD.ProjectService.IsSolutionOrProjectFile(fileName)) {
                                 SD.ProjectService.OpenSolutionOrProject(fileName);
                             } else {*/
-                            Menu.CreateViewDocumentViewModel(file_name);
+                            CreateViewDocumentViewModel(file_name);
                             //}
                         }
                     }
@@ -446,6 +440,19 @@ namespace BVEEditor.Workbench
 			}
         }
 
+        public void CreateViewDocumentViewModel(string filePath)
+        {
+            FileName non_null_filename = FileName.Create(filePath ?? "Untitled.txt");
+            FileName possibly_null_filename = FileName.Create(filePath);
+            var new_doc = display_binding.GetBindingPerFileName(non_null_filename)
+                .CreateViewModelForFile(possibly_null_filename);
+
+            if(!string.IsNullOrEmpty(filePath)) // Loads content from the specified file if the path is not null
+                new_doc.Load(filePath);
+
+            event_aggregator.Publish(new ViewDocumentAddedEvent(new_doc));
+        }
+
         public IEnumerable<IResult> SaveDocument(ViewDocumentViewModel document, bool doQuickSave)
         {
             return file_strategies.Save(document, doQuickSave, path => SaveInternal(document, path));
@@ -493,7 +500,7 @@ namespace BVEEditor.Workbench
 		
 		/// <summary>
 		/// Stores the memento for the view content.
-		/// Such mementos are automatically loaded in ShowView().
+		/// Such mementos are automatically loaded in CreateViewDocumentViewModel().
 		/// </summary>
 		public void StoreMemento(ViewDocumentViewModel viewDocument)
 		{

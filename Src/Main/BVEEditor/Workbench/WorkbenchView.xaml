@@ -53,10 +53,10 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <ContentControl x:Name="Menu" Grid.Row="0" />
@@ -89,6 +89,7 @@
                     <Setter Property="Title" Value="{Binding Model.Title}" />
                     <Setter Property="IconSource" Value="{Binding Model.Icon}" />
                     <Setter Property="IsActive" Value="{Binding Model.IsActive}" />
+                    <Setter Property="ToolTip" Value="{Binding Model.InfoTip}" />
                     <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                     <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay,
                         Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}" />
@@ -121,9 +122,9 @@
             <!--<avalonDock:DockingManager.LayoutUpdateStrategy>
                 <local:LayoutInitializer />
             </avalonDock:DockingManager.LayoutUpdateStrategy>-->
-            <avalonDock:LayoutRoot x:Name="layout_root">
+            <avalonDock:LayoutRoot>
                 <avalonDock:LayoutPanel>
-                    <avalonDock:LayoutDocumentPaneGroup x:Name="doc_area"/>
+                    <avalonDock:LayoutDocumentPaneGroup />
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>

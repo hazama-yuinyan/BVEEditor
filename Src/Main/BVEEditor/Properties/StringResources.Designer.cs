@@ -133,11 +133,20 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Options に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Common_Dialogs_Captions_Options {
+            get {
+                return ResourceManager.GetString("Common_Dialogs_Captions_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Save file as... に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string Common_Dialogs_Captions_Save {
+        public static string Common_Dialogs_Captions_SaveAs {
             get {
-                return ResourceManager.GetString("Common_Dialogs_Captions_Save", resourceCulture);
+                return ResourceManager.GetString("Common_Dialogs_Captions_SaveAs", resourceCulture);
             }
         }
         
@@ -502,6 +511,15 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Save the current document as certain type and in certain location に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_SaveAs_Description {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_SaveAs_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Save as... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_FileMenu_SaveDocumentAsEntry {
@@ -529,11 +547,65 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Tools に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_Tools {
+            get {
+                return ResourceManager.GetString("MainMenu_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Options... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_ToolsMenu_OptionsEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_ToolsMenu_OptionsEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   BVEEditor に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainWindow_DialogName {
             get {
                 return ResourceManager.GetString("MainWindow_DialogName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Theme に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string OptionsDialog_AppearancePanel_LabelTheme {
+            get {
+                return ResourceManager.GetString("OptionsDialog_AppearancePanel_LabelTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   UILanguage に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string OptionsDialog_AppearancePanel_LabelUILanguage {
+            get {
+                return ResourceManager.GetString("OptionsDialog_AppearancePanel_LabelUILanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Appearance に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string OptionsDialog_IDEOptions_SelectVisualStyle_PanelName {
+            get {
+                return ResourceManager.GetString("OptionsDialog_IDEOptions_SelectVisualStyle_PanelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   General に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string OptionsDialog_TreeViewOptions_BVEEditorOptionsText {
+            get {
+                return ResourceManager.GetString("OptionsDialog_TreeViewOptions_BVEEditorOptionsText", resourceCulture);
             }
         }
         

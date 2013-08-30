@@ -243,7 +243,7 @@
   <data name="Common_Dialogs_Captions_Open" xml:space="preserve">
     <value>ファイルを開く</value>
   </data>
-  <data name="Common_Dialogs_Captions_Save" xml:space="preserve">
+  <data name="Common_Dialogs_Captions_SaveAs" xml:space="preserve">
     <value>名前をつけてファイルを保存</value>
   </data>
   <data name="Common_Dialogs_Captions_SaveBeforeClose" xml:space="preserve">
@@ -290,5 +290,29 @@
   </data>
   <data name="StatusBar_Messages_SavedFileAs" xml:space="preserve">
     <value>ドキュメントを"${newFileName}"として保存しました</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Options" xml:space="preserve">
+    <value>オプション</value>
+  </data>
+  <data name="MainMenu_FileMenu_SaveAs_Description" xml:space="preserve">
+    <value>現在アクティブなドキュメントを指定したタイプで指定した場所に保存します</value>
+  </data>
+  <data name="MainMenu_Tools" xml:space="preserve">
+    <value>ツール</value>
+  </data>
+  <data name="MainMenu_ToolsMenu_OptionsEntry" xml:space="preserve">
+    <value>オプション...</value>
+  </data>
+  <data name="OptionsDialog_AppearancePanel_LabelTheme" xml:space="preserve">
+    <value>テーマ</value>
+  </data>
+  <data name="OptionsDialog_AppearancePanel_LabelUILanguage" xml:space="preserve">
+    <value>表示言語</value>
+  </data>
+  <data name="OptionsDialog_IDEOptions_SelectVisualStyle_PanelName" xml:space="preserve">
+    <value>外観</value>
+  </data>
+  <data name="OptionsDialog_TreeViewOptions_BVEEditorOptionsText" xml:space="preserve">
+    <value>一般</value>
   </data>
 </root>

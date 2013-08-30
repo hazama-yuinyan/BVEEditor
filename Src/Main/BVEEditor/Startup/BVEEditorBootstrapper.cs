@@ -17,6 +17,7 @@ using BVEEditor.Commands;
 using BVEEditor.Logging;
 using BVEEditor.Result;
 using BVEEditor.Services;
+using BVEEditor.Settings;
 using BVEEditor.Strategies;
 using BVEEditor.Views;
 using BVEEditor.Workbench;
@@ -43,6 +44,7 @@ namespace BVEEditor.Startup
 			
             kernel.Bind<IWindowManager>().To<WindowManager>().InSingletonScope();
             kernel.Bind<IResultFactory>().To<ResultFactory>();
+            kernel.Bind<ISettingsManager>().To<SettingsManager>().InSingletonScope();
             kernel.Bind<IFileDialogStrategies>().To<FileDialogStrategies>();
             kernel.Bind<IWorkbench>().To<WorkbenchViewModel>().InSingletonScope();
             kernel.Bind<IMessageLoop>().ToConstant(msg_loop).InSingletonScope();
@@ -174,19 +176,15 @@ namespace BVEEditor.Startup
 			
 			if(properties.ApplicationRootPath != null)
 				FileUtility.ApplicationRootPath = properties.ApplicationRootPath;
-			
-			var core_services = startup.StartCoreServices();    //register services provided by ICSharpCode.Core
+
+            // register services provided by ICSharpCode.Core
+			var core_services = startup.StartCoreServices();
             foreach(var service in core_services.Item1)
                 kernel.Bind(service.Key).To(service.Value).InSingletonScope();
 
             foreach(var inst in core_services.Item2)
                 kernel.Bind(inst.Key).ToConstant(inst.Value);
 
-			/*CommandWrapper.LinkCommandCreator = (link => new LinkCommand(link));
-			//CommandWrapper.WellKnownCommandCreator = Core.Presentation.MenuService.GetKnownCommand;
-			CommandWrapper.RegisterConditionRequerySuggestedHandler = (eh => CommandManager.RequerySuggested += eh);
-			CommandWrapper.UnregisterConditionRequerySuggestedHandler = (eh => CommandManager.RequerySuggested -= eh);*/
-			
 			Log4netLogger.Instance.Info("Looking for AddIns...");
 			foreach(string file in properties.addInFiles)
 				startup.AddAddInFile(file);

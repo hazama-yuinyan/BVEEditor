@@ -72,6 +72,15 @@ namespace BVEEditor.Workbench
         }
 
         /// <summary>
+        /// Creates a new <see cref="BVEEditor.Workbench.ViewDocumentViewModel"/> with the specified file path.
+        /// </summary>
+        /// <param name="filePath">
+        /// The file from which the ViewDocument loads its content.
+        /// If it is null, then that means that it should create a ViewDocument with empty content.
+        /// </param>
+        void CreateViewDocumentViewModel(string filePath);
+
+        /// <summary>
         /// Attempts to save the ViewDocument and shows the save-as dialog if needed.
         /// </summary>
         /// <param name="document">The ViewDocument to be saved</param>

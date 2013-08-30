@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BVEEditor.Editor;
 using BVEEditor.Events;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
+using WPFLocalizeExtension.Extensions;
 
 namespace BVEEditor.Views.Main
 {
@@ -16,6 +19,9 @@ namespace BVEEditor.Views.Main
     public class StatusBarViewModel : PropertyChangedBase, IHandle<CaretPositionChangedEvent>, IHandle<StatusBarMessageChangedEvent>,
         IHandle<ActiveViewDocumentChangedEvent>
     {
+        StatusBarMessageChangedEvent last_msg;
+        CaretPositionChangedEvent last_caret_pos;
+
         #region Binding sources
         bool is_text_file_active;
         public bool IsTextFileActive{
@@ -76,18 +82,41 @@ namespace BVEEditor.Views.Main
         public StatusBarViewModel(IEventAggregator eventAggregator)
         {
             eventAggregator.Subscribe(this);
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.PropertyChanged += LanguageChanged;
+        }
+
+        public void LanguageChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Culture"){
+                if(last_msg != null)
+                    SetMessage(last_msg.MessageKey, last_msg.CustomTags);
+                
+                if(last_caret_pos != null)
+                    SetCaretPosition(last_caret_pos.Line, last_caret_pos.Column, last_caret_pos.CharNumber);
+            }
+        }
+
+        void SetMessage(string messageKey, StringTagPair[] customTags)
+        {
+            MessageText = StringParser.Parse(messageKey, customTags);
+        }
+
+        void SetCaretPosition(int line, int column, int charNumber)
+        {
+            CursorPositionText = StringParser.Parse(
+                "${res:BVEEditor:StringResources:StatusBar.CursorPanelText}",
+                new StringTagPair("line", string.Format("{0,-10}", line)),
+                new StringTagPair("column", string.Format("{0,-5}", column)),
+                new StringTagPair("character", string.Format("{0,-5}", charNumber))
+            );
         }
 
         #region IHandle<CaretPositionChangedEvent> メンバー
 
         public void Handle(CaretPositionChangedEvent message)
         {
-            CursorPositionText = StringParser.Parse(
-                "${res:BVEEditor:StringResources:StatusBar.CursorPanelText}",
-                new StringTagPair("line", string.Format("{0,-10}", message.Line)),
-                new StringTagPair("column", string.Format("{0,-5}", message.Column)),
-                new StringTagPair("character", string.Format("{0,-5}", message.CharNumber))
-            );
+            SetCaretPosition(message.Line, message.Column, message.CharNumber);
+            last_caret_pos = message;
         }
 
         #endregion
@@ -96,7 +125,8 @@ namespace BVEEditor.Views.Main
 
         public void Handle(StatusBarMessageChangedEvent message)
         {
-            MessageText = message.Message;
+            SetMessage(message.MessageKey, message.CustomTags);
+            last_msg = message;
         }
 
         #endregion
@@ -106,6 +136,9 @@ namespace BVEEditor.Views.Main
         public void Handle(ActiveViewDocumentChangedEvent message)
         {
             IsTextFileActive = message.ViewDocument is IPositionable;
+            var encoding_provider = message.ViewDocument as ITextEncodingProvider;
+            if(encoding_provider != null)
+                EncodingName = encoding_provider.TextEncoding.EncodingName;
         }
 
         #endregion

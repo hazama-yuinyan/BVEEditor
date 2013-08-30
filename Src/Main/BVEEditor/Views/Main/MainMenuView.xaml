@@ -1,15 +1,16 @@
-﻿<UserControl x:Class="BVEEditor.Views.Main.MainMenuView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:common="clr-namespace:BVEEditor.Misc.Caliburn;assembly=BVEEditor.Core"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="300"
-             lex:LocalizeDictionary.DesignCulture="en"
-             lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
-             lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
+﻿<UserControl
+    x:Class="BVEEditor.Views.Main.MainMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:common="clr-namespace:BVEEditor.Misc.Caliburn;assembly=BVEEditor.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    d:DesignHeight="100" d:DesignWidth="300"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
     <Grid>
         <Menu IsMainMenu="True">
             <MenuItem Header="{lex:Loc MainMenu_File}">
@@ -31,11 +32,11 @@
                     </MenuItem.Icon>
                 </common:GestureMenuItem>
                 
-                <common:GestureMenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}">
+                <MenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}">
                     <MenuItem.Icon>
                         <Image Source="{StaticResource SaveAs}" />
                     </MenuItem.Icon>
-                </common:GestureMenuItem>
+                </MenuItem>
 
                 <common:GestureMenuItem x:Name="Close" Header="{lex:Loc MainMenu_FileMenu_ApplicationExitEntry}" Modifiers="Alt" Key="F4">
                     <MenuItem.Icon>
@@ -86,8 +87,13 @@
                 <Separator />
                 <MenuItem Header="{lex:Loc MainMenu_EditMenu_SelectAllEntry}" Command="SelectAll"></MenuItem>
             </MenuItem>
+            
+            <MenuItem Header="{lex:Loc MainMenu_Tools}">
+                <MenuItem x:Name="ShowOptionsDialog" Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}"></MenuItem>
+            </MenuItem>
+            
             <MenuItem Header="{lex:Loc MainMenu_Help}">
-                <common:GestureMenuItem x:Name="ShowAboutDialog" Header="{lex:Loc MainMenu_HelpMenu_ShowAboutEntry}" />
+                <MenuItem x:Name="ShowAboutDialog" Header="{lex:Loc MainMenu_HelpMenu_ShowAboutEntry}" />
             </MenuItem>
         </Menu>
     </Grid>

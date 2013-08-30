@@ -9,7 +9,6 @@ namespace ICSharpCode.Core
 	/// Interface for AnalyticsMonitorService.
 	/// </summary>
 	/// <remarks>Implementations of this interface must be thread-safe.</remarks>
-	[SDService("SD.AnalyticsMonitor", FallbackImplementation = typeof(AnalyticsMonitorFallback))]
 	public interface IAnalyticsMonitor
 	{
 		/// <summary>

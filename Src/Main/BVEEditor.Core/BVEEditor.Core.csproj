@@ -81,6 +81,7 @@
     <Compile Include="Editor\ISnippetElementProvider.cs" />
     <Compile Include="Editor\ITextEditor.cs" />
     <Compile Include="Editor\ITextEditorExtension.cs" />
+    <Compile Include="Editor\ITextEncodingProvider.cs" />
     <Compile Include="Editor\ITextMarker.cs" />
     <Compile Include="Editor\LanguageBinding\DefaultLanguageBinding.cs" />
     <Compile Include="Editor\LanguageBinding\ILanguageBinding.cs" />
@@ -93,13 +94,17 @@
     <Compile Include="Events\JumpLocationEvent.cs" />
     <Compile Include="Events\StatusBarMessageChangedEvent.cs" />
     <Compile Include="Events\ViewDocumentAddedEvent.cs" />
-    <Compile Include="GUI\AbstractOptionPanel.cs" />
-    <Compile Include="Internal\Doozers\IOptionPanel.cs" />
-    <Compile Include="Internal\Doozers\IOptionPanelDescriptor.cs" />
+    <Compile Include="Options\DefaultOptionPanelDescriptor.cs" />
+    <Compile Include="Options\IOptionPanel.cs" />
+    <Compile Include="Options\IOptionPanelDescriptor.cs" />
+    <Compile Include="Options\OptionCategoryViewModel.cs" />
+    <Compile Include="Options\OptionPanelDoozer.cs" />
+    <Compile Include="Options\OptionPanelViewModel.cs" />
     <Compile Include="Logging\Log4netLogger.cs" />
     <Compile Include="Misc\Caliburn\ActionMessageCommand.cs" />
     <Compile Include="Misc\Caliburn\GestureMenuItem.cs" />
     <Compile Include="Misc\Caliburn\InputBindingTrigger.cs" />
+    <Compile Include="Options\OptionPanelViewModelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\CancelResult.cs" />
     <Compile Include="Result\CloseResult.cs" />
@@ -115,10 +120,17 @@
     <Compile Include="Services\Language\UILanguageService.cs" />
     <Compile Include="Services\Navigation\DefaultNavigationPoint.cs" />
     <Compile Include="Services\Navigation\INavigationPoint.cs" />
+    <Compile Include="Settings\GlobalSettingDescriptor.cs" />
+    <Compile Include="Settings\GlobalSettingDoozer.cs" />
+    <Compile Include="Settings\GlobalSettingsSnippet.cs" />
+    <Compile Include="Settings\ISettingsManager.cs" />
+    <Compile Include="Settings\SettingsManager.cs" />
     <Compile Include="Strategies\IFileDialogStrategies.cs" />
     <Compile Include="Util\BVEEditorExtensions.cs" />
     <Compile Include="Util\ICanBeDirty.cs" />
-    <None Include="BVEEditor.addin" />
+    <None Include="BVEEditor.addin">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Util\NativeMethods.cs" />
     <Compile Include="Workbench\AutobinderTemplateSelector.cs" />
     <Compile Include="Workbench\DisplayBinding\DisplayBindingDiscriptor.cs" />
@@ -140,7 +152,9 @@
     <Compile Include="Workbench\ViewContentViewModel.cs" />
     <Compile Include="Workbench\ViewDocumentViewModel.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>

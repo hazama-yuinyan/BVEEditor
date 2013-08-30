@@ -127,7 +127,6 @@
     <Compile Include="Src\Services\PropertyService\IPropertyService.cs" />
     <Compile Include="Src\Services\PropertyService\PropertyService.cs" />
     <Compile Include="Src\Services\PropertyService\PropertyServiceImpl.cs" />
-    <Compile Include="Src\Services\SDServiceAttribute.cs" />
     <Compile Include="Src\Services\FileUtility\FileName.cs" />
     <Compile Include="Src\Services\FileUtility\FileNameEventHandler.cs" />
     <Compile Include="Src\Services\FileUtility\FileUtility.cs" />

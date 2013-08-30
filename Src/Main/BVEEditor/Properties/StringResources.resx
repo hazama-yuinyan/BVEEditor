@@ -243,7 +243,7 @@
   <data name="Common_Dialogs_Captions_Open" xml:space="preserve">
     <value>Open file</value>
   </data>
-  <data name="Common_Dialogs_Captions_Save" xml:space="preserve">
+  <data name="Common_Dialogs_Captions_SaveAs" xml:space="preserve">
     <value>Save file as...</value>
   </data>
   <data name="Common_Dialogs_Captions_SaveBeforeClose" xml:space="preserve">
@@ -290,5 +290,29 @@
   </data>
   <data name="StatusBar_Messages_SavedFileAs" xml:space="preserve">
     <value>Successfully saved the document as "${newFileName}"</value>
+  </data>
+  <data name="Common_Dialogs_Captions_Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="MainMenu_FileMenu_SaveAs_Description" xml:space="preserve">
+    <value>Save the current document as certain type and in certain location</value>
+  </data>
+  <data name="MainMenu_Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="MainMenu_ToolsMenu_OptionsEntry" xml:space="preserve">
+    <value>Options...</value>
+  </data>
+  <data name="OptionsDialog_AppearancePanel_LabelTheme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="OptionsDialog_AppearancePanel_LabelUILanguage" xml:space="preserve">
+    <value>UILanguage</value>
+  </data>
+  <data name="OptionsDialog_IDEOptions_SelectVisualStyle_PanelName" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="OptionsDialog_TreeViewOptions_BVEEditorOptionsText" xml:space="preserve">
+    <value>General</value>
   </data>
 </root>

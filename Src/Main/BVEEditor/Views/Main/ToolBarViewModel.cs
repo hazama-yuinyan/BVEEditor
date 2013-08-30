@@ -20,7 +20,6 @@ namespace BVEEditor.Views.Main
         readonly IResultFactory result_factory;
         readonly IFileDialogStrategies file_strategies;
         readonly IEventAggregator event_aggregator;
-        readonly IDisplayBindingService display_binding;
 
         ViewDocumentViewModel active_doc;
         ViewDocumentViewModel ActiveDocument{
@@ -37,37 +36,23 @@ namespace BVEEditor.Views.Main
         // because doing so creates a cyclic dependency.
         public IWorkbench Workbench{private get; set;}
 
-        public ToolBarViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
-            IDisplayBindingService displayBindingService)
+        public ToolBarViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator)
         {
             eventAggregator.Subscribe(this);
 
             result_factory = resultFactory;
             file_strategies = fileStrategies;
             event_aggregator = eventAggregator;
-            display_binding = displayBindingService;
         }
 
         public void NewDocument()
         {
-            CreateViewDocumentViewModel(null);
+            Workbench.CreateViewDocumentViewModel(null);
         }
 
         public IEnumerable<IResult> OpenDocument()
         {
-            return file_strategies.Open(CreateViewDocumentViewModel);
-        }
-
-        internal void CreateViewDocumentViewModel(string filePath)
-        {
-            FileName filename = FileName.Create(filePath);
-            var new_doc = display_binding.GetBindingPerFileName(filename)
-                .CreateViewModelForFile(filename);
-            
-            if(!string.IsNullOrEmpty(filePath))
-                new_doc.Load(filePath);
-
-            event_aggregator.Publish(new ViewDocumentAddedEvent(new_doc));
+            return file_strategies.Open(Workbench.CreateViewDocumentViewModel);
         }
 
         public IEnumerable<IResult> SaveDocument()

@@ -32,8 +32,9 @@
 			<!--<ConditionEvaluator name="ViewInBrowser" class="BVEEditor.ViewInBrowserConditionEvaluator"/>
 			<ConditionEvaluator name="ProjectBehaviorSupported" class="BVEEditor.Project.ProjectBehaviorSupportedConditionEvaluator"/>-->
 			
-			<!--<Doozer name="CustomProperty" class="BVEEditor.Project.CustomPropertyDoozer"/>
-			<Doozer name="OptionPanel" class="BVEEditor.OptionPanelDoozer"/>-->
+			<!--<Doozer name="CustomProperty" class="BVEEditor.Project.CustomPropertyDoozer"/>-->
+			<Doozer name="OptionPanel" class="BVEEditor.Options.OptionPanelDoozer"/>
+      <Doozer name="GlobalSetting" class="BVEEditor.Settings.GlobalSettingDoozer"/>
 			<Doozer name="DisplayBinding" class="BVEEditor.Workbench.DisplayBindingDoozer"/>
 			<Doozer name="Pad" class="BVEEditor.PadDoozer"/>
 			<!--<Doozer name="ProjectBinding" class="BVEEditor.ProjectBindingDoozer"/>
@@ -82,13 +83,6 @@
 		         class="BVEEditor.Editor.Bookmarks.BookmarkManager"/>
 		<Service id="BVEEditor.IUIService"
 		         class="BVEEditor.UIService"/>-->
-		
-		<Service id="BVEEditor.WinForms.IWinFormsService"
-		         class="BVEEditor.WinForms.WinFormsService"/>
-		<Service id="BVEEditor.WinForms.IWinFormsMenuService"
-		         class="BVEEditor.WinForms.WinFormsMenuService"/>
-		<Service id="BVEEditor.WinForms.IWinFormsToolbarService"
-		         class="BVEEditor.WinForms.WinFormsToolbarService"/>
 	</Path>
 	
 	<Path name = "/BVEEditor/Workbench/Ambiences">
@@ -108,7 +102,7 @@
 	
 	<Path name = "/BVEEditor/Workbench/FileFilter">
 		<FileFilter id         = "AllFiles"
-		            name       = "${res:BVEEditor.FileFilter.AllFiles}"
+		            name       = "${res:BVEEditor:StringResources:BVEEditor.FileFilter.AllFiles}"
 		            extensions = "*.*"/>
 	</Path>
 	
@@ -207,7 +201,7 @@
 		            extensions = "*.sln"/>-->
 		
 		<FileFilter id         = "AllFiles"
-		            name       = "${res:BVEEditor.FileFilter.AllFiles}"
+		            name       = "${res:BVEEditor:StringResources:BVEEditor.FileFilter.AllFiles}"
 		            extensions = "*.*"/>
 	</Path>
 	
@@ -1012,37 +1006,42 @@
 		<MenuItem id    = "ShowDescription"
 		          label = "${res:BVEEditor.Gui.Pads.PropertyPad.ContextMenu.ShowDescription}"
 		          class = "BVEEditor.Gui.PropertyPadShowDescriptionCommand"/>
-	</Path>
-	
-	<Path name = "/SharpDevelop/Dialogs/OptionsDialog">
-		<OptionPanel id    = "UIOptions"
-		             label = "${res:Dialog.Options.TreeViewOptions.SharpDevelopOptionsText}">
-			<OptionPanel id    = "SelectCulture"
-			             label = "${res:Dialog.Options.IDEOptions.SelectCulture.PanelName}"
-			             class = "BVEEditor.Gui.OptionPanels.SelectCulturePanel"/>
-			<OptionPanel id    = "SelectStyle"
-			             label = "${res:Dialog.Options.IDEOptions.SelectVisualStyle.PanelName}"
-			             class = "BVEEditor.Gui.OptionPanels.SelectStylePanel"/>
-			<OptionPanel id    = "LoadSave"
-			             label = "${res:Dialog.Options.IDEOptions.LoadSaveOptions.PanelName}"
-			             class = "BVEEditor.OptionPanels.LoadSaveOptions"/>
+	</Path>-->
+
+  <Path name="/BVEEditor/GlobalSettings">
+    <GlobalSetting className="BVEEditor.Settings.GlobalSettingsSnippet"
+                   name="GlobalSettings" />
+  </Path>
+
+	<Path name = "/BVEEditor/Dialogs/OptionsDialog">
+      <OptionPanel id    = "UIOptions"
+		               label = "${res:BVEEditor:StringResources:OptionsDialog.TreeViewOptions.BVEEditorOptionsText}">
+          <OptionPanel id    = "SelectAppearance"
+			                 label = "${res:BVEEditor:StringResources:OptionsDialog.IDEOptions.SelectVisualStyle.PanelName}"
+			                 class = "BVEEditor.Options.AppearancePanelViewModel"/>
+          <!--<OptionPanel id    = "SelectStyle"
+			           label = "${res:Dialog.Options.IDEOptions.SelectVisualStyle.PanelName}"
+			           class = "BVEEditor.Gui.OptionPanels.SelectStylePanel"/>
+          <OptionPanel id    = "LoadSave"
+			           label = "${res:Dialog.Options.IDEOptions.LoadSaveOptions.PanelName}"
+			           class = "BVEEditor.OptionPanels.LoadSaveOptions"/>
 			
-			<OptionPanel id    = "TaskListOptions"
+			    <OptionPanel id    = "TaskListOptions"
 			             label = "${res:Dialog.Options.IDEOptions.TaskListOptions.PanelName}"
 			             class = "BVEEditor.Gui.OptionPanels.TaskListXaml"/>
 			
 			
-			<OptionPanel id    = "OutputWindowOptions"
+			    <OptionPanel id    = "OutputWindowOptions"
 			             label = "${res:Dialog.Options.IDEOptions.OutputPanel.Title}"
 			             class = "BVEEditor.Gui.OptionPanels.OutputWindowOptionsPanel"/>
 			
-			<OptionPanel id    = "ProjectAndSolutionOptions"
+			    <OptionPanel id    = "ProjectAndSolutionOptions"
 			             label = "${res:Dialog.Options.IDEOptions.ProjectAndSolutionOptions.PanelName}"
-			             class = "BVEEditor.Gui.OptionPanels.ProjectAndSolutionOptions"/>
+			             class = "BVEEditor.Gui.OptionPanels.ProjectAndSolutionOptions"/>-->
 		
 		</OptionPanel>
 		
-		<OptionPanel id    = "CodingOptions"
+		<!--<OptionPanel id    = "CodingOptions"
 		             label = "${res:Dialog.Options.IDEOptions.CodingOptionsText}">
 			
 			<OptionPanel id    = "CodeGeneration"
@@ -1064,10 +1063,10 @@
 			<OptionPanel id    = "ServiceReferences"
 			             label = "Service References"
 			             class = "BVEEditor.Gui.OptionPanels.ServiceReference.ServiceReferenceOptionsPanel"/>
-		</OptionPanel>
+		</OptionPanel>-->
 	</Path>
 	
-	<Path name = "/SharpDevelop/Workbench/SharpDevelopSideBar/ContextMenu">
+	<!--<Path name = "/SharpDevelop/Workbench/SharpDevelopSideBar/ContextMenu">
 		<Condition name = "Ownerstate" ownerstate = "TabCanBeDeleted" action="Disable">
 			<MenuItem id     = "DeleteTab"
 			          label = "${res:SideBarComponent.ContextMenu.DeleteTab}"

@@ -65,7 +65,7 @@ namespace Core.Presentation
 		
 		public OptionBinding(string propertyName)
 		{
-			if (!regex.IsMatch(propertyName))
+			if(!regex.IsMatch(propertyName))
 				throw new ArgumentException("parameter must have the following format: namespace:ClassName.FieldOrProperty", "propertyName");
 			
 			this.FullPropertyName = propertyName;
@@ -90,8 +90,8 @@ namespace Core.Presentation
 			if (target == null || dp == null)
 				return null;
 			
-			if (FullPropertyName != null) {
-				string[] name =  FullPropertyName.Split('.');
+			if(FullPropertyName != null){
+				string[] name = FullPropertyName.Split('.');
 				IXamlTypeResolver typeResolver = provider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
 				propertyDeclaringType = typeResolver.Resolve(name[0]);
 				propertyName = name[1];

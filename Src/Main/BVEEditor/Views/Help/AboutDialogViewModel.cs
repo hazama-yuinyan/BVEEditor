@@ -42,7 +42,8 @@ namespace BVEEditor.Views.Help
             get{
                 var list = new SortedList<string, string>();
                 foreach(var assembly in Assembly.GetEntryAssembly().GetReferencedAssemblies()){
-                    list.Add(assembly.Name, string.Format("{0}, {1}={2}", assembly.Name, "version", assembly.Version));
+                    if(!list.ContainsKey(assembly.Name))
+                        list.Add(assembly.Name, string.Format("{0}, {1}={2}", assembly.Name, "version", assembly.Version));
                 }
                 return list;
             }

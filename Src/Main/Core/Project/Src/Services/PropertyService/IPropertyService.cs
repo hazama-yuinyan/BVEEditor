@@ -11,7 +11,6 @@ namespace ICSharpCode.Core
 	/// <summary>
 	/// The property service.
 	/// </summary>
-	[SDService("SD.PropertyService")]
 	public interface IPropertyService : INotifyPropertyChanged
 	{
 		/// <summary>

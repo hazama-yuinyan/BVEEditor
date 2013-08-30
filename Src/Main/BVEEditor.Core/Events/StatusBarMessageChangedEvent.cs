@@ -12,7 +12,9 @@ namespace BVEEditor.Events
     /// </summary>
     public class StatusBarMessageChangedEvent
     {
-        public string Message{get; private set;}
+        public string MessageKey{get; private set;}
+        public StringTagPair[] CustomTags{get; private set;}
+
         /// <summary>
         /// Creates a new <see cref="BVEEditor.Events.StatusBarMessageChangedEvent"/>.
         /// </summary>
@@ -28,7 +30,8 @@ namespace BVEEditor.Events
         /// </summary>
         public StatusBarMessageChangedEvent(string message, params StringTagPair[] customTags)
         {
-            Message = StringParser.Parse(message, customTags);
+            MessageKey = message;
+            CustomTags = customTags;
         }
     }
 }

@@ -58,12 +58,6 @@ namespace ICSharpCode.Core
 			return properties.Get(key, defaultValue);
 		}
 		
-		[Obsolete("Use the NestedProperties method instead", true)]
-		public Properties Get(string key, Properties defaultValue)
-		{
-			return properties.Get(key, defaultValue);
-		}
-		
 		/// <inheritdoc cref="Properties.NestedProperties"/>
 		public Properties NestedProperties(string key)
 		{
@@ -108,18 +102,19 @@ namespace ICSharpCode.Core
 		
 		bool LoadPropertiesFromStream(FileName fileName)
 		{
-			if (!File.Exists(fileName)) {
+			if(!File.Exists(fileName)){
 				properties = new Properties();
 				return false;
 			}
-			try {
-				using (LockPropertyFile()) {
+
+			try{
+				using(LockPropertyFile()){
 					properties = Properties.Load(fileName);
 					return true;
 				}
-			} catch (XmlException ex) {
-				var msgService = IoC.Get<IMessageService>();
-				msgService.ShowError("Error loading properties: " + ex.Message + "\nSettings have been restored to default values.");
+			}catch(XmlException ex){
+				var msg_service = IoC.Get<IMessageService>();
+				msg_service.ShowError("Error loading properties: " + ex.Message + "\nSettings have been restored to default values.");
 			}
 			properties = new Properties();
 			return false;
@@ -127,12 +122,12 @@ namespace ICSharpCode.Core
 		
 		public void Save()
 		{
-			if (string.IsNullOrEmpty(configDirectory) || string.IsNullOrEmpty(propertyFileName))
+			if(string.IsNullOrEmpty(configDirectory) || string.IsNullOrEmpty(propertyFileName))
 				throw new InvalidOperationException("No file name was specified on service creation");
 			
-			var fileName = FileName.Create(Path.Combine(configDirectory, propertyFileName));
-			using (LockPropertyFile()) {
-				properties.Save(fileName);
+			var file_name = FileName.Create(Path.Combine(configDirectory, propertyFileName));
+			using(LockPropertyFile()){
+				properties.Save(file_name);
 			}
 		}
 		
