@@ -78,8 +78,6 @@ namespace BVEEditor.Workbench
         readonly IMessageService msg_service;
         readonly IDisplayBindingService display_binding;
         readonly ISettingsManager settings_manager;
-		//EditorStatusBar status_bar = new EditorStatusBar();
-        //ToolBar[] tool_bars;
 
         #region Binding sources
         public FlowDirection FlowDirection{
@@ -91,9 +89,15 @@ namespace BVEEditor.Workbench
             get; set;
         }
 		
+        WindowState last_non_minimized_window_state;
 		public WindowState LastNonMinimizedState{
 			get{return last_non_minimized_window_state;}
-			set{last_non_minimized_window_state = value;}
+			set{
+                if(last_non_minimized_window_state != value){
+                    last_non_minimized_window_state = value;
+                    NotifyOfPropertyChange(() => LastNonMinimizedState);
+                }
+            }
 		}
 
         public IList<PadViewModel> Pads{
@@ -538,8 +542,6 @@ namespace BVEEditor.Workbench
 		}
 		#endregion
 		
-		System.Windows.WindowState last_non_minimized_window_state = System.Windows.WindowState.Normal;
-		
 		/*protected override void OnStateChanged(EventArgs e)
 		{
 			base.OnStateChanged(e);
@@ -550,7 +552,7 @@ namespace BVEEditor.Workbench
 		public ICSharpCode.Core.Properties CreateMemento()
 		{
 			ICSharpCode.Core.Properties prop = new ICSharpCode.Core.Properties();
-			prop.Set("WindowState", last_non_minimized_window_state);
+			prop.Set("WindowState", LastNonMinimizedState);
 			var bounds = this.RestoreBounds;
 			
 			if(!bounds.IsEmpty)
@@ -563,7 +565,7 @@ namespace BVEEditor.Workbench
 		{
 			Rect bounds = memento.Get("Bounds", new Rect(10, 10, 750, 550));
 			// bounds are validated after PresentationSource is initialized (see OnSourceInitialized)
-			last_non_minimized_window_state = memento.Get("WindowState", System.Windows.WindowState.Maximized);
+			LastNonMinimizedState = memento.Get("WindowState", System.Windows.WindowState.Maximized);
 			RestoreBounds = bounds;
 		}
 		

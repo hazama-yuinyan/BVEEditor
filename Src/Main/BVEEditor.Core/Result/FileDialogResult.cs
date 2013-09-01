@@ -46,8 +46,8 @@ namespace BVEEditor.Result
             dialog.Title = StringParser.Parse(title);
             dialog.Filter = StringParser.Parse(filter);
 
-            dialog.ShowDialog();
-            File = dialog.FileName;
+            if(dialog.ShowDialog().GetValueOrDefault())
+                File = dialog.FileName;
 
             base.Execute(context);
         }

@@ -61,11 +61,38 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Contributors に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_ContributorsTabText {
+            get {
+                return ResourceManager.GetString("AboutDialog_ContributorsTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Lists all assembly names that are currently loaded. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string AboutDialog_Descriptions_LoadedModule {
             get {
                 return ResourceManager.GetString("AboutDialog_Descriptions_LoadedModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Beautiful and excellent docking layout system: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_DockingLayoutText {
+            get {
+                return ResourceManager.GetString("AboutDialog_DockingLayoutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   The text editor: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string AboutDialog_TextEditorText {
+            get {
+                return ResourceManager.GetString("AboutDialog_TextEditorText", resourceCulture);
             }
         }
         
@@ -489,6 +516,15 @@ namespace BVEEditor.Properties {
         public static string MainMenu_FileMenu_QuickSaveDocumentEntry {
             get {
                 return ResourceManager.GetString("MainMenu_FileMenu_QuickSaveDocumentEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recent files に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string MainMenu_FileMenu_RecentFilesEntry {
+            get {
+                return ResourceManager.GetString("MainMenu_FileMenu_RecentFilesEntry", resourceCulture);
             }
         }
         

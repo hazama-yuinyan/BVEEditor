@@ -10,6 +10,7 @@
     lex:LocalizeDictionary.DesignCulture="en"
     lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
     lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
+    
     <Border>
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -38,12 +39,12 @@
                 <TabItem Header="{lex:Loc AboutDialog_VersionInfoTabText}" Name="InfoTab">
                     <Grid Margin="3">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" MinWidth="127.5" />
+                            <ColumnDefinition Width="Auto" MinWidth="127.5" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         
@@ -59,6 +60,38 @@
                         <ListBox Grid.Column="1" Grid.Row="2" Margin="3"
                                  ItemsSource="{Binding Modules, Mode=OneTime}"
                                  DisplayMemberPath="Value" />
+                    </Grid>
+                </TabItem>
+                
+                <TabItem Header="{lex:Loc AboutDialog_ContributorsTabText}">
+                    <Grid Margin="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Content="{lex:Loc AboutDialog_DockingLayoutText}"
+                               Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" />
+                        <TextBlock Text="AvalonDock"
+                                   Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3">
+                            <Hyperlink NavigateUri="https://avalondock.codeplex.com/"
+                                       x:Name="avalonDockLink"
+                                       ToolTip="{Binding Path=NavigateUri, ElementName=avalonDockLink}" />
+                        </TextBlock>
+
+                        <Label Content="{lex:Loc AboutDialog_TextEditorText}"
+                               Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="3" />
+                        <TextBlock Text="AvalonEdit"
+                                   Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="3">
+                            <Hyperlink NavigateUri="https://github.com/icsharpcode/SharpDevelop/wiki/AvalonEdit"
+                                       x:Name="avalonEditLink"
+                                       ToolTip="{Binding Path=NavigateUri, ElementName=avalonEditLink}" />
+                        </TextBlock>
                     </Grid>
                 </TabItem>
             </TabControl>

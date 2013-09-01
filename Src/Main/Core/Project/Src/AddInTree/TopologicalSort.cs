@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Caliburn.Micro;
 
 namespace ICSharpCode.Core
 {
@@ -57,7 +58,8 @@ namespace ICSharpCode.Core
 						if (nameToNodeDict.TryGetValue(beforeReference, out referencedNode)) {
 							referencedNode.previous.Add(node);
 						} else {
-							DebugLogger.Instance.Warn("Codon ({0}) specified in the insertbefore of the {1} codon does not exist!", beforeReference, node.codon);
+							LogManager.GetLog(typeof(TopologicalSort))
+                                .Warn("Codon ({0}) specified in the insertbefore of the {1} codon does not exist!", beforeReference, node.codon);
 						}
 					}
 				}
@@ -67,7 +69,8 @@ namespace ICSharpCode.Core
 						if (nameToNodeDict.TryGetValue(afterReference, out referencedNode)) {
 							node.previous.Add(referencedNode);
 						} else {
-							DebugLogger.Instance.Warn("Codon ({0}) specified in the insertafter of the {1} codon does not exist!", afterReference, node.codon);
+							LogManager.GetLog(typeof(TopologicalSort))
+                                .Warn("Codon ({0}) specified in the insertafter of the {1} codon does not exist!", afterReference, node.codon);
 						}
 					}
 				}

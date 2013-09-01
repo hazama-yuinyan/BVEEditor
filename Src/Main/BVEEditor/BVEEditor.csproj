@@ -104,6 +104,7 @@
     <Compile Include="Services\DisplayBindingService.cs" />
     <Compile Include="Services\FileSystem.cs" />
     <Compile Include="Services\WPFMessageService.cs" />
+    <Compile Include="Settings\GlobalSettingsSnippet.cs" />
     <Compile Include="Startup\BVEEditorBootstrapper.cs" />
     <Compile Include="Startup\ServiceBootstrapper.cs" />
     <Compile Include="Startup\StartupSettings.cs" />
@@ -111,6 +112,7 @@
     <None Include="Workbench\FileService.cs" />
     <None Include="Workbench\FileServiceOpenedFile.cs" />
     <Compile Include="Util\TaskUtils.cs" />
+    <Compile Include="Util\IntToBoolConverter.cs" />
     <Compile Include="Views\Help\AboutDialogView.xaml.cs">
       <DependentUpon>AboutDialogView.xaml</DependentUpon>
     </Compile>
@@ -135,7 +137,7 @@
     </Compile>
     <Compile Include="Workbench\ErrorDocumentViewModel.cs" />
     <Compile Include="Workbench\LayoutInitializer.cs" />
-    <Compile Include="Workbench\RecentOpen.cs" />
+    <Compile Include="Workbench\RecentOpenViewModel.cs" />
     <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
     <Page Include="Options\Views\AppearancePanelView.xaml">
@@ -241,7 +243,14 @@
       <Name>ICSharpCode.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

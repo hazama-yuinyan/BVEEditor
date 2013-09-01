@@ -16,15 +16,7 @@ namespace BVEEditor
     {
         static App()
         {
-            var old_get_log = LogManager.GetLog;
-            LogManager.GetLog = type => {
-                if(type == typeof(ICSharpCode.Core.DebugLogger))
-                    return new ICSharpCode.Core.DebugLogger(type);
-                else if(type == typeof(BVEEditor.Logging.Log4netLogger))
-                    return new BVEEditor.Logging.Log4netLogger(type);
-                else
-                    return old_get_log(type);
-            };
+            LogManager.GetLog = type => new BVEEditor.Logging.Log4netLogger(type);
         }
 
         public App()

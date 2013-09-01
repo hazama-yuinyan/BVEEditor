@@ -13,6 +13,10 @@ namespace BVEEditor.Options
 {
     public class AppearancePanelViewModel : OptionPanelViewModel
     {
+        #region Binding sources
+        /// <summary>
+        /// Gets available UI languages.
+        /// </summary>
         public IList<CultureInfo> UILanguages{
             get{return ResxLocalizationProvider.Instance.AvailableCultures;}
         }
@@ -27,6 +31,9 @@ namespace BVEEditor.Options
             }
         }
 
+        /// <summary>
+        /// Gets all themes installed and loaded.
+        /// </summary>
         public IList<Theme> Themes{
             get{return new List<Theme>();}
         }
@@ -41,6 +48,7 @@ namespace BVEEditor.Options
                 }
             }
         }
+        #endregion
 
         public AppearancePanelViewModel(IPropertyService propertyService) : base(propertyService)
         {
@@ -58,15 +66,12 @@ namespace BVEEditor.Options
 
         public override void LoadOptions()
         {
-            var props = app_settings.NestedProperties("Generics");
-            var culture_name = props.Get<string>("UserCultureName", "en-US");
-            LocalizeDictionary.Instance.Culture = CultureInfo.CreateSpecificCulture(culture_name);
+            SelectedUILanguage = UILanguages.First(lang => lang.Name == LocalizeDictionary.CurrentCulture.Name);
         }
 
         public override bool SaveOptions()
         {
-            var props = app_settings.NestedProperties("Generics");
-            props.Set("UserCultureName", LocalizeDictionary.CurrentCulture.Name);
+            LocalizeDictionary.Instance.Culture = SelectedUILanguage;
             return true;
         }
     }

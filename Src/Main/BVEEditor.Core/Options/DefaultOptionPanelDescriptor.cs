@@ -37,20 +37,22 @@ namespace BVEEditor.Options
 			}
 		}
 
-		public DefaultOptionPanelDescriptor(string id, string label)
+		public DefaultOptionPanelDescriptor(string id, string label, AddIn addin)
 		{
 			this.id    = id;
 			this.Label = label;
+            this.addin = addin;
 		}
 		
-		public DefaultOptionPanelDescriptor(string id, string label, List<IOptionPanelDescriptor> dialogPanelDescriptors) : this(id, label)
+		public DefaultOptionPanelDescriptor(string id, string label, AddIn addin, List<IOptionPanelDescriptor> dialogPanelDescriptors)
+            : this(id, label, addin)
 		{
 			this.option_panel_descriptors = dialogPanelDescriptors;
 		}
 		
-		public DefaultOptionPanelDescriptor(string id, string label, AddIn addin, object owner, string viewModelName) : this(id, label)
+		public DefaultOptionPanelDescriptor(string id, string label, AddIn addin, object owner, string viewModelName) :
+            this(id, label, addin)
 		{
-			this.addin = addin;
 			this.owner = owner;
 			this.viewmodel_name = viewModelName;
 		}
@@ -58,8 +60,10 @@ namespace BVEEditor.Options
         public OptionPanelViewModel CreateViewModel()
         {
             if(!HasOptionPanel){
+                addin.LoadRuntimeAssemblies();  // Ensures that the dependency assemblies are loaded
+
                 var viewmodel = new OptionCategoryViewModel();
-                viewmodel.Title = Label;
+                viewmodel.Title = StringParser.Parse(Label);
                 
                 foreach(var item in option_panel_descriptors){
                     var child_viewmodel = item.CreateViewModel();
@@ -68,7 +72,7 @@ namespace BVEEditor.Options
                 return viewmodel;
             }else{
                 var viewmodel = (OptionPanelViewModel)addin.CreateObject(viewmodel_name);
-                viewmodel.Title = Label;
+                viewmodel.Title = StringParser.Parse(Label);
                 return viewmodel;
             }
         }

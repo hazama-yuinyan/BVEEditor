@@ -62,7 +62,10 @@ namespace ICSharpCode.Core
             if(name == null)
                 throw new ArgumentNullException("name");
 
-            return name.Replace('.', '_');
+            int last_colon = name.LastIndexOf(':');
+            var resource_key = name.Substring(last_colon);
+            resource_key = resource_key.Replace('.', '_');
+            return name.Substring(0, last_colon) + resource_key;
         }
 		
 		/// <summary>
@@ -218,35 +221,35 @@ namespace ICSharpCode.Core
 				string prefix = propertyName.Substring(0, k);
 				propertyName = propertyName.Substring(k + 1);
 				switch(prefix.ToUpperInvariant()){
-					case "SDKTOOLPATH":
-						return FileUtility.GetSdkPath(propertyName);
+				case "SDKTOOLPATH":
+					return FileUtility.GetSdkPath(propertyName);
 
-					case "ADDINPATH":
-						foreach(var addIn in IoC.Get<IAddInTree>().AddIns){
-							if(addIn.Manifest.Identities.ContainsKey(propertyName))
-								return System.IO.Path.GetDirectoryName(addIn.FileName);
-						}
-						return null;
+                case "ADDINPATH":
+                    foreach(var add_in in IoC.Get<IAddInTree>().AddIns){
+                        if(add_in.Manifest.Identities.ContainsKey(propertyName))
+                            return System.IO.Path.GetDirectoryName(add_in.FileName);
+					}
+                    return null;
 					
-                    case "DATE":
-						try{
-							return DateTime.Now.ToString(propertyName, CultureInfo.CurrentCulture);
-						}catch(Exception ex){
-							return ex.Message;
-						}
+                case "DATE":
+                    try{
+                        return DateTime.Now.ToString(propertyName, CultureInfo.CurrentCulture);
+                    }catch(Exception ex){
+                        return ex.Message;
+                    }
 
-					case "ENV":
-						return Environment.GetEnvironmentVariable(propertyName);
+                case "ENV":
+                    return Environment.GetEnvironmentVariable(propertyName);
 
-					case "PROPERTY":
-						return GetProperty(propertyName);
+                case "PROPERTY":
+                    return GetProperty(propertyName);
 
-					default:
-						IStringTagProvider provider;
-						if(prefixed_string_tag_providers.TryGetValue(prefix, out provider))
-							return provider.ProvideString(propertyName, customTags);
-						else
-							return null;
+                default:
+                    IStringTagProvider provider;
+                    if(prefixed_string_tag_providers.TryGetValue(prefix, out provider))
+                        return provider.ProvideString(propertyName, customTags);
+                    else
+                        return null;
 				}
 			}
 		}
@@ -263,7 +266,7 @@ namespace ICSharpCode.Core
 			try{
 				return String.Format(StringParser.Parse(formatstring), formatitems);
 			}catch(FormatException ex){
-				DebugLogger.Instance.Warn(ex.ToString());
+				LogManager.GetLog(typeof(StringParser)).Warn(ex.ToString());
 				
 				StringBuilder b = new StringBuilder(StringParser.Parse(formatstring));
 				foreach(object formatitem in formatitems){

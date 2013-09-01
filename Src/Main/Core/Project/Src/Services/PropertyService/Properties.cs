@@ -12,6 +12,7 @@ using System.Threading;
 using System.Xaml;
 using System.Xml;
 using System.Xml.Linq;
+using Caliburn.Micro;
 
 namespace ICSharpCode.Core
 {
@@ -178,7 +179,7 @@ namespace ICSharpCode.Core
 					try{
 						return (T)Deserialize(val, typeof(T));
 					}catch(SerializationException ex){
-						DebugLogger.Instance.Warn(ex.ToString());
+						LogManager.GetLog(typeof(Properties)).Warn(ex.ToString());
 						return defaultValue;
 					}
 				}else{
@@ -242,12 +243,12 @@ namespace ICSharpCode.Core
 							
 							return array;
 						}catch(XamlObjectWriterException ex){
-							DebugLogger.Instance.Warn(ex.ToString());
+							LogManager.GetLog(typeof(Properties)).Warn(ex.ToString());
 						}catch(NotSupportedException ex){
-							DebugLogger.Instance.Warn(ex.ToString());
+							LogManager.GetLog(typeof(Properties)).Warn(ex.ToString());
 						}
 					}else{
-						DebugLogger.Instance.Warn("Properties.GetList(" + key + ") - this entry is not a list");
+						LogManager.GetLog(typeof(Properties)).Warn("Properties.GetList(" + key + ") - this entry is not a list");
 					}
 				}
 				return new T[0];

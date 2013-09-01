@@ -19,7 +19,7 @@ namespace BVEEditor.Result
         public void Execute(ActionExecutionContext context)
         {
             if(Completed != null)
-                Completed(this, null);
+                Completed(this, new ResultCompletionEventArgs{WasCancelled = true});
         }
 
         #endregion

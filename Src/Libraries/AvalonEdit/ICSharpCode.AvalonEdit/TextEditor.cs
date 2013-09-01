@@ -513,7 +513,7 @@ namespace ICSharpCode.AvalonEdit
 		static void OnLineNumbersForegroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			TextEditor editor = (TextEditor)d;
-			var lineNumberMargin = editor.TextArea.LeftMargins.FirstOrDefault(margin => margin is LineNumberMargin) as LineNumberMargin;;
+			var lineNumberMargin = editor.TextArea.LeftMargins.FirstOrDefault(margin => margin is LineNumberMargin) as LineNumberMargin;
 			
 			if (lineNumberMargin != null) {
 				lineNumberMargin.SetValue(Control.ForegroundProperty, e.NewValue);

@@ -48,12 +48,12 @@ namespace BVEEditor.Options
             var sub_items = args.BuildSubItems<IOptionPanelDescriptor>();
             if(sub_items.Count == 0){
                 if(args.Codon.Properties.Contains("class"))
-                    return new DefaultOptionPanelDescriptor(id, StringParser.Parse(label), args.AddIn, args.Parameter, args.Codon["class"]);
+                    return new DefaultOptionPanelDescriptor(id, label, args.AddIn, args.Parameter, args.Codon["class"]);
                 else
-                    return new DefaultOptionPanelDescriptor(id, StringParser.Parse(label));
+                    return new DefaultOptionPanelDescriptor(id, label, args.AddIn);
             }
 
-            return new DefaultOptionPanelDescriptor(id, StringParser.Parse(label), sub_items);
+            return new DefaultOptionPanelDescriptor(id, label, args.AddIn, sub_items);
         }
     }
 }

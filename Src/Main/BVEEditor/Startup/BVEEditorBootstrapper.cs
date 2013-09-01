@@ -19,7 +19,6 @@ using BVEEditor.Result;
 using BVEEditor.Services;
 using BVEEditor.Settings;
 using BVEEditor.Strategies;
-using BVEEditor.Views;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;

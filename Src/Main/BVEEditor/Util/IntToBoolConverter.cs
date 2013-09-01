@@ -5,24 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace BVEEditor.Options
+namespace BVEEditor.Util
 {
-    [ValueConversion(typeof(object), typeof(OptionPanelViewModel))]
-    public class OptionPanelViewModelConverter : IValueConverter
+    /// <summary>
+    /// Converts int value to bool.
+    /// Returns false if the value is 0, otherwise true.
+    /// </summary>
+    public class IntToBoolConverter : IValueConverter
     {
         #region IValueConverter メンバー
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var category_viewmodel = value as OptionCategoryViewModel;
-            if(category_viewmodel != null)
-                return category_viewmodel.Children[0];
+            if(value is int){
+                if((int)value == 0)
+                    return false;
+                else
+                    return true;
+            }
 
-            var option_viewmodel = value as OptionPanelViewModel;
-            if(option_viewmodel != null)
-                return option_viewmodel;
-
-            return Binding.DoNothing;
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

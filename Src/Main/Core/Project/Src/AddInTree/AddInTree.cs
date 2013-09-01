@@ -291,7 +291,7 @@ namespace ICSharpCode.Core
 				try{
 					add_in = AddIn.Load(this, file_name, name_table);
 				}catch(AddInLoadException ex){
-					DebugLogger.Instance.Error(ex);
+					LogManager.GetLog(typeof(AddInTree)).Error(ex);
 					if(ex.InnerException != null){
                         IoC.Get<IMessageService>().ShowError("Error loading AddIn " + file_name + ":\n"
 						                         + ex.InnerException.Message);
@@ -369,7 +369,7 @@ namespace ICSharpCode.Core
 				try{
 					InsertAddIn(addIn);
 				}catch(AddInLoadException ex){
-					DebugLogger.Instance.Error(ex);
+					LogManager.GetLog(typeof(AddInTree)).Error(ex);
                     IoC.Get<IMessageService>().ShowError("Error loading AddIn " + addIn.FileName + ":\n"
 					                         + ex.Message);
 				}

@@ -8,7 +8,7 @@
  */
 using System;
 
-namespace BVEEditor
+namespace BVEEditor.Events
 {
 	public class FileEvent
 	{

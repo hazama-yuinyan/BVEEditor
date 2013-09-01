@@ -15,10 +15,11 @@
     Background="{DynamicResource WindowBackgroundBrush}"
     MinHeight="400"
     Width="400">
+    
     <Grid Margin="9,3">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <local:AboutView Grid.Row="0" cal:Bind.Model="{Binding .}" />

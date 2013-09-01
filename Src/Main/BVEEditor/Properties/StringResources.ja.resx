@@ -315,4 +315,16 @@
   <data name="OptionsDialog_TreeViewOptions_BVEEditorOptionsText" xml:space="preserve">
     <value>一般</value>
   </data>
+  <data name="AboutDialog_ContributorsTabText" xml:space="preserve">
+    <value>使用ライブラリー</value>
+  </data>
+  <data name="AboutDialog_DockingLayoutText" xml:space="preserve">
+    <value>ドッキングレイアウトシステム:</value>
+  </data>
+  <data name="AboutDialog_TextEditorText" xml:space="preserve">
+    <value>テキストエディター:</value>
+  </data>
+  <data name="MainMenu_FileMenu_RecentFilesEntry" xml:space="preserve">
+    <value>最近使ったファイル</value>
+  </data>
 </root>

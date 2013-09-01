@@ -20,13 +20,13 @@ namespace BVEEditor.Settings
 
         public void Load(ISettingsManager manager)
         {
-            var user_culture_name = manager.GetValue("Generics.UserCultureName", "en-US");
-            LocalizeDictionary.Instance.Culture = CultureInfo.CreateSpecificCulture(user_culture_name);
+            var user_culture_id = manager.GetValue("Generics.UserCultureID", CultureInfo.InvariantCulture.LCID);
+            LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(user_culture_id);
         }
 
         public bool Save(ISettingsManager manager)
         {
-            manager.SetValue("Generics.UserCultureName", LocalizeDictionary.CurrentCulture.Name);
+            manager.SetValue("Generics.UserCultureID", LocalizeDictionary.CurrentCulture.LCID);
             return true;
         }
 

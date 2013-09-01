@@ -17,10 +17,5 @@ namespace BVEEditor.Workbench
 	{
 		IReadOnlyList<FileName> RecentFiles { get; }
 		IReadOnlyList<FileName> RecentProjects { get; }
-		
-		void ClearRecentFiles();
-		void ClearRecentProjects();
-		void AddRecentFile(FileName fileName);
-		void AddRecentProject(FileName fileName);
 	}
 }

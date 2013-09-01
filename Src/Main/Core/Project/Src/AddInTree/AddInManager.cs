@@ -127,7 +127,7 @@ namespace ICSharpCode.Core
 		{
 			if (!Directory.Exists(addInInstallTemp))
 				return;
-			DebugLogger.Instance.Info("AddInManager.InstallAddIns started");
+			LogManager.GetLog(typeof(AddInManager)).Info("AddInManager.InstallAddIns started");
 			if (!Directory.Exists(userAddInPath))
 				Directory.CreateDirectory(userAddInPath);
 			string removeFile = Path.Combine(addInInstallTemp, "remove.txt");
@@ -148,10 +148,10 @@ namespace ICSharpCode.Core
 					}
 				}
 				if (notRemoved.Count == 0) {
-					DebugLogger.Instance.Info("Deleting remove.txt");
+					LogManager.GetLog(typeof(AddInManager)).Info("Deleting remove.txt");
 					File.Delete(removeFile);
 				} else {
-					DebugLogger.Instance.Info("Rewriting remove.txt");
+					LogManager.GetLog(typeof(AddInManager)).Info("Rewriting remove.txt");
 					using (StreamWriter w = new StreamWriter(removeFile)) {
 						notRemoved.ForEach(w.WriteLine);
 					}
@@ -161,11 +161,11 @@ namespace ICSharpCode.Core
 				string addInName = Path.GetFileName(sourceDir);
 				string targetDir = Path.Combine(userAddInPath, addInName);
 				if (notRemoved.Contains(addInName)) {
-					DebugLogger.Instance.Info("Skipping installation of " + addInName + " because deinstallation failed.");
+					LogManager.GetLog(typeof(AddInManager)).Info("Skipping installation of " + addInName + " because deinstallation failed.");
 					continue;
 				}
 				if (UninstallAddIn(disabled, addInName, targetDir)) {
-					DebugLogger.Instance.Info("Installing " + addInName + "...");
+					LogManager.GetLog(typeof(AddInManager)).Info("Installing " + addInName + "...");
 					Directory.Move(sourceDir, targetDir);
 				} else {
 					allOK = false;
@@ -175,16 +175,16 @@ namespace ICSharpCode.Core
 				try {
 					Directory.Delete(addInInstallTemp, false);
 				} catch (Exception ex) {
-					DebugLogger.Instance.Warn("Error removing install temp", ex);
+					LogManager.GetLog(typeof(AddInManager)).Warn("Error removing install temp", ex);
 				}
 			}
-			DebugLogger.Instance.Info("AddInManager.InstallAddIns finished");
+			LogManager.GetLog(typeof(AddInManager)).Info("AddInManager.InstallAddIns finished");
 		}
 		
 		static bool UninstallAddIn(List<string> disabled, string addInName, string targetDir)
 		{
 			if (Directory.Exists(targetDir)) {
-				DebugLogger.Instance.Info("Removing " + addInName + "...");
+				LogManager.GetLog(typeof(AddInManager)).Info("Removing " + addInName + "...");
 				try {
 					Directory.Delete(targetDir, true);
 				} catch (Exception ex) {

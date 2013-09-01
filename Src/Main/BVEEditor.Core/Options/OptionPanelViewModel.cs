@@ -56,14 +56,20 @@ namespace BVEEditor.Options
 
         protected override void OnInitialize()
         {
-            if(!IsInitialized)
-                LoadOptions();
+            LoadOptions();
         }
 
+        /// <summary>
+        /// Initializes values corresponding to the UI.
+        /// </summary>
         public virtual void LoadOptions()
         {
         }
 
+        /// <summary>
+        /// Responsible for saving UI values to Model class.
+        /// </summary>
+        /// <returns></returns>
         public virtual bool SaveOptions()
         {
             return true;

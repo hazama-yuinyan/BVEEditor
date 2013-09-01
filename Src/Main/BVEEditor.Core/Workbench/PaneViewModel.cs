@@ -28,7 +28,7 @@ namespace BVEEditor.Workbench
             set{
                 if(title != value){
                     title = value;
-                    NotifyOfPropertyChange(() => title);
+                    NotifyOfPropertyChange(() => Title);
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace BVEEditor.Workbench
             set{
                 if(content_id != value){
                     content_id = value;
-                    NotifyOfPropertyChange(() => content_id);
+                    NotifyOfPropertyChange(() => ContentId);
                 }
             }
         }
@@ -50,7 +50,7 @@ namespace BVEEditor.Workbench
             set{
                 if(is_visible != value){
                     is_visible = value;
-                    NotifyOfPropertyChange(() => is_visible);
+                    NotifyOfPropertyChange(() => IsVisible);
                 }
             }
         }

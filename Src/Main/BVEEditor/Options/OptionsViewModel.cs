@@ -27,6 +27,7 @@ namespace BVEEditor.Options
             set{
                 if(active_panel != value){
                     active_panel = value;
+                    ActivateItem(active_panel);
                     NotifyOfPropertyChange(() => ActivePanel);
                 }
             }
@@ -49,6 +50,9 @@ namespace BVEEditor.Options
         {
             var panel = descriptor.CreateViewModel();
             panel.PropertyChanged += OptionPanelPropertyChanged;
+            foreach(var child in panel.Children)
+                child.PropertyChanged += OptionPanelPropertyChanged;
+            
             return panel;
         }
 
@@ -73,11 +77,11 @@ namespace BVEEditor.Options
         {
             if(e.PropertyName == "IsSelected"){
                 var category = sender as OptionCategoryViewModel;
-                if(category != null){
+                if(category != null && category.IsSelected){
                     ActivePanel = category.Children[0];
                 }else{
                     var panel = sender as OptionPanelViewModel;
-                    if(panel != null)
+                    if(panel != null && panel.IsSelected)
                         ActivePanel = panel;
                 }
             }

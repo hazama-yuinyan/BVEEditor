@@ -10,9 +10,6 @@
     lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
     lex:ResxLocalizationProvider.DefaultDictionary="StringResources"
     Height="400" Width="500">
-    <Window.Resources>
-        <options:OptionPanelViewModelConverter x:Key="OptionPanelViewModelConverter" />
-    </Window.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -38,6 +35,7 @@
                     </Style.Triggers>
                 </Style>
             </TreeView.ItemContainerStyle>
+            
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type options:OptionCategoryViewModel}" ItemsSource="{Binding Children}">
                     <TextBlock Text="{Binding Title}" />

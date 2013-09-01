@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BVEEditor.Events;
 using BVEEditor.Options;
 using BVEEditor.Result;
@@ -25,6 +26,7 @@ namespace BVEEditor.Views.Main
         readonly IResultFactory result_factory;
         readonly IFileDialogStrategies file_strategies;
         readonly IEventAggregator event_aggregator;
+        readonly RecentOpenViewModel recent_open;
 
         ViewDocumentViewModel active_doc;
         ViewDocumentViewModel ActiveDocument{
@@ -37,17 +39,23 @@ namespace BVEEditor.Views.Main
             }
         }
 
+        public RecentOpenViewModel RecentOpen{
+            get{return recent_open;}
+        }
+
         // This property cann't use constructor injection
         // because doing so creates a cyclic dependency.
         public IWorkbench Workbench{private get; set;}
 
-        public MainMenuViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator)
+        public MainMenuViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
+            RecentOpenViewModel recentOpen)
         {
             eventAggregator.Subscribe(this);
 
             result_factory = resultFactory;
             file_strategies = fileStrategies;
             event_aggregator = eventAggregator;
+            recent_open = recentOpen;
         }
 
         public void NewDocument()
@@ -58,6 +66,13 @@ namespace BVEEditor.Views.Main
         public IEnumerable<IResult> OpenDocument()
         {
             return file_strategies.Open(Workbench.CreateViewDocumentViewModel);
+        }
+
+        public void OpenDocument(FrameworkElement elem)
+        {
+            var file_name = elem.DataContext as FileName;
+            if(file_name != null)
+                Workbench.CreateViewDocumentViewModel(file_name);
         }
 
         public IEnumerable<IResult> SaveDocument()

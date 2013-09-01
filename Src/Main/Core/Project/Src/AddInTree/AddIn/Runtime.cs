@@ -109,8 +109,8 @@ namespace ICSharpCode.Core
 						ShowError("The addin '" + assembly + "' could not be loaded:\n" + ex.ToString());
 					}
 
-                    //Register the assembly to Caliburn.Micro in order for it to
-                    //retrieve views from the assembly.
+                    // Register the assembly to Caliburn.Micro in order for it to
+                    // retrieve views from the assembly.
                     if(!AssemblySource.Instance.Contains(loaded_assembly))
                         AssemblySource.Instance.Add(loaded_assembly);
 				}

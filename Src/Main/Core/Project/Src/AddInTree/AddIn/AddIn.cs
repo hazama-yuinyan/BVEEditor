@@ -15,8 +15,6 @@ namespace ICSharpCode.Core
 		IAddInTree addInTree;
 		Properties    properties = new Properties();
 		List<Runtime> runtimes   = new List<Runtime>();
-		List<string> bitmapResources = new List<string>();
-		List<string> stringResources = new List<string>();
 		
 		internal string addInFileName = null;
 		AddInManifest manifest = new AddInManifest();
@@ -24,7 +22,7 @@ namespace ICSharpCode.Core
 		AddInAction action = AddInAction.Disable;
 		bool enabled;
 		
-		static bool hasShownErrorMessage = false;
+		static bool HasShownErrorMessage = false;
 		
 		internal AddIn(IAddInTree addInTree)
 		{
@@ -62,10 +60,10 @@ namespace ICSharpCode.Core
 				if(t != null)
 					return t;
 			}
-			if(hasShownErrorMessage){
-				DebugLogger.Instance.Error("Cannot find class: " + className);
+			if(HasShownErrorMessage){
+				LogManager.GetLog(typeof(AddIn)).Error(new Exception("Cannot find class: " + className));
 			}else{
-				hasShownErrorMessage = true;
+				HasShownErrorMessage = true;
 				IoC.Get<IMessageService>()
                     .ShowError("Cannot find class: " + className + "\nFuture missing objects will not cause an error message.");
 			}
@@ -103,9 +101,9 @@ namespace ICSharpCode.Core
 			// Because the methods being called should be thread-safe, there's
 			// no problem when we load dependencies multiple times concurrently.
 			// However, we need to make sure we don't return before the dependencies are ready,
-			// so "bool dependenciesLoaded" must be volatile and set only at the very end of this method.
+			// so "bool dependencies_loaded" must be volatile and set only at the very end of this method.
 			if(!dependencies_loaded){
-				DebugLogger.Instance.Info("Loading addin " + this.Name);
+				LogManager.GetLog(typeof(AddIn)).Info("Loading addin " + this.Name);
 				
 				AssemblyLocator.Init();
 				foreach(AddInReference r in manifest.Dependencies){
@@ -186,16 +184,6 @@ namespace ICSharpCode.Core
 			get { return properties; }
 		}
 		
-		public List<string> BitmapResources {
-			get { return bitmapResources; }
-			set { bitmapResources = value; }
-		}
-		
-		public List<string> StringResources {
-			get { return stringResources; }
-			set { stringResources = value; }
-		}
-		
 		public bool Enabled {
 			get { return enabled; }
 			set {
@@ -209,24 +197,12 @@ namespace ICSharpCode.Core
 			while(reader.Read()){
 				if(reader.NodeType == XmlNodeType.Element && reader.IsStartElement()){
 					switch(reader.LocalName){
-                    case "StringResources":
-                    case "BitmapResources":
-                        if(reader.AttributeCount != 1)
-							throw new AddInLoadException("BitmapResources requires ONE attribute.");
-							
-						string filename = StringParser.Parse(reader.GetAttribute("file"));
-							
-						if(reader.LocalName == "BitmapResources")
-							addIn.BitmapResources.Add(filename);
-						else
-							addIn.StringResources.Add(filename);
-					
-                        break;
 					case "Runtime":
 						if(!reader.IsEmptyElement)
 							addIn.runtimes.AddRange(Runtime.ReadSection(reader, addIn, hintPath));
 						
 					    break;
+
 					case "Include":
 						if(reader.AttributeCount != 1)
 							throw new AddInLoadException("Include requires ONE attribute.");
@@ -243,7 +219,8 @@ namespace ICSharpCode.Core
 							SetupAddIn(includeReader, addIn, Path.GetDirectoryName(fileName));
 						}
 						break;
-					case "Path":
+					
+                    case "Path":
 						if(reader.AttributeCount != 1)
 							throw new AddInLoadException("Import node requires ONE attribute.");
 						
@@ -253,10 +230,12 @@ namespace ICSharpCode.Core
 							ExtensionPath.SetUp(extensionPath, reader, "Path");
 					    
                         break;
-				    case "Manifest":
+				    
+                    case "Manifest":
 						addIn.Manifest.ReadManifestSection(reader, hintPath);
 						break;
-					default:
+					
+                    default:
 						throw new AddInLoadException("Unknown root path node:" + reader.LocalName);
 					}
 				}
@@ -286,7 +265,8 @@ namespace ICSharpCode.Core
 									addIn.properties = Properties.ReadFromAttributes(reader);
 									SetupAddIn(reader, addIn, hintPath);
 									break;
-								default:
+								
+                            default:
 									throw new AddInLoadException("Unknown add-in file.");
 							}
 						}

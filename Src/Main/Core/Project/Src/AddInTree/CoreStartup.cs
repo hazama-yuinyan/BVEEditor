@@ -187,7 +187,7 @@ namespace ICSharpCode.Core
 			//	addInTree.BuildItems<object>("/BVEEditor/Services", container, false);
 			
 			// run workspace autostart commands
-			DebugLogger.Instance.Info("Running autostart commands...");
+			LogManager.GetLog(typeof(CoreStartup)).Info("Running autostart commands...");
 			foreach(ICommand command in addInTree.BuildItems<ICommand>("/BVEEditor/Autostart", null, false)){
 				try {
 					command.Execute(null);
