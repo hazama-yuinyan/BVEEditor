@@ -19,7 +19,6 @@ using System.Reflection;
 [assembly: AssemblyCopyright("2000-2013 AlphaSierraPapa for the SharpDevelop Team")]
 [assembly: AssemblyVersion(RevisionClass.Major + "." + RevisionClass.Minor + "." + RevisionClass.Build + "." + RevisionClass.Revision)]
 [assembly: AssemblyInformationalVersion(RevisionClass.FullVersion + "-24fd3c8d")]
-[assembly: NeutralResourcesLanguage("en-US")]
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly",
 	Justification = "AssemblyInformationalVersion does not need to be a parsable version")]

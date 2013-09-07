@@ -1,16 +1,18 @@
-﻿<UserControl x:Class="BVEEditor.Views.Main.ToolBarView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="32" d:DesignWidth="400"
-             lex:LocalizeDictionary.DesignCulture="en"
-             lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
-             lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
+﻿<UserControl
+    x:Class="BVEEditor.Views.Main.ToolBarView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    mc:Ignorable="d" 
+    d:DesignHeight="32" d:DesignWidth="400"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:ResxLocalizationProvider.DefaultDictionary="StringResources">
+    
     <Grid>
-        <ToolBarTray Grid.Row="1" SnapsToDevicePixels="True">
+        <ToolBarTray Grid.Row="0" SnapsToDevicePixels="True">
             <ToolBar VerticalAlignment="Stretch" ToolBarTray.IsLocked="True"
                      SnapsToDevicePixels="True"
                      Margin="3">
@@ -36,27 +38,33 @@
                 </Button>
                 <Separator Margin="6,3" />
                 <Button Command="Cut" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Cut_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Cut}" SnapsToDevicePixels="True" />
                 </Button>
                 <Button Command="Copy" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Copy_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Copy}" SnapsToDevicePixels="True" />
                 </Button>
                 <Button Command="Paste" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Paste_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Paste}" SnapsToDevicePixels="True" />
                 </Button>
                 <Button Command="Delete" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Delete_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Delete}" SnapsToDevicePixels="True" />
                 </Button>
                 <Separator Margin="6,3" />
                 <Button Command="Undo" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Undo_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Undo}" SnapsToDevicePixels="True" />
                 </Button>
                 <Button Command="Redo" SnapsToDevicePixels="True"
+                        ToolTip="{lex:Loc MainMenu_EditMenu_Redo_Description}"
                         ToolTipService.ShowOnDisabled="True">
                     <Image Source="{StaticResource Redo}" SnapsToDevicePixels="True" />
                 </Button>

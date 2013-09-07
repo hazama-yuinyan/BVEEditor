@@ -327,4 +327,43 @@
   <data name="MainMenu_FileMenu_RecentFilesEntry" xml:space="preserve">
     <value>Recent files</value>
   </data>
+  <data name="SearchPanel_FindNextText" xml:space="preserve">
+    <value>Find next (F3)</value>
+  </data>
+  <data name="SearchPanel_FindPreviousText" xml:space="preserve">
+    <value>Find previous (Shift + F3)</value>
+  </data>
+  <data name="SearchPanel_MatchCaseText" xml:space="preserve">
+    <value>Match case</value>
+  </data>
+  <data name="SearchPanel_MatchWholeWordsText" xml:space="preserve">
+    <value>Match whole words</value>
+  </data>
+  <data name="SearchPanel_NoMatchesFoundText" xml:space="preserve">
+    <value>No matches found!</value>
+  </data>
+  <data name="SearchPanel_UseRegexText" xml:space="preserve">
+    <value>Use regular expression</value>
+  </data>
+  <data name="FindReplaceDialog_FindAll" xml:space="preserve">
+    <value>Find all</value>
+  </data>
+  <data name="FindReplaceDialog_FindNext" xml:space="preserve">
+    <value>Find next</value>
+  </data>
+  <data name="FindReplaceDialog_FindPrevious" xml:space="preserve">
+    <value>Find previous</value>
+  </data>
+  <data name="FindReplaceDialog_IncludesSubfoldersLabel" xml:space="preserve">
+    <value>Includes subfolders as search targets</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions" xml:space="preserve">
+    <value>SearchOptions</value>
+  </data>
+  <data name="FindReplaceDialog_SearchTargetLabel" xml:space="preserve">
+    <value>Look in:</value>
+  </data>
+  <data name="FindReplaceDialog_SearchTextLabel" xml:space="preserve">
+    <value>Search text:</value>
+  </data>
 </root>

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using BVEEditor.Editor;
 using BVEEditor.Events;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
-using WPFLocalizeExtension.Extensions;
 
 namespace BVEEditor.Views.Main
 {
@@ -24,6 +18,9 @@ namespace BVEEditor.Views.Main
 
         #region Binding sources
         bool is_text_file_active;
+        /// <summary>
+        /// Gets whether the active ViewDocument is a text file or not.
+        /// </summary>
         public bool IsTextFileActive{
             get{return is_text_file_active;}
             private set{

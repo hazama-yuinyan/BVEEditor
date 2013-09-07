@@ -20,22 +20,25 @@ namespace ICSharpCode.AvalonEdit.Search
 		
 		public RegexSearchStrategy(Regex searchPattern, bool matchWholeWords)
 		{
-			if (searchPattern == null)
+			if(searchPattern == null)
 				throw new ArgumentNullException("searchPattern");
-			this.searchPattern = searchPattern;
+			
+            this.searchPattern = searchPattern;
 			this.matchWholeWords = matchWholeWords;
 		}
 		
 		public IEnumerable<ISearchResult> FindAll(ITextSource document, int offset, int length)
 		{
 			int endOffset = offset + length;
-			foreach (Match result in searchPattern.Matches(document.Text)) {
+			foreach(Match result in searchPattern.Matches(document.Text)){
 				int resultEndOffset = result.Length + result.Index;
-				if (offset > result.Index || endOffset < resultEndOffset)
+				if(offset > result.Index || endOffset < resultEndOffset)
 					continue;
-				if (matchWholeWords && (!IsWordBorder(document, result.Index) || !IsWordBorder(document, resultEndOffset)))
+				
+                if(matchWholeWords && (!IsWordBorder(document, result.Index) || !IsWordBorder(document, resultEndOffset)))
 					continue;
-				yield return new SearchResult { StartOffset = result.Index, Length = result.Length, Data = result };
+				
+                yield return new SearchResult{StartOffset = result.Index, Length = result.Length, Data = result};
 			}
 		}
 		

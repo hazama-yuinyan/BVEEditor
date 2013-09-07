@@ -42,7 +42,7 @@ namespace ICSharpCode.AvalonEdit.Search
 		
 		protected override void OnClick()
 		{
-			if (DropDownContent != null && !IsDropDownContentOpen) {
+			if(DropDownContent != null && !IsDropDownContentOpen){
 				DropDownContent.Placement = PlacementMode.Bottom;
 				DropDownContent.PlacementTarget = this;
 				DropDownContent.IsOpen = true;

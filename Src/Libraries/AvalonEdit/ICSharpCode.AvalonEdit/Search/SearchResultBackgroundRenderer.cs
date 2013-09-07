@@ -48,30 +48,29 @@ namespace ICSharpCode.AvalonEdit.Search
 		
 		public void Draw(TextView textView, DrawingContext drawingContext)
 		{
-			if (textView == null)
+			if(textView == null)
 				throw new ArgumentNullException("textView");
-			if (drawingContext == null)
+			if(drawingContext == null)
 				throw new ArgumentNullException("drawingContext");
 			
-			if (currentResults == null || !textView.VisualLinesValid)
+			if(currentResults == null || !textView.VisualLinesValid)
 				return;
 			
-			var visualLines = textView.VisualLines;
-			if (visualLines.Count == 0)
+			var visual_lines = textView.VisualLines;
+			if(visual_lines.Count == 0)
 				return;
 			
-			int viewStart = visualLines.First().FirstDocumentLine.Offset;
-			int viewEnd = visualLines.Last().LastDocumentLine.EndOffset;
+			int view_start = visual_lines.First().FirstDocumentLine.Offset;
+			int view_end = visual_lines.Last().LastDocumentLine.EndOffset;
 			
-			foreach (SearchResult result in currentResults.FindOverlappingSegments(viewStart, viewEnd - viewStart)) {
-				BackgroundGeometryBuilder geoBuilder = new BackgroundGeometryBuilder();
-				geoBuilder.AlignToMiddleOfPixels = true;
-				geoBuilder.CornerRadius = 3;
-				geoBuilder.AddSegment(textView, result);
-				Geometry geometry = geoBuilder.CreateGeometry();
-				if (geometry != null) {
+			foreach(SearchResult result in currentResults.FindOverlappingSegments(view_start, view_end - view_start)){
+				BackgroundGeometryBuilder geo_builder = new BackgroundGeometryBuilder();
+				geo_builder.AlignToMiddleOfPixels = true;
+				geo_builder.CornerRadius = 3;
+				geo_builder.AddSegment(textView, result);
+				Geometry geometry = geo_builder.CreateGeometry();
+				if(geometry != null)
 					drawingContext.DrawGeometry(markerBrush, markerPen, geometry);
-				}
 			}
 		}
 	}

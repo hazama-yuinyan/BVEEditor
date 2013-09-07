@@ -322,6 +322,69 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Find all に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_FindAll {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_FindAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find next に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_FindNext {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_FindNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find previous に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_FindPrevious {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_FindPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Includes subfolders as search targets に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_IncludesSubfoldersLabel {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_IncludesSubfoldersLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   SearchOptions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchOptions {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Look in: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchTargetLabel {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchTargetLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Search text: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchTextLabel {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchTextLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Edit に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string MainMenu_Edit {
@@ -642,6 +705,60 @@ namespace BVEEditor.Properties {
         public static string OptionsDialog_TreeViewOptions_BVEEditorOptionsText {
             get {
                 return ResourceManager.GetString("OptionsDialog_TreeViewOptions_BVEEditorOptionsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find next (F3) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_FindNextText {
+            get {
+                return ResourceManager.GetString("SearchPanel_FindNextText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find previous (Shift + F3) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_FindPreviousText {
+            get {
+                return ResourceManager.GetString("SearchPanel_FindPreviousText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Match case に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_MatchCaseText {
+            get {
+                return ResourceManager.GetString("SearchPanel_MatchCaseText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Match whole words に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_MatchWholeWordsText {
+            get {
+                return ResourceManager.GetString("SearchPanel_MatchWholeWordsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   No matches found! に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_NoMatchesFoundText {
+            get {
+                return ResourceManager.GetString("SearchPanel_NoMatchesFoundText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use regular expression に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SearchPanel_UseRegexText {
+            get {
+                return ResourceManager.GetString("SearchPanel_UseRegexText", resourceCulture);
             }
         }
         

@@ -12,7 +12,7 @@
     <NoStdLib>False</NoStdLib>
     <NoConfig>False</NoConfig>
     <OutputType>Library</OutputType>
-    <SignAssembly>False</SignAssembly>
+    <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\ICSharpCode.SharpDevelop.snk</AssemblyOriginatorKeyFile>
     <BaseAddress>83886080</BaseAddress>
     <RunPostBuildEvent>Always</RunPostBuildEvent>

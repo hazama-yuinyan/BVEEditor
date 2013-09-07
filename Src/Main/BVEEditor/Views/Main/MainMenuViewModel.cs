@@ -68,9 +68,13 @@ namespace BVEEditor.Views.Main
             return file_strategies.Open(Workbench.CreateViewDocumentViewModel);
         }
 
-        public void OpenDocument(FrameworkElement elem)
+        public void OpenDocument(RoutedEventArgs e)
         {
-            var file_name = elem.DataContext as FileName;
+            var original_source = e.OriginalSource as FrameworkElement;
+            if(original_source == null)
+                return;
+
+            var file_name = original_source.DataContext as FileName;
             if(file_name != null)
                 Workbench.CreateViewDocumentViewModel(file_name);
         }

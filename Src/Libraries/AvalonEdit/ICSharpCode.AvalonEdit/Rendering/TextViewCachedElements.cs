@@ -16,27 +16,30 @@ namespace ICSharpCode.AvalonEdit.Rendering
 		
 		public TextLine GetTextForNonPrintableCharacter(string text, ITextRunConstructionContext context)
 		{
-			if (nonPrintableCharacterTexts == null)
+			if(nonPrintableCharacterTexts == null)
 				nonPrintableCharacterTexts = new Dictionary<string, TextLine>();
-			TextLine textLine;
-			if (!nonPrintableCharacterTexts.TryGetValue(text, out textLine)) {
+			
+            TextLine text_line;
+			if(!nonPrintableCharacterTexts.TryGetValue(text, out text_line)){
 				var p = new VisualLineElementTextRunProperties(context.GlobalTextRunProperties);
 				p.SetForegroundBrush(context.TextView.NonPrintableCharacterBrush);
-				if (formatter == null)
+				if(formatter == null)
 					formatter = TextFormatterFactory.Create(context.TextView);
-				textLine = FormattedTextElement.PrepareText(formatter, text, p);
-				nonPrintableCharacterTexts[text] = textLine;
+				
+                text_line = FormattedTextElement.PrepareText(formatter, text, p);
+				nonPrintableCharacterTexts[text] = text_line;
 			}
-			return textLine;
+			return text_line;
 		}
 		
 		public void Dispose()
 		{
-			if (nonPrintableCharacterTexts != null) {
-				foreach (TextLine line in nonPrintableCharacterTexts.Values)
+			if(nonPrintableCharacterTexts != null){
+				foreach(TextLine line in nonPrintableCharacterTexts.Values)
 					line.Dispose();
 			}
-			if (formatter != null)
+
+			if(formatter != null)
 				formatter.Dispose();
 		}
 	}

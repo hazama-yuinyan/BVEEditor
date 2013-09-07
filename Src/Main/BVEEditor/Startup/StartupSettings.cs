@@ -19,23 +19,8 @@ namespace BVEEditor.Startup
 	{
 		string application_name = "BVEEditor";
 		bool allow_addIn_configuration_and_external_addIns = true;
-		string resource_assembly_name = "BVEEditor";
 		internal List<string> addInDirectories = new List<string>();
 		internal List<string> addInFiles = new List<string>();
-		
-		/// <summary>
-		/// Gets/Sets the name of the assembly to load the BitmapResources
-		/// and English StringResources from.
-		/// </summary>
-		public string ResourceAssemblyName {
-			get { return resource_assembly_name; }
-			set {
-				if(value == null)
-					throw new ArgumentNullException("value");
-				
-				resource_assembly_name = value;
-			}
-		}
 		
 		/// <summary>
 		/// Use the file <see cref="ConfigDirectory"/>\AddIns.xml to maintain
@@ -70,12 +55,12 @@ namespace BVEEditor.Startup
 		
 		/// <summary>
 		/// Gets/Sets the application root path to use.
-		/// Use null (default) to use the base directory of the SharpDevelop AppDomain.
+		/// Use null (default) to use the base directory of the BVEEditor AppDomain.
 		/// </summary>
 		public string ApplicationRootPath {get; set;}
 		
 		/// <summary>
-		/// Gets/Sets the directory used to store SharpDevelop properties,
+		/// Gets/Sets the directory used to store BVEEditor properties,
 		/// settings and user AddIns.
 		/// Use null (default) to use "ApplicationData\ApplicationName"
 		/// </summary>

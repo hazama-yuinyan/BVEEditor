@@ -63,7 +63,7 @@ namespace BVEEditor.Workbench
 	/// </list>
 	/// </summary>
 	public class WorkbenchViewModel : ShellPresentationViewModel, IWorkbench, IHandle<FileEvent>, /*IHandle<FileRenameEvent>,*/
-        IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewContentChangedEvent>, IHandle<JumpLocationEvent>
+        IHandle<ViewDocumentAddedEvent>, IHandle<ActiveViewDocumentChangedEvent>, IHandle<JumpLocationEvent>
 	{
 		const string PadContentPath = "/BVEEditor/Workbench/Pad";
 		const string LayoutConfig = "LayoutConfig.xml";
@@ -534,7 +534,7 @@ namespace BVEEditor.Workbench
 					string key = GetMementoKeyName(viewDocument);
 					Log4netLogger.Instance.Debug("Trying to restore memento of '" + viewDocument.ToString() + "' from key '" + key + "'");
 					
-					memento_capable.SetMemento(this.LoadOrCreateViewContentMementos().NestedProperties(key));
+					memento_capable.SetMemento(LoadOrCreateViewContentMementos().NestedProperties(key));
 				}catch(Exception e){
 					MessageService.ShowException(e, "Can't get/set memento");
 				}
@@ -713,7 +713,6 @@ namespace BVEEditor.Workbench
             
             if(doc == null){
                 doc = message.Document;
-                LoadViewDocumentMemento(doc);
                 viewdoc_conductor.AddDocument(doc);
             }
 
@@ -723,12 +722,11 @@ namespace BVEEditor.Workbench
 
         #endregion
 
-        #region IHandle<ActiveViewContentChangedEvent> メンバー
+        #region IHandle<ActiveViewDocumentChangedEvent> メンバー
 
-        public void Handle(ActiveViewContentChangedEvent message)
+        public void Handle(ActiveViewDocumentChangedEvent message)
         {
-            //ActiveViewDocument = message.Content;
-            ActiveDocument = message.Content.ViewDocument;
+            LoadViewDocumentMemento(message.ViewDocument);
         }
 
         #endregion

@@ -109,7 +109,28 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Icons\AssetEditorIcon.png" />
+    <Resource Include="Icons\EditLowercase.png" />
+    <Resource Include="Icons\EditUppercase.png" />
+    <Resource Include="Icons\FileTypeImage.png" />
+    <Resource Include="Icons\FileTypeMap.png" />
+    <Resource Include="Icons\FileTypeRoute.png" />
+    <Resource Include="Icons\FileTypeSound.png" />
+    <Resource Include="Icons\magnet.png" />
+    <Resource Include="Icons\minus-circle.png" />
+    <Resource Include="Icons\minus.png" />
+    <Resource Include="Icons\Options.png" />
+    <Resource Include="Icons\pin.png" />
+    <Resource Include="Icons\plus-circle.png" />
+    <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\property-blue.png" />
+    <Resource Include="Icons\RecentFiles.png" />
+    <Resource Include="Icons\Replace.png" />
+    <Resource Include="Icons\report.png" />
+    <Resource Include="Icons\ruler.png" />
+    <Resource Include="Icons\Tools.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\bveeditor_icon.png" />
     <Resource Include="Icons\Copy.png" />

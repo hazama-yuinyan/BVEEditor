@@ -14,10 +14,25 @@
     <BitmapImage x:Key="Save" UriSource="/BVEEditor.Themes;component/Icons/Save.png" />
     <BitmapImage x:Key="SaveAs" UriSource="/BVEEditor.Themes;component/Icons/SaveAs.png" />
     <BitmapImage x:Key="SaveAll" UriSource="/BVEEditor.Themes;component/Icons/SaveAll.png" />
+    <BitmapImage x:Key="RecentFiles" UriSource="/BVEEditor.Themes;component/Icons/RecentFiles.png" />
     <BitmapImage x:Key="ApplicationExit" UriSource="/BVEEditor.Themes;component/Icons/Exit.png" />
+    
+    <BitmapImage x:Key="Options" UriSource="/BVEEditor.Themes;component/Icons/Options.png" />
+    <BitmapImage x:Key="Tools" UriSource="/BVEEditor.Themes;component/Icons/Tools.png" />
 
     <BitmapImage x:Key="Indent" UriSource="/BVEEditor.Themes;component/Icons/Indent.png" />
     <BitmapImage x:Key="Outdent" UriSource="/BVEEditor.Themes;component/Icons/Outdent.png" />
+    <BitmapImage x:Key="ToUppercase" UriSource="/BVEEditor.Themes;component/Icons/EditUppercase.png" />
+    <BitmapImage x:Key="ToLowercase" UriSource="/BVEEditor.Themes;component/Icons/EditLowercase.png" />
+    <BitmapImage x:Key="Replace" UriSource="/BVEEditor.Themes;component/Icons/Replace.png" />
+    
+    <BitmapImage x:Key="AssetEditorIcon" UriSource="/BVEEditor.Themes;component/Icons/AssetEditorIcon.png" />
+    
+    <!-- FileTypeIcons -->
+    <BitmapImage x:Key="FileTypeMap" UriSource="/BVEEditor.Themes;component/Icons/FileTypeMap.png" />
+    <BitmapImage x:Key="FileTypeRoute" UriSource="/BVEEditor.Themes;component/Icons/FileTypeRoute.png" />
+    <BitmapImage x:Key="FileTypeImage" UriSource="/BVEEditor.Themes;component/Icons/FileTypeImage.png" />
+    <BitmapImage x:Key="FileTypeSound" UriSource="/BVEEditor.Themes;component/Icons/FileTypeSound.png" />
 
     <BitmapImage x:Key="InsertMode" UriSource="/BVEEditor.Themes;component/Icons/InsertMode.png" />
 </ResourceDictionary>

@@ -20,11 +20,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
-        <TextBlock Text="{lex:Loc OptionsDialog_AppearancePanel_LabelUILanguage}"
-                   Margin="6,3"
-                   Grid.Row="0" Grid.Column="0"/>
+        <Label Content="{lex:Loc OptionsDialog_AppearancePanel_LabelUILanguage}"
+               Margin="6,3"
+               Grid.Row="0" Grid.Column="0"/>
         <ComboBox ItemsSource="{Binding UILanguages}"
                   SelectedItem="{Binding SelectedUILanguage, Mode=TwoWay}"
+                  Margin="6,3"
                   Grid.Row="0" Grid.Column="1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -35,11 +36,12 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         
-        <TextBlock Text="{lex:Loc OptionsDialog_AppearancePanel_LabelTheme}"
-                   Margin="6,3"
-                   Grid.Row="1" Grid.Column="0"/>
+        <Label Content="{lex:Loc OptionsDialog_AppearancePanel_LabelTheme}"
+               Margin="6,3"
+               Grid.Row="1" Grid.Column="0"/>
         <ComboBox ItemsSource="{Binding Themes}"
                   SelectedItem="{Binding SelectedTheme, Mode=TwoWay}"
+                  Margin="6,3"
                   Grid.Row="1" Grid.Column="1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>

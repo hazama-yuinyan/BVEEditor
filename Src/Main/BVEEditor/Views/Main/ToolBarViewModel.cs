@@ -13,7 +13,7 @@ using ICSharpCode.Core;
 
 namespace BVEEditor.Views.Main
 {
-    public class ToolBarViewModel : PropertyChangedBase
+    public class ToolBarViewModel : PropertyChangedBase, IHandle<ActiveViewDocumentChangedEvent>
     {
         const string ToolBarPath = "/BVEEditor/Workbench/ToolBar";
 

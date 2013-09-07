@@ -51,10 +51,15 @@
                 <MenuItem Header="{lex:Loc MainMenu_FileMenu_RecentFilesEntry}"
                           ItemsSource="{Binding RecentOpen.RecentFiles}"
                           IsEnabled="{Binding Path=RecentOpen.RecentFiles.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}"
-                          cal:Message.Attach="OpenDocument($source)">
+                          cal:Message.Attach="OpenDocument($eventArgs)">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource RecentFiles}" />
+                    </MenuItem.Icon>
+                    
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
                             <Setter Property="Header" Value="{Binding}" />
+                            <Setter Property="CommandParameter" Value="{Binding}" />
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
@@ -112,7 +117,11 @@
             </MenuItem>
             
             <MenuItem Header="{lex:Loc MainMenu_Tools}">
-                <MenuItem x:Name="ShowOptionsDialog" Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}"></MenuItem>
+                <MenuItem x:Name="ShowOptionsDialog" Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}">
+                    <MenuItem.Icon>
+                        <Image Source="{StaticResource Options}" />
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
             
             <MenuItem Header="{lex:Loc MainMenu_Help}">

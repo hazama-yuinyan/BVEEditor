@@ -62,30 +62,30 @@ namespace ICSharpCode.AvalonEdit.Folding
 		{
 			Stack<XmlFoldStart> stack = new Stack<XmlFoldStart>();
 			List<NewFolding> foldMarkers = new List<NewFolding>();
-			try {
-				while (reader.Read()) {
-					switch (reader.NodeType) {
-						case XmlNodeType.Element:
-							if (!reader.IsEmptyElement) {
-								XmlFoldStart newFoldStart = CreateElementFoldStart(document, reader);
-								stack.Push(newFoldStart);
-							}
-							break;
+			try{
+				while(reader.Read()){
+					switch(reader.NodeType){
+					case XmlNodeType.Element:
+						if(!reader.IsEmptyElement){
+							XmlFoldStart newFoldStart = CreateElementFoldStart(document, reader);
+							stack.Push(newFoldStart);
+						}
+						break;
 							
-						case XmlNodeType.EndElement:
-							XmlFoldStart foldStart = stack.Pop();
-							CreateElementFold(document, foldMarkers, reader, foldStart);
-							break;
+					case XmlNodeType.EndElement:
+						XmlFoldStart foldStart = stack.Pop();
+						CreateElementFold(document, foldMarkers, reader, foldStart);
+						break;
 							
-						case XmlNodeType.Comment:
-							CreateCommentFold(document, foldMarkers, reader);
-							break;
+					case XmlNodeType.Comment:
+						CreateCommentFold(document, foldMarkers, reader);
+						break;
 					}
 				}
 				firstErrorOffset = -1;
-			} catch (XmlException ex) {
+			}catch(XmlException ex){
 				// ignore errors at invalid positions (prevent ArgumentOutOfRangeException)
-				if (ex.LineNumber >= 1 && ex.LineNumber <= document.LineCount)
+				if(ex.LineNumber >= 1 && ex.LineNumber <= document.LineCount)
 					firstErrorOffset = document.GetOffset(ex.LineNumber, ex.LinePosition);
 				else
 					firstErrorOffset = 0;
