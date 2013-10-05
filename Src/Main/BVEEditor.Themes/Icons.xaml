@@ -24,7 +24,17 @@
     <BitmapImage x:Key="Outdent" UriSource="/BVEEditor.Themes;component/Icons/Outdent.png" />
     <BitmapImage x:Key="ToUppercase" UriSource="/BVEEditor.Themes;component/Icons/EditUppercase.png" />
     <BitmapImage x:Key="ToLowercase" UriSource="/BVEEditor.Themes;component/Icons/EditLowercase.png" />
-    <BitmapImage x:Key="Replace" UriSource="/BVEEditor.Themes;component/Icons/Replace.png" />
+    <BitmapImage x:Key="ReplaceButtonImage" UriSource="/BVEEditor.Themes;component/Icons/Replace.png" />
+    <BitmapImage x:Key="ShowSpaceCharacterImage" UriSource="/BVEEditor.Themes;component/Icons/ShowSpace.png" />
+    <BitmapImage x:Key="WrapTextImage" UriSource="/BVEEditor.Themes;component/Icons/WrapText.png" />
+    
+    <BitmapImage x:Key="CloseButtonImage" UriSource="/BVEEditor.Themes;component/Icons/Cross.png" />
+    <BitmapImage x:Key="FindNextButtonImage" UriSource="/BVEEditor.Themes;component/Icons/FindNext.png" />
+    <BitmapImage x:Key="ReplaceAllButtonImage" UriSource="/BVEEditor.Themes;component/Icons/ReplaceAll.png" />
+
+    <BitmapImage x:Key="WholeWordsButtonImage" UriSource="/BVEEditor.Themes;component/Icons/WholeWords.png" />
+    <BitmapImage x:Key="IgnoreCaseButtonImage" UriSource="/BVEEditor.Themes;component/Icons/IgnoreCase.png" />
+    <BitmapImage x:Key="UseRegexButtonImage" UriSource="/BVEEditor.Themes;component/Icons/RegularExpression.png" />
     
     <BitmapImage x:Key="AssetEditorIcon" UriSource="/BVEEditor.Themes;component/Icons/AssetEditorIcon.png" />
     

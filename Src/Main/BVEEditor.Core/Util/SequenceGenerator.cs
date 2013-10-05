@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BVEEditor.Util
 {
@@ -17,9 +14,9 @@ namespace BVEEditor.Util
         /// a[0] = f(from)
         /// a[a.length - 1] = f(to - 1)
         /// </summary>
-        /// <param name="f"></param>
+        /// <param name="f">The function that is used to generate the sequence</param>
         /// <param name="to">The end point </param>
-        /// <param name="from"></param>
+        /// <param name="from">The start point(default is 0)</param>
         public static IEnumerable<int> GenerateIntegerSequence(Func<int, int> f, int to, int from = 0)
         {
             for(int i = from; i < to; ++i)

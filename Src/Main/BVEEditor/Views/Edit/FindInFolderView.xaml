@@ -28,7 +28,7 @@
         <Label Content="{lex:Loc FindReplaceDialog_SearchTextLabel}"
                Margin="6"
                Grid.Column="0" Grid.Row="0" />
-        <ComboBox IsEditable="True" ItemsSource="{Binding RecentSearchTexts}"
+        <ComboBox IsEditable="True" ItemsSource="{Binding RecentSearchTexts, Mode=OneWay}"
                   Margin="6,6,3,6"
                   Grid.Column="0" Grid.Row="1" />
         
@@ -48,7 +48,17 @@
         <GroupBox Header="{lex:Loc FindReplaceDialog_SearchOptions}"
                   Margin="6"
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2">
-            
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <CheckBox Content="{lex:Loc FindReplaceDialog_SearchOptions_IgnoreCase}"
+                          IsChecked="{Binding IgnoreCase, Mode=TwoWay}"
+                          Margin="10,10,6,6" />
+                <CheckBox Content="{lex:Loc FindReplaceDialog_SearchOptions_WholeWords}"
+                          IsChecked="{Binding MatchWholeWords, Mode=TwoWay}"
+                          Margin="10,10,6,6" />
+                <CheckBox Content="{lex:Loc FindReplaceDialog_SearchOptions_UseRegex}"
+                          IsChecked="{Binding UseRegex, Mode=TwoWay}"
+                          Margin="10,10,6,6" />
+            </StackPanel>
         </GroupBox>
 
         <Grid HorizontalAlignment="Right"

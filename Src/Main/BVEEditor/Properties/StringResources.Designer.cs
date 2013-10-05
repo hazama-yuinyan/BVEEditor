@@ -322,7 +322,16 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Find all に類似しているローカライズされた文字列を検索します。
+        ///   Find and Replace に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_Caption_FindReplace {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_Caption_FindReplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find All に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FindReplaceDialog_FindAll {
             get {
@@ -331,7 +340,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Find next に類似しているローカライズされた文字列を検索します。
+        ///   Find Next に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FindReplaceDialog_FindNext {
             get {
@@ -340,11 +349,20 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Find previous に類似しているローカライズされた文字列を検索します。
+        ///   Find Previous に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FindReplaceDialog_FindPrevious {
             get {
                 return ResourceManager.GetString("FindReplaceDialog_FindPrevious", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Find in Folders に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_FindTabText {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_FindTabText", resourceCulture);
             }
         }
         
@@ -358,11 +376,74 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
+        ///   Replace に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_Replace {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_Replace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Replace All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_ReplaceAll {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Replace in Folders に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_ReplaceTabText {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_ReplaceTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Replaced with: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_ReplaceTextLabel {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_ReplaceTextLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   SearchOptions に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FindReplaceDialog_SearchOptions {
             get {
                 return ResourceManager.GetString("FindReplaceDialog_SearchOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ignore Case に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchOptions_IgnoreCase {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchOptions_IgnoreCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Regular Expression に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchOptions_UseRegex {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchOptions_UseRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Whole Words に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_SearchOptions_WholeWords {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_SearchOptions_WholeWords", resourceCulture);
             }
         }
         
@@ -381,6 +462,15 @@ namespace BVEEditor.Properties {
         public static string FindReplaceDialog_SearchTextLabel {
             get {
                 return ResourceManager.GetString("FindReplaceDialog_SearchTextLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Skip に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FindReplaceDialog_Skip {
+            get {
+                return ResourceManager.GetString("FindReplaceDialog_Skip", resourceCulture);
             }
         }
         

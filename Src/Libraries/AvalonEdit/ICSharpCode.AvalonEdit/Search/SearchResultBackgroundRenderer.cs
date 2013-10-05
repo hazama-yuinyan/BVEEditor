@@ -14,12 +14,10 @@ using ICSharpCode.AvalonEdit.Rendering;
 
 namespace ICSharpCode.AvalonEdit.Search
 {
-	class SearchResultBackgroundRenderer : IBackgroundRenderer
+	public class SearchResultBackgroundRenderer : IBackgroundRenderer
 	{
-		TextSegmentCollection<SearchResult> currentResults = new TextSegmentCollection<SearchResult>();
-		
 		public TextSegmentCollection<SearchResult> CurrentResults {
-			get { return currentResults; }
+            get; set;
 		}
 		
 		public KnownLayer Layer {
@@ -53,7 +51,7 @@ namespace ICSharpCode.AvalonEdit.Search
 			if(drawingContext == null)
 				throw new ArgumentNullException("drawingContext");
 			
-			if(currentResults == null || !textView.VisualLinesValid)
+			if(CurrentResults == null || !textView.VisualLinesValid)
 				return;
 			
 			var visual_lines = textView.VisualLines;
@@ -63,7 +61,7 @@ namespace ICSharpCode.AvalonEdit.Search
 			int view_start = visual_lines.First().FirstDocumentLine.Offset;
 			int view_end = visual_lines.Last().LastDocumentLine.EndOffset;
 			
-			foreach(SearchResult result in currentResults.FindOverlappingSegments(view_start, view_end - view_start)){
+			foreach(SearchResult result in CurrentResults.FindOverlappingSegments(view_start, view_end - view_start)){
 				BackgroundGeometryBuilder geo_builder = new BackgroundGeometryBuilder();
 				geo_builder.AlignToMiddleOfPixels = true;
 				geo_builder.CornerRadius = 3;

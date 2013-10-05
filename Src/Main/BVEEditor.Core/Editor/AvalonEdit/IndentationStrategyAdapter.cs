@@ -19,7 +19,7 @@ namespace BVEEditor.Editor.AvalonEdit
 	public class IndentationStrategyAdapter : IIndentationStrategy
 	{
 		readonly ITextEditor editor;
-		readonly IFormattingStrategy formattingStrategy;
+		readonly IFormattingStrategy formatting_strategy;
 		
 		public IndentationStrategyAdapter(ITextEditor editor, IFormattingStrategy formattingStrategy)
 		{
@@ -30,7 +30,7 @@ namespace BVEEditor.Editor.AvalonEdit
 				throw new ArgumentNullException("formattingStrategy");
 			
 			this.editor = editor;
-			this.formattingStrategy = formattingStrategy;
+			this.formatting_strategy = formattingStrategy;
 		}
 		
 		public virtual void IndentLine(TextDocument document, DocumentLine line)
@@ -38,12 +38,12 @@ namespace BVEEditor.Editor.AvalonEdit
 			if(line == null)
 				throw new ArgumentNullException("line");
 			
-			formattingStrategy.IndentLine(editor, editor.Document.GetLineByNumber(line.LineNumber));
+			formatting_strategy.IndentLine(editor, editor.Document.GetLineByNumber(line.LineNumber));
 		}
 		
 		public virtual void IndentLines(TextDocument document, int beginLine, int endLine)
 		{
-			formattingStrategy.IndentLines(editor, beginLine, endLine);
+			formatting_strategy.IndentLines(editor, beginLine, endLine);
 		}
 	}
 }

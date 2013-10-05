@@ -115,8 +115,6 @@
     <Compile Include="Result\ShowDialogResult.cs" />
     <Compile Include="Services\IFileSystem.cs" />
     <Compile Include="Services\IMessageLoop.cs" />
-    <Compile Include="Services\Language\UILanguage.cs" />
-    <Compile Include="Services\Language\UILanguageService.cs" />
     <Compile Include="Services\Navigation\DefaultNavigationPoint.cs" />
     <Compile Include="Services\Navigation\INavigationPoint.cs" />
     <Compile Include="Settings\GlobalSettingDescriptor.cs" />

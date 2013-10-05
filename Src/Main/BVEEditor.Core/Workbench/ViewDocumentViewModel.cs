@@ -15,6 +15,7 @@ using BVEEditor.Events;
 using BVEEditor.Result;
 using BVEEditor.Services;
 using Caliburn.Micro;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.Core;
 using Xceed.Wpf.AvalonDock.Layout;
 
@@ -83,6 +84,10 @@ namespace BVEEditor.Workbench
                     NotifyOfPropertyChange(() => IsUntitled);
                 }
             }
+        }
+
+        public virtual TextDocument Document{
+            get; protected set;
         }
 		#endregion
 		

@@ -346,13 +346,13 @@
     <value>Use regular expression</value>
   </data>
   <data name="FindReplaceDialog_FindAll" xml:space="preserve">
-    <value>Find all</value>
+    <value>Find All</value>
   </data>
   <data name="FindReplaceDialog_FindNext" xml:space="preserve">
-    <value>Find next</value>
+    <value>Find Next</value>
   </data>
   <data name="FindReplaceDialog_FindPrevious" xml:space="preserve">
-    <value>Find previous</value>
+    <value>Find Previous</value>
   </data>
   <data name="FindReplaceDialog_IncludesSubfoldersLabel" xml:space="preserve">
     <value>Includes subfolders as search targets</value>
@@ -365,5 +365,35 @@
   </data>
   <data name="FindReplaceDialog_SearchTextLabel" xml:space="preserve">
     <value>Search text:</value>
+  </data>
+  <data name="FindReplaceDialog_Caption_FindReplace" xml:space="preserve">
+    <value>Find and Replace</value>
+  </data>
+  <data name="FindReplaceDialog_FindTabText" xml:space="preserve">
+    <value>Find in Folders</value>
+  </data>
+  <data name="FindReplaceDialog_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceAll" xml:space="preserve">
+    <value>Replace All</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceTabText" xml:space="preserve">
+    <value>Replace in Folders</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceTextLabel" xml:space="preserve">
+    <value>Replaced with:</value>
+  </data>
+  <data name="FindReplaceDialog_Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_IgnoreCase" xml:space="preserve">
+    <value>Ignore Case</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_UseRegex" xml:space="preserve">
+    <value>Use Regular Expression</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_WholeWords" xml:space="preserve">
+    <value>Whole Words</value>
   </data>
 </root>

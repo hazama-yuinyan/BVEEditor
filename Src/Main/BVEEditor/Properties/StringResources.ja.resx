@@ -366,4 +366,34 @@
   <data name="FindReplaceDialog_SearchTextLabel" xml:space="preserve">
     <value>検索する文字列:</value>
   </data>
+  <data name="FindReplaceDialog_Caption_FindReplace" xml:space="preserve">
+    <value>検索と置換</value>
+  </data>
+  <data name="FindReplaceDialog_FindTabText" xml:space="preserve">
+    <value>フォルダーを指定して検索</value>
+  </data>
+  <data name="FindReplaceDialog_Replace" xml:space="preserve">
+    <value>置換</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceAll" xml:space="preserve">
+    <value>すべて置換</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceTabText" xml:space="preserve">
+    <value>フォルダーを指定して置換</value>
+  </data>
+  <data name="FindReplaceDialog_ReplaceTextLabel" xml:space="preserve">
+    <value>置換する文字列:</value>
+  </data>
+  <data name="FindReplaceDialog_Skip" xml:space="preserve">
+    <value>ファイルをスキップ</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_IgnoreCase" xml:space="preserve">
+    <value>大文字・小文字を区別する</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_UseRegex" xml:space="preserve">
+    <value>正規表現を使用する</value>
+  </data>
+  <data name="FindReplaceDialog_SearchOptions_WholeWords" xml:space="preserve">
+    <value>単語単位</value>
+  </data>
 </root>

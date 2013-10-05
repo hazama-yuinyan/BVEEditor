@@ -100,6 +100,7 @@
       <DependentUpon>StringResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Result\ResultFactory.cs" />
+    <Compile Include="Result\ShowQuickSearchPanelResult.cs" />
     <Compile Include="Services\DispatcherMessageLoop.cs" />
     <Compile Include="Services\DisplayBindingService.cs" />
     <Compile Include="Services\FileSystem.cs" />
@@ -110,11 +111,17 @@
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
-    <None Include="Workbench\FileServiceOpenedFile.cs" />
     <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Util\IntToBoolConverter.cs" />
     <Compile Include="Views\Edit\FindInFolderView.xaml.cs">
       <DependentUpon>FindInFolderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Edit\FindReplaceDialogView.xaml.cs">
+      <DependentUpon>FindReplaceDialogView.xaml</DependentUpon>
+    </Compile>
+    <None Include="Views\Edit\FindReplaceDialogViewModel.cs" />
+    <Compile Include="Views\Edit\ReplaceInFolderView.xaml.cs">
+      <DependentUpon>ReplaceInFolderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Help\AboutDialogView.xaml.cs">
       <DependentUpon>AboutDialogView.xaml</DependentUpon>
@@ -156,6 +163,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Edit\FindInFolderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Edit\FindReplaceDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Edit\ReplaceInFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

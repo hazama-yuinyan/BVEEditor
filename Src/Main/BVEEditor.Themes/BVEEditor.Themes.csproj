@@ -118,13 +118,8 @@
     <Resource Include="Icons\FileTypeRoute.png" />
     <Resource Include="Icons\FileTypeSound.png" />
     <Resource Include="Icons\magnet.png" />
-    <Resource Include="Icons\minus-circle.png" />
-    <Resource Include="Icons\minus.png" />
     <Resource Include="Icons\Options.png" />
     <Resource Include="Icons\pin.png" />
-    <Resource Include="Icons\plus-circle.png" />
-    <Resource Include="Icons\plus.png" />
-    <Resource Include="Icons\property-blue.png" />
     <Resource Include="Icons\RecentFiles.png" />
     <Resource Include="Icons\Replace.png" />
     <Resource Include="Icons\report.png" />
@@ -151,6 +146,34 @@
     <Resource Include="Icons\SaveAs.png" />
     <Resource Include="Icons\Undo.png" />
     <Resource Include="Icons\WarningSign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Grid.png" />
+    <Resource Include="Icons\GridDot.png" />
+    <Resource Include="Icons\highlighter.png" />
+    <Resource Include="Icons\IgnoreCase.png" />
+    <Resource Include="Icons\MinusCircle.png" />
+    <Resource Include="Icons\MinusSign.png" />
+    <Resource Include="Icons\PlusCircle.png" />
+    <Resource Include="Icons\PlusSign.png" />
+    <Resource Include="Icons\PropertyBlue.png" />
+    <Resource Include="Icons\RegularExpression.png" />
+    <Resource Include="Icons\SnapGrid.png" />
+    <Resource Include="Icons\UseGuide.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\FindNext.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ReplaceAll.png" />
+    <Resource Include="Icons\WholeWords.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ShowSpace.png" />
+    <Resource Include="Icons\WrapText.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
