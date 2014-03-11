@@ -1,0 +1,3 @@
+[submodule "Src/Libraries/NRefactory"]
+	path = Src/Libraries/NRefactory
+	url = https://github.com/icsharpcode/NRefactory.git
