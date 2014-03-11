@@ -49,6 +49,7 @@ namespace BVEEditor.Startup
             kernel.Bind<IMessageLoop>().ToConstant(msg_loop).InSingletonScope();
             kernel.Bind<IDisplayBindingService>().To<DisplayBindingService>().InSingletonScope();
             kernel.Bind<IMessageService>().To<WPFMessageService>().InSingletonScope();
+            kernel.Bind<ILanguageService>().To<LanguageBindingService>().InSingletonScope();
 
             SetupCustomMessageBindings();
 			

@@ -85,6 +85,22 @@
     <Compile Include="AvalonDock\ActiveDocumentConverter.cs" />
     <Compile Include="AvalonDock\DocumentContext.cs" />
     <Compile Include="AvalonDock\IDockingManagerProvider.cs" />
+    <Compile Include="Editor\AvalonEditorAdaptor.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\BackspaceHideAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CloseOnSteppingIntoEndOfExpression.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CloseOnWritingEndOfExpression.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CustomKeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\ElementChangedKeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\InsertionAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\InsertOnItemClicked.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\KeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Controls\EvenListBox.xaml.cs">
+      <DependentUpon>EvenListBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\EditorAdaptorConverter.cs" />
     <Compile Include="Misc\BVEEditorStringTagProvider.cs" />
     <Compile Include="Options\AppearancePanelViewModel.cs" />
     <Compile Include="Options\OptionsViewModel.cs" />
@@ -111,8 +127,14 @@
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
+    <Compile Include="Util\CompletionPopupActions.cs" />
+    <Compile Include="Util\FixedSizeStack.cs" />
     <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Util\IntToBoolConverter.cs" />
+    <Compile Include="Views\CodeCompletion\CompletionPopupView.xaml.cs">
+      <DependentUpon>CompletionPopupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CodeCompletion\CompletionPopupViewModel.cs" />
     <Compile Include="Views\Edit\FindInFolderView.xaml.cs">
       <DependentUpon>FindInFolderView.xaml</DependentUpon>
     </Compile>
@@ -150,6 +172,10 @@
     <Compile Include="Workbench\RecentOpenViewModel.cs" />
     <Compile Include="Workbench\ViewDocumentConductor.cs" />
     <Compile Include="Workbench\WorkbenchViewModel.cs" />
+    <Page Include="Editor\CodeCompletion\Controls\EvenListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Options\Views\AppearancePanelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CodeCompletion\CompletionPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,10 +274,6 @@
       <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NRefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
-      <Project>{3b2a5653-ec97-4001-bb9b-d90f1af2c371}</Project>
-      <Name>ICSharpCode.NRefactory</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BVEEditor.Core\BVEEditor.Core.csproj">
       <Project>{df868466-a67a-438d-85aa-e438597ba457}</Project>
       <Name>BVEEditor.Core</Name>
@@ -272,6 +298,9 @@
     <None Include="Readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

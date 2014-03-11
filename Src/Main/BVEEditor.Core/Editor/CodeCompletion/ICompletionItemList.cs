@@ -98,7 +98,7 @@ namespace BVEEditor.Editor.CodeCompletion
 		/// </summary>
 		public void SortItems()	// PERF this is called twice
 		{
-			// the user might use method names is his language, so sort using CurrentCulture
+			// the user might use method names in his language, so sort using CurrentCulture
 			items.Sort((a,b) => {
 			           	int r = string.Compare(a.Text, b.Text, StringComparison.CurrentCultureIgnoreCase);
 			           	if (r != 0)

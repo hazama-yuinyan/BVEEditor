@@ -65,28 +65,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\StringToUintConverter.cs" />
     <Compile Include="Editor\AvalonEdit\IndentationStrategyAdapter.cs" />
     <Compile Include="Editor\CodeCompletion\CodeCompletionBinding.cs" />
     <Compile Include="Editor\CodeCompletion\CompletionContext.cs" />
+    <Compile Include="Editor\CodeCompletion\CompletionEventAttributes.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\CancellableInputEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\CancellableKeyEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\ItemClickedEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\ItemClickedEventArgs.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\PopupStateChangedEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\PositionInvalidatedEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\Events\SelectionChangedEvent.cs" />
     <Compile Include="Editor\CodeCompletion\ICompletionItem.cs" />
     <Compile Include="Editor\CodeCompletion\ICompletionItemList.cs" />
     <Compile Include="Editor\CodeCompletion\ICompletionListWindow.cs" />
     <Compile Include="Editor\CodeCompletion\ICompletionWindow.cs" />
+    <Compile Include="Editor\CodeCompletion\IEventObserver.cs" />
     <Compile Include="Editor\CodeCompletion\IInsightItem.cs" />
     <Compile Include="Editor\CodeCompletion\IInsightWindow.cs" />
+    <Compile Include="Editor\CodeCompletion\ICancellablePopupEvent.cs" />
+    <Compile Include="Editor\CodeCompletion\IPopupEvent.cs" />
     <Compile Include="Editor\DocumentUtilities.cs" />
     <Compile Include="Editor\IBracketSearcher.cs" />
     <Compile Include="Editor\IDocumentVersionProvider.cs" />
     <Compile Include="Editor\IFormattingStrategy.cs" />
     <Compile Include="Editor\ISnippetElementProvider.cs" />
-    <Compile Include="Editor\ITextEditor.cs" />
+    <Compile Include="Editor\EditorAdaptorBase.cs" />
     <Compile Include="Editor\ITextEditorExtension.cs" />
     <Compile Include="Editor\ITextEncodingProvider.cs" />
     <Compile Include="Editor\ITextMarker.cs" />
     <Compile Include="Editor\LanguageBinding\DefaultLanguageBinding.cs" />
     <Compile Include="Editor\LanguageBinding\ILanguageBinding.cs" />
+    <Compile Include="Editor\LanguageBinding\LanguageBindingDoozer.cs" />
+    <Compile Include="Editor\LanguageBinding\LanguageBindingService.cs" />
     <Compile Include="Editor\OnDiskTextSourceVersion.cs" />
     <Compile Include="Editor\TextNavigationPoint.cs" />
+    <Compile Include="Editor\ITextEditor.cs" />
     <Compile Include="Events\ActiveViewContentChangedEvent.cs" />
     <Compile Include="Events\ActiveViewDocumentChangedEvent.cs" />
     <Compile Include="Events\ApplicationExitingEvent.cs" />
@@ -154,10 +169,6 @@
     <ProjectReference Include="..\..\Libraries\AvalonEdit\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NRefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj">
-      <Project>{3b2a5653-ec97-4001-bb9b-d90f1af2c371}</Project>
-      <Name>ICSharpCode.NRefactory</Name>
     </ProjectReference>
     <ProjectReference Include="..\Core.Presentation\Core.Presentation.csproj">
       <Project>{a8264efb-bf01-4901-9154-1839ae2b7276}</Project>

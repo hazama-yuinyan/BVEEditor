@@ -19,12 +19,12 @@ namespace BVEEditor.Editor.LanguageBinding
 		
 		DefaultLanguageBinding(bool isDefault)
 		{
-			if (isDefault) {
+			if(isDefault){
 				this.container = new ServiceContainer();
 				this.container.AddService(typeof(IFormattingStrategy), DefaultFormattingStrategy.DefaultInstance);
 				this.container.AddService(typeof(IBracketSearcher), DefaultBracketSearcher.DefaultInstance);
 				//this.container.AddService(typeof(CodeGenerator), CodeGenerator.DummyCodeGenerator);
-			} else {
+			}else{
 				this.container = new ServiceContainer(DefaultInstance);
 			}
 		}

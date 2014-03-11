@@ -1,0 +1,25 @@
+﻿<Window
+    x:Class="BVEEditor.Views.Edit.FindReplaceDialogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:local="clr-namespace:BVEEditor.Views.Edit"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:ResxLocalizationProvider.DefaultDictionary="StringResources"
+    SizeToContent="WidthAndHeight"
+    Height="400" Width="450">
+    <Grid>
+        <TabControl HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    MinWidth="450">
+            <TabItem Header="{lex:Loc FindReplaceDialog_FindTabText}">
+                <local:FindInFolderView cal:Bind.Model="{Binding .}" />
+            </TabItem>
+            <TabItem Header="{lex:Loc FindReplaceDialog_ReplaceTabText}">
+                <local:ReplaceInFolderView cal:Bind.Model="{Binding .}" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

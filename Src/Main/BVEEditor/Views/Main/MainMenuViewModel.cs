@@ -116,10 +116,10 @@ namespace BVEEditor.Views.Main
             yield return result_factory.ShowDialogResult<OptionsViewModel>();
         }
 
-        public IEnumerable<IResult> ShowQuickSearchPanel()
+        /*public IEnumerable<IResult> ShowQuickSearchPanel()
         {
             //yield return 
-        }
+        }*/
 
         #region IHandle<ActiveViewDocumentChangedEvent> メンバー
 
