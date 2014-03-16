@@ -59,7 +59,7 @@ namespace BVEEditor.Views.CodeCompletion
                     x.IsOpen = true;
                 },
                 Key = Key.Space,
-                Modifiers = new[] { Key.LeftCtrl },
+                Modifiers = new[]{Key.LeftCtrl},
                 ShouldSwallowKeyPress = true
             });
 
@@ -73,7 +73,7 @@ namespace BVEEditor.Views.CodeCompletion
             observers.Add(new ElementChangedKeyAction{Key = Key.Down, IsTargetSource = IsEditor});
         }
 
-        private bool IsEditor(EventSource source)
+        bool IsEditor(EventSource source)
         {
             return source == EventSource.Editor;
         }

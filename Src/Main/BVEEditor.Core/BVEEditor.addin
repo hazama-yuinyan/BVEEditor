@@ -37,10 +37,10 @@
       <Doozer name="GlobalSetting" class="BVEEditor.Settings.GlobalSettingDoozer"/>
 			<Doozer name="DisplayBinding" class="BVEEditor.Workbench.DisplayBindingDoozer"/>
 			<Doozer name="Pad" class="BVEEditor.PadDoozer"/>
-			<!--<Doozer name="ProjectBinding" class="BVEEditor.ProjectBindingDoozer"/>
-			<Doozer name="LanguageBinding" class="BVEEditor.LanguageBindingDoozer"/>-->
+			<!--<Doozer name="ProjectBinding" class="BVEEditor.ProjectBindingDoozer"/>-->
+			<Doozer name="LanguageBinding" class="BVEEditor.Editor.LanguageBinding.LanguageBindingDoozer"/>
 			<Doozer name="TextEditorExtension" class="BVEEditor.Editor.TextEditorExtensionDoozer"/>
-			<!--<Doozer name="CodeCompletionBinding" class="BVEEditor.Editor.CodeCompletion.CodeCompletionBindingDoozer"/>-->
+			<Doozer name="CodeCompletionBinding" class="BVEEditor.Editor.CodeCompletion.CodeCompletionBindingDoozer"/>
 			<Doozer name="Directory" class="BVEEditor.DirectoryDoozer"/>
 			<!--<Doozer name="TemplateFile" class="BVEEditor.Templates.TemplateFileDoozer"/>
 			<Doozer name="TemplateCategory" class="BVEEditor.Templates.TemplateCategoryDoozer"/>-->
@@ -56,11 +56,11 @@
 		<Service id="BVEEditor.Parser.IParserService"
 		         class="BVEEditor.Parser.ParserService"/>
 		<Service id="BVEEditor.Parser.IAssemblyParserService"
-		         class="BVEEditor.Parser.AssemblyParserService"/>-->
-		<Service id="BVEEditor.Workbench.IFileService"
-		         class="BVEEditor.Workbench.FileService"/>
-		<Service id="BVEEditor.Workbench.IDisplayBindingService"
-		         class="BVEEditor.Workbench.DisplayBindingService"/>
+		         class="BVEEditor.Parser.AssemblyParserService"/>
+		<Service bindingFrom="BVEEditor.Workbench.IFileService"
+		         bindingTo="BVEEditor.Workbench.FileService"/>-->
+		<Service bindingFrom="BVEEditor.Workbench.IDisplayBindingService"
+		         bindingTo="BVEEditor.Services.DisplayBindingService"/>
 		<!--<Service id="BVEEditor.Dom.ITreeNodeFactory"
 		         class="BVEEditor.Dom.TreeNodeFactoryService"/>
 		<Service id="BVEEditor.Dom.IModelFactory"

@@ -182,7 +182,7 @@ namespace ICSharpCode.AvalonEdit.Document
 				lastGroupDescriptor = groupDescriptor;
 			}
 			undoGroupDepth++;
-			//Util.LoggingService.Debug("Open undo group (new depth=" + undoGroupDepth + ")");
+			//Log4netLogger.Instance.Debug("Open undo group (new depth=" + undoGroupDepth + ")");
 		}
 		
 		/// <summary>
@@ -201,7 +201,7 @@ namespace ICSharpCode.AvalonEdit.Document
 				lastGroupDescriptor = groupDescriptor;
 			}
 			undoGroupDepth++;
-			//Util.LoggingService.Debug("Continue undo group (new depth=" + undoGroupDepth + ")");
+			//Log4netLogger.Instance.Debug("Continue undo group (new depth=" + undoGroupDepth + ")");
 		}
 		
 		/// <summary>
@@ -211,7 +211,7 @@ namespace ICSharpCode.AvalonEdit.Document
 		{
 			if (undoGroupDepth == 0) throw new InvalidOperationException("There are no open undo groups");
 			undoGroupDepth--;
-			//Util.LoggingService.Debug("Close undo group (new depth=" + undoGroupDepth + ")");
+			//Log4netLogger.Instance.Debug("Close undo group (new depth=" + undoGroupDepth + ")");
 			if (undoGroupDepth == 0) {
 				Debug.Assert(state == StateListen || actionCountInUndoGroup == 0);
 				if (actionCountInUndoGroup == optionalActionCount) {

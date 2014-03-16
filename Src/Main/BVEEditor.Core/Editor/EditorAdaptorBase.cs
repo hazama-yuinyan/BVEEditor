@@ -31,9 +31,9 @@ namespace BVEEditor.Editor
 		public abstract IDocument Document{get;}
 		
         /// <summary>
-        /// Gets the offset of the caret.
+        /// Gets/sets the offset of the caret.
         /// </summary>
-        public abstract int CaretOffset{get;}
+        public abstract int CaretOffset{get; set;}
 		
 		/// <summary>
 		/// Gets the content text.
@@ -41,6 +41,11 @@ namespace BVEEditor.Editor
 		public abstract string Text{get;}
 		
 		public abstract UIElement UIElement{get;}
+
+        /// <summary>
+        /// Gets the file name as a string.
+        /// </summary>
+        public abstract string FileName{get;}
 		
 		/// <summary>
 		/// Is raised when the selection changes.
@@ -70,5 +75,6 @@ namespace BVEEditor.Editor
         public abstract Rect GetVisualPosition();
         public abstract bool IsSameLine(int charIndex1, int charIndex2);
         public abstract void Focus();
+        public abstract void ShowInsightWindow();
 	}
 }

@@ -16,7 +16,7 @@ namespace BVEEditor.Editor.LanguageBinding
     /// <attribute name="class" use="required">
     /// Name of the ILanguageBinding class.
     /// </attribute>
-    /// <usage>Only in /SharpDevelop/Workbench/LanguageBindings</usage>
+    /// <usage>Only in /BVEEditor/Workbench/LanguageBindings</usage>
     /// <returns>
     /// The ILanguageBinding object.
     /// </returns>

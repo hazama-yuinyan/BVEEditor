@@ -86,7 +86,7 @@ namespace BVEEditor.Editor
 		/// <summary>
 		/// Is raised before a key is pressed.
 		/// </summary>
-		event KeyEventHandler KeyDown;
+		event KeyEventHandler KeyPress;
 
 		/// <summary>
 		/// Sets the caret to the specified line/column and brings the caret into view.

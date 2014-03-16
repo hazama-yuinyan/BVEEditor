@@ -35,7 +35,6 @@ namespace BVEEditor.CodeCompletion.Controls
     {
         public EvenListBox()
         {
-            InitializeComponent();
             Loaded += (sender, args) => {
                 this.itemHeight = CalculateItemHeight();
                 UpdateHeight();

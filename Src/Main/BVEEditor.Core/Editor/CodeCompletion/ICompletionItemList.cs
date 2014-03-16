@@ -154,7 +154,7 @@ namespace BVEEditor.Editor.CodeCompletion
 				context.StartOffset++;
 				context.EndOffset++;
 			}
-			item.Complete(context);
+			item.Insert(context);
 		}
 	}
 }

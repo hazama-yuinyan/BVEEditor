@@ -32,7 +32,7 @@ namespace BVEEditor.Startup
 	public class Bootstrapper : Bootstrapper<IWorkbench>    //Because we register WorkbenchViewModel class as IWorkbench on our IoC container,
 	{                                                       //we should tell the bootstrapper that IWorkbench is the root view model class.
         IKernel kernel;
-        System.Action addin_initializer;
+        System.Action<IKernel> addin_initializer;
 		
 		#region Bootstrapper overrides
 		protected override void Configure()
@@ -47,7 +47,6 @@ namespace BVEEditor.Startup
             kernel.Bind<IFileDialogStrategies>().To<FileDialogStrategies>();
             kernel.Bind<IWorkbench>().To<WorkbenchViewModel>().InSingletonScope();
             kernel.Bind<IMessageLoop>().ToConstant(msg_loop).InSingletonScope();
-            kernel.Bind<IDisplayBindingService>().To<DisplayBindingService>().InSingletonScope();
             kernel.Bind<IMessageService>().To<WPFMessageService>().InSingletonScope();
             kernel.Bind<ILanguageService>().To<LanguageBindingService>().InSingletonScope();
 
@@ -121,7 +120,7 @@ namespace BVEEditor.Startup
 		protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
 		{
             Log4netLogger.Instance.Info("Initializing AddInTree...");
-            addin_initializer();
+            addin_initializer(kernel);
             addin_initializer = null;
 
             Log4netLogger.Instance.Info("Run OnStartup...");
@@ -146,6 +145,9 @@ namespace BVEEditor.Startup
 		#endregion
 		
 		#region InitStatus enum
+        /// <summary>
+        /// Represents the current phase of the initialization. Mainly used for showing the status in SplashScreen.
+        /// </summary>
 		enum InitStatus
 		{
 			None,

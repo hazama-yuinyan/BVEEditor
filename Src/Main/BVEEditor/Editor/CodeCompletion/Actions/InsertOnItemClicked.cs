@@ -14,12 +14,12 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// </summary>
     class InsertOnItemClicked : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
     {
-        void InsertItem(ICompletionItem item, CompletionContext context)
+        void InsertItem(ICompletionItem item, CompletionPopupView view)
         {
             if(item == null)
                 throw new InvalidOperationException("ICompletionItem is null. Something is wrong with the hackish ItemClicked event.");
 
-            item.Complete(context);
+            item.Insert(view.Target);
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
@@ -29,9 +29,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 
             var event_args = current.EventArgs as ItemClickedEventArgs;
 
-            var context = new CompletionContext();
-            
-            InsertItem(event_args.Item, new CompletionContext());
+            InsertItem(event_args.Item, view);
 
             CompletionPopupActions.Hide(view);
 

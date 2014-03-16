@@ -35,7 +35,7 @@ namespace BVEEditor.Editor.CodeCompletion.Events
 
     public class KeyUpEvent : KeyEvent
     {
-        public EventType Type{
+        public override EventType Type{
             get{return EventType.KeyUp;}
         }
 

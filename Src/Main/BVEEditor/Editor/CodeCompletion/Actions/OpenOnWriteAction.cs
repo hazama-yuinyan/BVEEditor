@@ -14,18 +14,11 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// </summary>
     public class OpenOnWriteAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
     {
-        Func<char, bool> BeginningOfExpressionPredicate;
+        readonly ICodeCompletionBinding binding;
 
-        HashSet<char> triggers;
-
-        public OpenOnWriteAction(Func<char, bool> isBeginningOfExpression)
+        public OpenOnWriteAction(ICodeCompletionBinding binding)
         {
-            triggers = new HashSet<char>(Enumerable.Range(65, 26).Union(Enumerable.Range(97, 26)).Select(x => (char)x))
-            {
-                '(',
-                '.'
-            };
-            this.BeginningOfExpressionPredicate = isBeginningOfExpression;
+            this.binding = binding;
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
@@ -35,7 +28,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 
             var args = current.EventArgs as TextCompositionEventArgs;
 
-            if(args.Text.Length == 1 && triggers.Contains(args.Text[0]) && BeginningOfExpressionPredicate(args.Text[0]))
+            if(args.Text.Length == 1 && binding.ShouldOpenPopup(view.Target, args.Text[0]))
                 CompletionPopupActions.Show(view);
         }
 

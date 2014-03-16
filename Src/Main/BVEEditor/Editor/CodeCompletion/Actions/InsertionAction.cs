@@ -50,7 +50,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 
         void InsertItem(ICompletionItem item, CompletionPopupView view)
         {
-            item.Complete();
+            item.Insert(view.Target);
             CompletionPopupActions.Hide(view);
         }
 

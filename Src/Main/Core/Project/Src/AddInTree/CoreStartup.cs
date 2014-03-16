@@ -7,6 +7,7 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Windows.Input;
 using Caliburn.Micro;
+using Ninject;
 
 namespace ICSharpCode.Core
 {
@@ -177,19 +178,17 @@ namespace ICSharpCode.Core
 		/// then it executes the <see cref="ICommand">commands</see>
 		/// in <c>/BVEEditor/Autostart</c>.
 		/// </summary>
-		public void RunInitialization()
+		public void RunInitialization(IKernel kernel)
 		{
 			addInTree.Load(addInFiles, disabledAddIns);
 			
 			// perform service registration
-			//var container = IoC.Get<IServiceContainer>();
-			//if(container != null)
-			//	addInTree.BuildItems<object>("/BVEEditor/Services", container, false);
+			addInTree.BuildItems<object>("/BVEEditor/Services", kernel, false);
 			
 			// run workspace autostart commands
 			LogManager.GetLog(typeof(CoreStartup)).Info("Running autostart commands...");
 			foreach(ICommand command in addInTree.BuildItems<ICommand>("/BVEEditor/Autostart", null, false)){
-				try {
+				try{
 					command.Execute(null);
 				}catch(Exception ex){
 					// allow startup to continue if some commands fail
@@ -224,7 +223,7 @@ namespace ICSharpCode.Core
             instances.Add(new KeyValuePair<Type,object>(typeof(IAddInTree), addInTree));
             
             services.Add(new KeyValuePair<Type,Type>(typeof(ApplicationStateInfoService), typeof(ApplicationStateInfoService)));
-			StringParser.RegisterStringTagProvider(new AppNameProvider{appName = application_name});
+			StringParser.RegisterStringTagProvider(new AppNameProvider{AppName = application_name});
 
             return Tuple.Create((IEnumerable<KeyValuePair<Type, Type>>)services, (IEnumerable<KeyValuePair<Type, object>>)instances);
 		}
@@ -234,12 +233,12 @@ namespace ICSharpCode.Core
         /// </summary>
 		sealed class AppNameProvider : IStringTagProvider
 		{
-			internal string appName;
+			internal string AppName{get; set;}
 			
 			public string ProvideString(string tag, StringTagPair[] customTags)
 			{
-				if (string.Equals(tag, "AppName", StringComparison.OrdinalIgnoreCase))
-					return appName;
+				if(string.Equals(tag, "AppName", StringComparison.OrdinalIgnoreCase))
+					return AppName;
 				else
 					return null;
 			}

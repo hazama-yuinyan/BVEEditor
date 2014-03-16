@@ -239,7 +239,7 @@ namespace BVEEditor.Workbench
             if(oldName == null)
                 return; // File just created with NewFile where name is being initialized.
 
-            LoggingService.Debug("OpenedFileFileNameChange: " + oldName + " => " + newName);
+            Log4netLogger.Instance.Debug("OpenedFileFileNameChange: " + oldName + " => " + newName);
 
             if(opened_file_dict[oldName] != file)
                 throw new ArgumentException("file must be registered as oldName");
@@ -265,7 +265,7 @@ namespace BVEEditor.Workbench
                 throw new ArgumentException("file must be registered");
 
             opened_file_dict.Remove(file.FileName);
-            LoggingService.Debug("OpenedFileClosed: " + file.FileName);
+            Log4netLogger.Instance.Debug("OpenedFileClosed: " + file.FileName);
         }
         #endregion
 
@@ -307,7 +307,7 @@ namespace BVEEditor.Workbench
         /// <inheritdoc/>
         public ViewDocumentViewModel OpenFile(FileName fileName, bool switchToOpenedView)
         {
-            LoggingService.Info("Open file " + fileName);
+            Log4netLogger.Instance.Info("Open file " + fileName);
 
             ViewDocumentViewModel view_document = GetOpenFile(fileName);
             if(view_document != null){
@@ -391,7 +391,7 @@ namespace BVEEditor.Workbench
 
             ViewDocumentViewModel new_doc = binding.CreateViewModelForFile(file);
             if(new_doc == null){
-                LoggingService.Warn("Created view content was null - DefaultName:" + defaultName);
+                Log4netLogger.Instance.Warn("Created view content was null - DefaultName:" + defaultName);
                 file.CloseIfAllViewsClosed();
                 return null;
             }
@@ -463,7 +463,7 @@ namespace BVEEditor.Workbench
         /// <inheritdoc/>
         public ViewDocumentViewModel JumpToFilePosition(FileName fileName, int line, int column)
         {
-            LoggingService.InfoFormatted("FileService\n\tJumping to File Position:  [{0} : {1}x{2}]", fileName, line, column);
+            Log4netLogger.Instance.InfoFormatted("FileService\n\tJumping to File Position:  [{0} : {1}x{2}]", fileName, line, column);
 
             if(fileName == null)
                 return null;
@@ -489,7 +489,7 @@ namespace BVEEditor.Workbench
 
             }
             finally{
-                LoggingService.InfoFormatted("FileService\n\tJumped to File Position:  [{0} : {1}x{2}]", fileName, line, column);
+                Log4netLogger.Instance.InfoFormatted("FileService\n\tJumped to File Position:  [{0} : {1}x{2}]", fileName, line, column);
 
                 /*if(!loggingResumed)
                     NavigationService.ResumeLogging();*/

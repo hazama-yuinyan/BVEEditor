@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace BVEEditor.Startup
 {
 	/// <summary>
-	/// This class contains properties you can use to control how SharpDevelop is launched.
+	/// This class contains properties you can use to control how BVEEditor is launched.
 	/// </summary>
 	[Serializable]
 	public sealed class StartupSettings

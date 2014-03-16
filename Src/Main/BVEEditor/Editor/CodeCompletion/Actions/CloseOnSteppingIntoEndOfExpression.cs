@@ -22,7 +22,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             this.EndOfExpressionPredicate = isEndOfExpression;
         }
 
-        private bool IsTriggered(KeyEventArgs key)
+        bool IsTriggered(KeyEventArgs key)
         {
             return EndOfExpressionPredicate() && key.Key == Key.Left || key.Key == Key.Right;
         }

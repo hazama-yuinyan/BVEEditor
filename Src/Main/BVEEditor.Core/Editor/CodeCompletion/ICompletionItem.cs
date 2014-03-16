@@ -9,19 +9,21 @@
 using System;
 using System.Windows.Media;
 using BVEEditor.Editor.CodeCompletion;
+using ICSharpCode.NRefactory.Editor;
 
 namespace BVEEditor.Editor.CodeCompletion
 {
 	public interface ICompletionItem
 	{
-		string Text { get; }
-		string Description { get; }
-		ImageSource Image { get; }
+		string Text{get;}
+		string Description{get;}
+		ImageSource Image{get;}
+        ISegment ReplacementRange{get;}
 		
 		/// <summary>
 		/// Performs code completion for the item.
 		/// </summary>
-		void Complete(CompletionContext context);
+		void Insert(EditorAdaptorBase editor);
 		
 		/// <summary>
 		/// Gets a priority value for the completion data item.
@@ -38,32 +40,36 @@ namespace BVEEditor.Editor.CodeCompletion
 	/// </summary>
 	public interface IFancyCompletionItem : ICompletionItem
 	{
-		object Content { get; }
-		new object Description { get; }
+        /// <summary>
+        /// The content. It can be various WPF objects.
+        /// </summary>
+		object Content{get;}
+		new object Description{get;}
 	}
 	
 	public interface ISnippetCompletionItem : ICompletionItem
 	{
-		string Keyword { get; }
+		string Keyword{get;}
 	}
 	
 	public class DefaultCompletionItem : ICompletionItem
 	{
-		public string Text { get; private set; }
-		public virtual string Description { get; set; }
-		public virtual ImageSource Image { get; set; }
+		public string Text{get; private set;}
+		public virtual string Description{get; set;}
+		public virtual ImageSource Image{get; set;}
+        public ISegment ReplacementRange{get; set;}
 		
-		public virtual double Priority { get { return 0; } }
+		public virtual double Priority{get{return 0;}}
 		
 		public DefaultCompletionItem(string text)
 		{
 			this.Text = text;
 		}
 		
-		public virtual void Complete(CompletionContext context)
+		public virtual void Insert(EditorAdaptorBase editor)
 		{
-			context.Editor.Document.Replace(context.StartOffset, context.Length, this.Text);
-			context.EndOffset = context.StartOffset + this.Text.Length;
+			editor.Document.Replace(ReplacementRange.Offset, ReplacementRange.Length, Text);
+			editor.CaretOffset = ReplacementRange.EndOffset;
 		}
 	}
 }

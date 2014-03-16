@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using BVEEditor.Logging;
 using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.Core;
 using ICSharpCode.NRefactory.Editor;
 
 namespace BVEEditor.Editor
@@ -65,7 +67,16 @@ namespace BVEEditor.Editor
         }
 
         public override int CaretOffset{
-            get{return area.Caret.Offset;}
+            get{
+                return area.Caret.Offset;
+            }
+
+            set{
+                if(area.Caret.Offset != value){
+                    area.Caret.Offset = value;
+                    Log4netLogger.Instance.Debug("Caret offset has been changed by AvalonEditorAdaptor");
+                }
+            }
         }
 
         public override string Text{
@@ -76,6 +87,10 @@ namespace BVEEditor.Editor
 
         public override UIElement UIElement{
             get{return area;}
+        }
+
+        public override string FileName{
+            get{return area.Document.FileName;}
         }
 
         public override event EventHandler SelectionChanged;
@@ -104,6 +119,12 @@ namespace BVEEditor.Editor
         public override void Focus()
         {
             area.Focus();
+        }
+
+        public override void ShowInsightWindow()
+        {
+            //TODO: implement it
+            throw new NotImplementedException();
         }
     }
 }

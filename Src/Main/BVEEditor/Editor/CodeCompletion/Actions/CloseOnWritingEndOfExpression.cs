@@ -22,7 +22,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             EndOfExpressionPredicate = isEndOfExpression;
         }
 
-        private bool IsTriggered(TextCompositionEventArgs args)
+        bool IsTriggered(TextCompositionEventArgs args)
         {
             return args.Text.Length == 1 && EndOfExpressionPredicate(args.Text[0]);
         }
@@ -40,7 +40,6 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 
         public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
         {
-
         }
     }
 }

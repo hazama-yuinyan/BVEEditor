@@ -3,45 +3,42 @@
 
 using System;
 using System.ComponentModel.Design;
+using Ninject;
 
 namespace ICSharpCode.Core
 {
 	/// <summary>
-	/// Registers a service in a service container.
+	/// Registers a service in the Ninject kernel.
 	/// </summary>
-	/// <attribute name="id" use="required">
+	/// <attribute name="bindingFrom" use="required">
 	/// The service interface type.
 	/// </attribute>
-	/// <attribute name="class" use="required">
+	/// <attribute name="bindingTo" use="required">
 	/// The implementing service class name.
 	/// </attribute>
-	/// <usage>Only in /SharpDevelop/Services</usage>
+	/// <usage>Only in /BVEEditor/Services</usage>
 	/// <returns>
 	/// <c>null</c>. The service is registered, but not returned.
 	/// </returns>
 	public class ServiceDoozer : IDoozer
 	{
-		public bool HandleConditions {
-			get { return false; }
+		public bool HandleConditions{
+			get{return false;}
 		}
 		
 		public object BuildItem(BuildItemArgs args)
 		{
-			var container = (IServiceContainer)args.Parameter;
-			if (container == null)
-				throw new InvalidOperationException("Expected the parameter to be a service container");
-			Type interfaceType = args.AddIn.FindType(args.Codon.Id);
-			if (interfaceType != null) {
-				string className = args.Codon.Properties["class"];
-				bool serviceLoading = false;
-				// Use ServiceCreatorCallback to lazily create the service
-				container.AddService(
-					interfaceType, delegate {
-						if (serviceLoading)
-							throw new InvalidOperationException("Found cyclic dependency when initializating " + className);
-						serviceLoading = true;
-						return args.AddIn.CreateObject(className);
-					});
+			var kernel = (IKernel)args.Parameter;
+			if(kernel == null)
+				throw new InvalidOperationException("Expected the parameter to be an IKernel");
+			
+            Type interface_type = args.AddIn.FindType(args.Codon.Properties["bindingFrom"]);
+			if(interface_type != null){
+				string class_name = args.Codon.Properties["bindingTo"];
+                Type concrete_type = args.AddIn.FindType(class_name);
+				kernel.Bind(interface_type)
+                      .To(concrete_type)
+                      .InSingletonScope();
 			}
 			return null;
 		}

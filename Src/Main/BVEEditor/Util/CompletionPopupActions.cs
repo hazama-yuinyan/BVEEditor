@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BVEEditor.Editor.CodeCompletion;
 using BVEEditor.Views.CodeCompletion;
 
 namespace BVEEditor.Util
@@ -29,6 +30,10 @@ namespace BVEEditor.Util
         {
             if(view.CompletionItems.HasItems)
                 ForceShow(view);
+        }
+
+        public static void FillInNewItems(CompletionPopupView view, ICodeCompletionBinding completionBinding)
+        {
         }
     }
 }
