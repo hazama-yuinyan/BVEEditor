@@ -90,17 +90,17 @@
     <Compile Include="AvalonDock\DocumentContext.cs" />
     <Compile Include="AvalonDock\IDockingManagerProvider.cs" />
     <Compile Include="Editor\AvalonEditorAdaptor.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\BackspaceHideAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\CloseOnSteppingIntoEndOfExpression.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\CloseOnWritingEndOfExpression.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\CustomKeyAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\ElementChangedKeyAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\InsertionAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\InsertOnItemClicked.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\KeyAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
-    <Compile Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\BackspaceHideAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\CloseOnSteppingIntoEndOfExpression.cs" />
+    <None Include="Editor\CodeCompletion\Actions\CloseOnWritingEndOfExpression.cs" />
+    <None Include="Editor\CodeCompletion\Actions\CustomKeyAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\ElementChangedKeyAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\InsertionAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\InsertOnItemClicked.cs" />
+    <None Include="Editor\CodeCompletion\Actions\KeyAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
+    <None Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
     <Compile Include="Editor\CodeCompletion\Controls\EvenListBox.xaml.cs">
       <DependentUpon>EvenListBox.xaml</DependentUpon>
     </Compile>
@@ -132,43 +132,43 @@
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
-    <Compile Include="Util\CompletionPopupActions.cs" />
+    <None Include="Util\CompletionPopupActions.cs" />
     <Compile Include="Util\FixedSizeStack.cs" />
     <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Util\IntToBoolConverter.cs" />
-    <Compile Include="Views\CodeCompletion\CompletionPopupView.xaml.cs">
+    <None Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml.cs">
       <DependentUpon>CompletionPopupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CodeCompletion\CompletionPopupViewModel.cs" />
-    <Compile Include="Views\Edit\FindInFolderView.xaml.cs">
+    </None>
+    <None Include="Editor\CodeCompletion\Views\CompletionPopupViewModel.cs" />
+    <Compile Include="Search\Views\FindInFolderView.xaml.cs">
       <DependentUpon>FindInFolderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Edit\FindReplaceDialogView.xaml.cs">
+    <Compile Include="Search\Views\FindReplaceDialogView.xaml.cs">
       <DependentUpon>FindReplaceDialogView.xaml</DependentUpon>
     </Compile>
-    <None Include="Views\Edit\FindReplaceDialogViewModel.cs" />
-    <Compile Include="Views\Edit\ReplaceInFolderView.xaml.cs">
+    <None Include="Search\FindReplaceDialogViewModel.cs" />
+    <Compile Include="Search\Views\ReplaceInFolderView.xaml.cs">
       <DependentUpon>ReplaceInFolderView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Help\AboutDialogView.xaml.cs">
+    <Compile Include="Help\Views\AboutDialogView.xaml.cs">
       <DependentUpon>AboutDialogView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Help\AboutDialogViewModel.cs" />
-    <Compile Include="Views\Help\AboutView.xaml.cs">
+    <Compile Include="Help\AboutDialogViewModel.cs" />
+    <Compile Include="Help\Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\MainMenuView.xaml.cs">
+    <Compile Include="Workbench\Attachments\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\MainMenuViewModel.cs" />
-    <Compile Include="Views\Main\StatusBarView.xaml.cs">
+    <Compile Include="Workbench\Attachments\MainMenuViewModel.cs" />
+    <Compile Include="Workbench\Attachments\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\StatusBarViewModel.cs" />
-    <Compile Include="Views\Main\ToolBarView.xaml.cs">
+    <Compile Include="Workbench\Attachments\StatusBarViewModel.cs" />
+    <Compile Include="Workbench\Attachments\Views\ToolBarView.xaml.cs">
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Main\ToolBarViewModel.cs" />
+    <Compile Include="Workbench\Attachments\ToolBarViewModel.cs" />
     <Compile Include="Workbench\ErrorDocumentView.xaml.cs">
       <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
     </Compile>
@@ -193,39 +193,39 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CodeCompletion\CompletionPopupView.xaml">
+    <None Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <Page Include="Search\Views\FindInFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Edit\FindInFolderView.xaml">
+    <Page Include="Search\Views\FindReplaceDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Edit\FindReplaceDialogView.xaml">
+    <Page Include="Search\Views\ReplaceInFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Edit\ReplaceInFolderView.xaml">
+    <Page Include="Help\Views\AboutDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Help\AboutDialogView.xaml">
+    <Page Include="Help\Views\AboutView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Help\AboutView.xaml">
+    <Page Include="Workbench\Attachments\Views\MainMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\MainMenuView.xaml">
+    <Page Include="Workbench\Attachments\Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Main\StatusBarView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Main\ToolBarView.xaml">
+    <Page Include="Workbench\Attachments\Views\ToolBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

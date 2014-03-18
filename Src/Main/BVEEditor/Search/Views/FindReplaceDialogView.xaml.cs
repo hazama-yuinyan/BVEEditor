@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BVEEditor.Views.Help
+namespace BVEEditor.Search
 {
     /// <summary>
-    /// AboutDialogView.xaml の相互作用ロジック
+    /// FindReplaceDialogView.xaml の相互作用ロジック
     /// </summary>
-    public partial class AboutDialogView
+    public partial class FindReplaceDialogView : Window
     {
-        public AboutDialogView()
+        public FindReplaceDialogView()
         {
             InitializeComponent();
         }

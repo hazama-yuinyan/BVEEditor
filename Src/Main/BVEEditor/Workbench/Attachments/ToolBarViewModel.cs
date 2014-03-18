@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using BVEEditor.Events;
 using BVEEditor.Result;
 using BVEEditor.Strategies;
-using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
 
-namespace BVEEditor.Views.Main
+namespace BVEEditor.Workbench
 {
     public class ToolBarViewModel : PropertyChangedBase, IHandle<ActiveViewDocumentChangedEvent>
     {

@@ -250,7 +250,8 @@
     <value>閉じる前に保存しますか？</value>
   </data>
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
-    <value>{0}は変更されています\nアプリケーションを終了する前に保存しますか？</value>
+    <value>{0}は変更されています。
+アプリケーションを終了する前に保存しますか？</value>
   </data>
   <data name="Common_Dialogs_Captions_About" xml:space="preserve">
     <value>BVEEditorの情報</value>

@@ -20,7 +20,7 @@ using BVEEditor.Editor.CodeCompletion.Actions;
 using BVEEditor.Editor.CodeCompletion.Events;
 using BVEEditor.Util;
 
-namespace BVEEditor.Views.CodeCompletion
+namespace BVEEditor.CodeCompletion
 {
     /// <summary>
     /// CompletionPopupView.xaml の相互作用ロジック

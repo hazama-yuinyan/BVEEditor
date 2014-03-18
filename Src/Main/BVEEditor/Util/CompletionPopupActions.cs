@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BVEEditor.Editor.CodeCompletion;
-using BVEEditor.Views.CodeCompletion;
+using BVEEditor.CodeCompletion;
 
 namespace BVEEditor.Util
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BVEEditor.Editor.CodeCompletion;
 using Caliburn.Micro;
 
-namespace BVEEditor.Views.CodeCompletion
+namespace BVEEditor.CodeCompletion
 {
     /// <summary>
     /// The view model for the code completion window.

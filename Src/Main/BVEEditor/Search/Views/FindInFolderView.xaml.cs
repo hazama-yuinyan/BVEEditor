@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BVEEditor.Views.Edit
+namespace BVEEditor.Search
 {
     /// <summary>
-    /// ReplaceInFolderView.xaml の相互作用ロジック
+    /// FindInFolderView.xaml の相互作用ロジック
     /// </summary>
-    public partial class ReplaceInFolderView : UserControl
+    public partial class FindInFolderView : UserControl
     {
-        public ReplaceInFolderView()
+        public FindInFolderView()
         {
             InitializeComponent();
         }

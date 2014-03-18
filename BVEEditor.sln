@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BVE5RouteGenerateHelper", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.NRefactory", "Src\Libraries\NRefactory\ICSharpCode.NRefactory\ICSharpCode.NRefactory.csproj", "{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BVE5Tests", "Src\AddIns\LanguageBindings\BVEBinding\BVE5Tests\BVE5Tests.csproj", "{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,14 @@ Global
 		{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}.net_4_5_Release|Any CPU.Build.0 = net_4_5_Release|Any CPU
 		{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2A5653-EC97-4001-BB9B-D90F1AF2C371}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.net_4_5_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.net_4_5_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.net_4_5_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.net_4_5_Release|Any CPU.Build.0 = Release|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DBBEDC1-9E99-4733-89F2-55A71AE108DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

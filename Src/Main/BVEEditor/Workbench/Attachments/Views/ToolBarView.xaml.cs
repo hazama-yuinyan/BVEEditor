@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BVEEditor.Views.Main
+namespace BVEEditor.Workbench
 {
     /// <summary>
     /// ToolBarView.xaml の相互作用ロジック

@@ -9,7 +9,7 @@ using BVEEditor.Events;
 using BVEEditor.Options;
 using BVEEditor.Result;
 using BVEEditor.Strategies;
-using BVEEditor.Views.Help;
+using BVEEditor.Help;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;

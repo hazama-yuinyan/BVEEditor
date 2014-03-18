@@ -9,7 +9,7 @@ using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
 
-namespace BVEEditor.Views.Help
+namespace BVEEditor.Help
 {
     public class AboutDialogViewModel : ShellPresentationViewModel
     {

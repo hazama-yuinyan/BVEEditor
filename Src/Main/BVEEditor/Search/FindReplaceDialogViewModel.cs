@@ -12,7 +12,7 @@ using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Search;
 using ICSharpCode.Core;
 
-namespace BVEEditor.Views.Edit
+namespace BVEEditor.Search
 {
     public class FindReplaceDialogViewModel : ShellPresentationViewModel, IHandle<ActiveViewDocumentChangedEvent>
     {

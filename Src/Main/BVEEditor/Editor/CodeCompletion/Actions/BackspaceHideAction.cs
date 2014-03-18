@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using BVEEditor.Views.CodeCompletion;
+using BVEEditor.CodeCompletion;
 using ICSharpCode.AvalonEdit.Editing;
 
 namespace BVEEditor.Editor.CodeCompletion.Actions

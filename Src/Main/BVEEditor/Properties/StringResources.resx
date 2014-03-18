@@ -250,7 +250,8 @@
     <value>Save before closing?</value>
   </data>
   <data name="Common_Dialogs_Messages_SaveBeforeClose" xml:space="preserve">
-    <value>{0} is modified. Do you want to save it before quitting the application?</value>
+    <value>{0} is modified.
+Do you want to save it before quitting the application?</value>
   </data>
   <data name="Common_Dialogs_Captions_About" xml:space="preserve">
     <value>About BVEEditor</value>
