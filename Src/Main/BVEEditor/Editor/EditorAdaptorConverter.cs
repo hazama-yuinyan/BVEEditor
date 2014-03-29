@@ -7,17 +7,12 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using ICSharpCode.AvalonEdit.Editing;
 
-namespace BVEEditor.Editor
+namespace BVEEditor.Editor.CodeCompletion
 {
     public class EditorAdaptorConverter : MarkupExtension, IValueConverter
     {
-        public Dictionary<Type, Func<object, EditorAdaptorBase>> factories;
-
         public EditorAdaptorConverter()
         {
-            factories = new Dictionary<Type, Func<object, EditorAdaptorBase>>(){
-                { typeof(TextArea), val => new AvalonEditorAdaptor((TextArea)val) }
-            };
         }
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -25,12 +20,11 @@ namespace BVEEditor.Editor
             if(value == null)
                 return null;
 
-            Type val_type = value.GetType();
+            var res = value as ITextEditor;
+            if(res == null)
+                throw new InvalidOperationException("Could not cast the value to ITextEditor!");
 
-            if(!factories.ContainsKey(val_type))
-                throw new NotSupportedException("Conversion from " + val_type + " to EditorAdapterBase is currently not supported.");
-
-            return factories[val_type](value);
+            return res;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

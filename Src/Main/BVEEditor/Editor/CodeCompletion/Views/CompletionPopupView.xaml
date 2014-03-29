@@ -1,5 +1,5 @@
 ﻿<Popup
-    x:Class="BVEEditor.CodeCompletion.CompletionPopupView"
+    x:Class="BVEEditor.Editor.CodeCompletion.CompletionPopupView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,6 +10,7 @@
     Placement="Bottom"
     MaxHeight="202"
     AllowsTransparency="True"
+    IsOpen="{Binding IsOpen}"
     d:DesignHeight="300"
     d:DesignWidth="300">
     <DockPanel>

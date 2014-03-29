@@ -13,32 +13,32 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// </summary>
     public class ElementChangedKeyAction : KeyAction
     {
-        protected override void DoAct(CompletionPopupView view, KeyEventArgs args)
+        protected override void DoAct(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
-            PerformElementChanged(view, args);
+            PerformElementChanged(viewModel, args);
         }
 
-        void PerformElementChanged(CompletionPopupView view, KeyEventArgs args)
+        void PerformElementChanged(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
-            if(view.CompletionItems.Items.Count <= 0)
+            if(viewModel.CompletionItems.Count <= 0)
                 return;
 
             if(args.Key == Key.Down)
-                view.Model.SelectNextCompletionItem();
+                viewModel.SelectNextCompletionItem();
             else
-                view.Model.SelectPreviousCompletionItem();
+                viewModel.SelectPreviousCompletionItem();
 
-            view.CompletionItems.ScrollIntoView(view.Model.SelectedCompletionItem);
+            viewModel.ScrollIntoSelectedItem();
         }
 
-        protected override bool ShouldSwallow(CompletionPopupView view, KeyEventArgs args)
+        protected override bool ShouldSwallow(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
-            return view.CompletionItems.Items.Count > 0;
+            return viewModel.CompletionItems.Count > 0;
         }
 
-        protected override bool IsTriggeredAddon(IPopupEvent @event, CompletionPopupView view)
+        protected override bool IsTriggeredAddon(IPopupEvent @event, CompletionPopupViewModel viewModel)
         {
-            return view.IsOpen;
+            return viewModel.IsOpen;
         }
     }
 }

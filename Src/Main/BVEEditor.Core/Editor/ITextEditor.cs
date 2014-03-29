@@ -23,16 +23,8 @@ namespace BVEEditor.Editor
 	/// <summary>
 	/// Interface for text editors.
 	/// </summary>
-	public interface ITextEditor : IServiceProvider
+	public interface ITextEditor
 	{
-		/// <summary>
-		/// Gets the primary view if split-view is active.
-		/// If split-view is disabled, the current ITextEditor instance is returned.
-		/// This property never returns null.
-		/// </summary>
-		/// <example>bool isSecondaryView = (editor != editor.PrimaryView);</example>
-		ITextEditor PrimaryView{get;}
-		
 		/// <summary>
 		/// Gets the document that is being edited.
 		/// </summary>
@@ -49,12 +41,8 @@ namespace BVEEditor.Editor
 		/// This property never returns null.
 		/// </summary>
 		ITextEditorOptions Options{get;}
-		
-		/// <summary>
-		/// Gets the language binding attached to this text editor.
-		/// This property never returns null.
-		/// </summary>
-		ILanguageBinding Language{get;}
+
+        ILanguageBinding Language{get;}
 		
 		/// <summary>
 		/// Gets the start offset of the selection.
@@ -70,7 +58,7 @@ namespace BVEEditor.Editor
 		/// Gets/Sets the selected text.
 		/// </summary>
 		string SelectedText{get; set;}
-		
+
 		/// <summary>
 		/// Sets the selection.
 		/// </summary>
@@ -83,10 +71,25 @@ namespace BVEEditor.Editor
 		/// </summary>
 		event EventHandler SelectionChanged;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        event TextCompositionEventHandler PreviewTextInput;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event KeyEventHandler PreviewKeyDown;
+
 		/// <summary>
 		/// Is raised before a key is pressed.
 		/// </summary>
-		event KeyEventHandler KeyPress;
+		event KeyEventHandler KeyDown;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        event KeyEventHandler KeyUp;
 
 		/// <summary>
 		/// Sets the caret to the specified line/column and brings the caret into view.
@@ -94,11 +97,17 @@ namespace BVEEditor.Editor
 		void JumpTo(int line, int column);
 		
 		FileName FileName{get;}
+        UIElement EditorElement{get;}
 		
 		/// <summary>
 		/// Gets the list of available code snippets.
 		/// </summary>
 		IEnumerable<ICompletionItem> GetSnippets();
+
+        /// <summary>
+        /// Gets the visual position of the caret.
+        /// </summary>
+        Rect GetCursorCoordinates();
 		
 		/// <summary>
 		/// Gets the list of context action providers.

@@ -11,36 +11,37 @@ using BVEEditor.CodeCompletion;
 namespace BVEEditor.Editor.CodeCompletion.Actions
 {
     /// <summary>
-    /// An action that hides the code completion popup when the cursor gets in the end of an expression.
+    /// An action that hides the code completion popup when the cursor gets out of the scope of an expression.
     /// </summary>
-    public class CloseOnSteppingIntoEndOfExpression : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class CloseOnSteppingIntoEndOfExpression : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
-        readonly Func<bool> EndOfExpressionPredicate;
+        readonly ICodeCompletionBinding CodeCompletionBinding;
 
-        public CloseOnSteppingIntoEndOfExpression(Func<bool> isEndOfExpression)
+        public CloseOnSteppingIntoEndOfExpression(ICodeCompletionBinding completionBinding)
         {
-            this.EndOfExpressionPredicate = isEndOfExpression;
+            this.CodeCompletionBinding = completionBinding;
         }
 
-        bool IsTriggered(KeyEventArgs key)
+        bool IsTriggered(KeyEventArgs key, ITextEditor editor)
         {
-            return EndOfExpressionPredicate() && key.Key == Key.Left || key.Key == Key.Right;
+            return CodeCompletionBinding.ShouldMarkEndOfExpression(editor) && key.Key == Key.Left || key.Key == Key.Right;
         }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
-        {}
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
+        {
+        }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
             var current = events.First();
 
-            if(current.Type != EventType.KeyUp || view.Target == null)
+            if(current.Type != EventType.KeyUp || viewModel.Target == null)
                 return;
 
-            if(!IsTriggered(current.EventArgs as KeyEventArgs))
+            if(!IsTriggered(current.EventArgs as KeyEventArgs, viewModel.Target))
                 return;
 
-            CompletionPopupActions.Hide(view);
+            viewModel.Hide();
         }
     }
 }

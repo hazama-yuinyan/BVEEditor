@@ -94,7 +94,6 @@
     <Compile Include="Editor\IFormattingStrategy.cs" />
     <Compile Include="Editor\IHighlighterFactory.cs" />
     <Compile Include="Editor\ISnippetElementProvider.cs" />
-    <Compile Include="Editor\EditorAdaptorBase.cs" />
     <Compile Include="Editor\ITextEditorExtension.cs" />
     <Compile Include="Editor\ITextEncodingProvider.cs" />
     <Compile Include="Editor\ITextMarker.cs" />

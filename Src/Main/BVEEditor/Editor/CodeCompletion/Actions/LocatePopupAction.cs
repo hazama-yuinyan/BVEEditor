@@ -12,12 +12,13 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that locates the code completion popup according to the cursor position.
     /// </summary>
-    public class LocatePopupAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class LocatePopupAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
-        { }
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
+        {
+        }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
             if(!events.Any())
                 return;
@@ -27,34 +28,10 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             if(last.Type != EventType.PositionInvalidated && last.Type != EventType.SelectionChanged && last.Type != EventType.PopupStateChanged)
                 return;
 
-            if(last.Type == EventType.SelectionChanged && view.IsOpen)
+            if(last.Type == EventType.SelectionChanged && viewModel.IsOpen)
                 return;
 
-            Rect rect = view.Target.GetVisualPosition();
-
-            view.PlacementRectangle = rect.IsEmpty ? default(Rect) : new Rect(CalculatePoint(rect, view.Target.UIElement), new Size(rect.Width, rect.Height));
-        }
-
-        private ScrollViewer FindScrollAncestor(UIElement element)
-        {
-            DependencyObject obj = element;
-            while((obj = LogicalTreeHelper.GetParent(obj)) != null){
-                var scroll_viewer = obj as ScrollViewer;
-                if(scroll_viewer != null)
-                    return scroll_viewer;
-            }
-
-            return null;
-        }
-
-        Point CalculatePoint(Rect rect, UIElement textArea)
-        {
-            var scroll = FindScrollAncestor(textArea);
-
-            if(scroll == null)
-                return new Point(rect.X, rect.Y + 1);
-
-            return new Point(rect.X - scroll.HorizontalOffset, rect.Y - scroll.VerticalOffset + 1);
+            viewModel.LocatePopup();
         }
     }
 }

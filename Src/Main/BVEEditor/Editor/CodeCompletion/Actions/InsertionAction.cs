@@ -12,17 +12,17 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that performs completion item insertion.
     /// </summary>
-    public class InsertionAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class InsertionAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
         public InsertionAction(Key key)
         {
             this.Key = key;
         }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(IsTriggered(current, view)){
-                InsertElement(view);
+            if(IsTriggered(current, viewModel)){
+                InsertElement(viewModel);
                 if(ShouldSwallow)
                     current.Cancel();
             }
@@ -31,11 +31,11 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         public Key Key{get; set;}
 
         public bool ShouldSwallow{get; set;}
-        static IEnumerable<Key> modifiers = new[] {Key.LeftShift, Key.RightShift, Key.LeftCtrl, Key.RightCtrl, Key.LeftAlt, Key.RightAlt};
+        static IEnumerable<Key> modifiers = new[]{Key.LeftShift, Key.RightShift, Key.LeftCtrl, Key.RightCtrl, Key.LeftAlt, Key.RightAlt};
 
-        bool IsTriggered(ICancellablePopupEvent current, CompletionPopupView view)
+        bool IsTriggered(ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(current.Type != EventType.KeyPress || !view.IsOpen || view.CompletionItems.SelectedItem == null)
+            if(current.Type != EventType.KeyPress || !viewModel.IsOpen || viewModel.SelectedCompletionItem == null)
                 return false;
 
             var args = current.EventArgs as KeyEventArgs;
@@ -43,18 +43,19 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             return args.Key == Key && modifiers.All(args.KeyboardDevice.IsKeyUp);
         }
 
-        void InsertElement(CompletionPopupView view)
+        void InsertElement(CompletionPopupViewModel viewModel)
         {
-            InsertItem(view.Model.SelectedCompletionItem, view);
+            InsertItem(viewModel.SelectedCompletionItem, viewModel);
         }
 
-        void InsertItem(ICompletionItem item, CompletionPopupView view)
+        void InsertItem(ICompletionItem item, CompletionPopupViewModel viewModel)
         {
-            item.Insert(view.Target);
-            CompletionPopupActions.Hide(view);
+            item.Insert(viewModel.Target);
+            viewModel.Hide();
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
-        {}
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
+        {
+        }
     }
 }

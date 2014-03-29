@@ -27,15 +27,30 @@ namespace BVEEditor.Editor.CodeCompletion
         /// <param name="editor">The editor</param>
         /// <param name="ch">The character being inserted.</param>
         /// <returns>Returns whether the completion binding has shown code completion.</returns>
-        bool ShouldOpenPopup(EditorAdaptorBase editor, char ch);
+        bool ShouldOpenPopup(ITextEditor editor, char ch);
 
         /// <summary>
-        /// This method is called when a character is typed
+        /// Determines whether the cursor is at the end of an expression.
+        /// </summary>
+        /// <param name="editor">The editor.</param>
+        /// <returns>true, if it recognizes that the cursor is currently at the end of an expression.</returns>
+        bool ShouldMarkEndOfExpression(ITextEditor editor);
+
+        /// <summary>
+        /// Determines whether the user finishes typing in an expression.
+        /// </summary>
+        /// <param name="editor">The editor.</param>
+        /// <param name="ch">The character being inserted.</param>
+        /// <returns>true, if it recognizes that the user finished typing in an expression; otherwise, false.</returns>
+        bool ShouldMarkEndOfExpression(ITextEditor editor, char ch);
+
+        /// <summary>
+        /// This method is called when a character is typed in.
         /// </summary>
         /// <param name="editor">The editor</param>
         /// <param name="ch">The character that will be inserted. It will be '\0' if the method is called on Ctrl+Space action.</param>
         /// <returns>Returns whether the completion binding has shown code completion.</returns>
-        IEnumerable<ICompletionItem> GenerateItems(EditorAdaptorBase editor, char ch = '\0');
+        IEnumerable<ICompletionItem> GenerateItems(ITextEditor editor, char ch = '\0');
     }
 
     /// <summary>
@@ -75,7 +90,7 @@ namespace BVEEditor.Editor.CodeCompletion
     /// List of semicolon-separated entries of the file extensions handled by the binding.
     /// If no extensions attribute is specified, the binding is activated in all files.
     /// </attribute>
-    /// <usage>Only in /SharpDevelop/ViewContent/TextEditor/CodeCompletion</usage>
+    /// <usage>Only in /BVEEditor/ViewContent/TextEditor/CodeCompletion</usage>
     /// <returns>
     /// The ICodeCompletionBinding class specified with the 'class' attribute, or a
     /// wrapper that lazy-loads the actual class when it is used in a file with the specified
@@ -93,57 +108,51 @@ namespace BVEEditor.Editor.CodeCompletion
         {
             string ext = args.Codon["extensions"];
             if(ext != null && ext.Length > 0)
-                return new LazyCodeCompletionBinding(args.Codon, ext.Split(';'));
+                return new CodeCompletionBindingDescriptor(args.Codon, ext.Split(';'));
             else
                 return args.AddIn.CreateObject(args.Codon["class"]);
         }
     }
 
     /// <summary>
-    /// An implementation of ICodeCompletionBinding that lazily loads real completion binding
+    /// Descriptor of <see cref="BVEEditor.Editor.CodeCompletion.ICodeCompletionBinding"/>.
     /// </summary>
-    public sealed class LazyCodeCompletionBinding : ICodeCompletionBinding
+    public sealed class CodeCompletionBindingDescriptor
     {
         Codon codon;
         string[] extensions;
         ICodeCompletionBinding binding;
 
-        public LazyCodeCompletionBinding(Codon codon, string[] extensions)
+        public ICodeCompletionBinding Binding{
+            get{
+                if(binding == null)
+                    binding = (ICodeCompletionBinding)codon.AddIn.CreateObject(codon.Properties["class"]);
+
+                return binding;
+            }
+        }
+
+        public CodeCompletionBindingDescriptor(Codon codon, string[] extensions)
         {
             this.codon = codon;
             this.extensions = extensions;
         }
 
-        bool MatchesExtension(EditorAdaptorBase editor)
+        /// <summary>
+        /// Determines whether the <see cref="BVEEditor.Editor.CodeCompletion.ICodeCompletionBinding"/> can handle
+        /// the specific type of files.
+        /// </summary>
+        /// <param name="editor"></param>
+        /// <returns>true, if it can handle the content of the editor; otherwise, false.</returns>
+        public bool CanHandle(ITextEditor editor)
         {
             string ext = Path.GetExtension(editor.FileName);
-            foreach(string extension in extensions){
-                if(ext.Equals(extension, StringComparison.OrdinalIgnoreCase)){
-                    if(binding == null){
-                        binding = (ICodeCompletionBinding)codon.AddIn.CreateObject(codon.Properties["class"]);
-                        if(binding == null)
-                            return false;
-                    }
+            foreach(var extension in extensions){
+                if(ext.Equals(extension, StringComparison.OrdinalIgnoreCase))
                     return true;
-                }
             }
+
             return false;
-        }
-
-        public bool ShouldOpenPopup(EditorAdaptorBase editor, char ch)
-        {
-            if(MatchesExtension(editor))
-                return binding.ShouldOpenPopup(editor, ch);
-            else
-                return false;
-        }
-
-        public IEnumerable<ICompletionItem> GenerateItems(EditorAdaptorBase editor, char ch)
-        {
-            if(MatchesExtension(editor))
-                return binding.GenerateItems(editor, ch);
-            else
-                return Enumerable.Empty<ICompletionItem>();
         }
     }
 }

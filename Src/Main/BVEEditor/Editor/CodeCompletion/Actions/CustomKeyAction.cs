@@ -12,26 +12,26 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 {
     public class CustomKeyAction : KeyAction
     {
-        public CustomKeyAction(Action<CompletionPopupView> action, IEnumerable<Key> modifiers, Key key)
+        public CustomKeyAction(Action<CompletionPopupViewModel> action, IEnumerable<Key> modifiers, Key key)
             : base(modifiers, key)
         {
             this.Action = action;
         }
 
         public CustomKeyAction()
-        { }
+        {}
 
         [TypeConverter(typeof(ActionConverter))]
-        public Action<CompletionPopupView> Action{get; set;}
+        public Action<CompletionPopupViewModel> Action{get; set;}
 
-        protected override void DoAct(CompletionPopupView view, KeyEventArgs args)
+        protected override void DoAct(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
-            Action(view);
+            Action(viewModel);
         }
 
         public bool ShouldSwallowKeyPress{get; set;}
 
-        protected override bool ShouldSwallow(CompletionPopupView view, KeyEventArgs args)
+        protected override bool ShouldSwallow(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
             return ShouldSwallowKeyPress;
         }
@@ -51,7 +51,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         {
             var val = value as string;
 
-            return Delegate.CreateDelegate(typeof(Action<CompletionPopupView>), typeof(CompletionPopupActions), val);
+            return Delegate.CreateDelegate(typeof(Action<CompletionPopupViewModel>), typeof(CompletionPopupViewModel), val);
         }
     }
 }

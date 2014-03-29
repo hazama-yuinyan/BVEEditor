@@ -13,32 +13,32 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that hides the code completion popup when the user finishes entering an expression.
     /// </summary>
-    public class CloseOnWritingEndOfExpression : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class CloseOnWritingEndOfExpression : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
-        readonly Func<char, bool> EndOfExpressionPredicate;
+        readonly ICodeCompletionBinding CodeCompletionBinding;
 
-        public CloseOnWritingEndOfExpression(Func<char, bool> isEndOfExpression)
+        public CloseOnWritingEndOfExpression(ICodeCompletionBinding completionBinding)
         {
-            EndOfExpressionPredicate = isEndOfExpression;
+            CodeCompletionBinding = completionBinding;
         }
 
-        bool IsTriggered(TextCompositionEventArgs args)
+        bool IsTriggered(TextCompositionEventArgs args, ITextEditor editor)
         {
-            return args.Text.Length == 1 && EndOfExpressionPredicate(args.Text[0]);
+            return args.Text.Length == 1 && CodeCompletionBinding.ShouldMarkEndOfExpression(editor, args.Text[0]);
         }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(current.Type != EventType.CancellableInput || view.Target == null)
+            if(current.Type != EventType.CancellableInput || viewModel.Target == null)
                 return;
 
-            if(!IsTriggered(current.EventArgs as TextCompositionEventArgs))
+            if(!IsTriggered(current.EventArgs as TextCompositionEventArgs, viewModel.Target))
                 return;
 
-            CompletionPopupActions.Hide(view);
+            viewModel.Hide();
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
         }
     }

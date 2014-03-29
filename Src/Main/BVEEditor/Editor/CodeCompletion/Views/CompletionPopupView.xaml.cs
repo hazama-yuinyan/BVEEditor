@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -18,20 +19,44 @@ using BVEEditor.Editor;
 using BVEEditor.Editor.CodeCompletion;
 using BVEEditor.Editor.CodeCompletion.Actions;
 using BVEEditor.Editor.CodeCompletion.Events;
+using BVEEditor.Messages;
 using BVEEditor.Util;
+using Caliburn.Micro;
 
-namespace BVEEditor.CodeCompletion
+namespace BVEEditor.Editor.CodeCompletion
 {
     /// <summary>
     /// CompletionPopupView.xaml の相互作用ロジック
     /// </summary>
-    public partial class CompletionPopupView : Popup
+    public partial class CompletionPopupView : Popup, IHandle<PopupShowMessage>, IHandle<PopupHideMessage>,
+        IHandle<InvalidatePositionMessage>, IHandle<ScrollIntoViewMessage>, IHandle<PopupLocateMessage>
     {
         readonly FixedSizeStack<IPopupEvent> events;
+
+        IEventAggregator event_aggregator;
+        // This property should be explicit because property injection doesn't work for view elements
+        // created by the xaml loader(it requires view elements created to have a default constructor)
+        // FIXME: if it is possible
+        public IEventAggregator EventAggregator{
+            get{
+                return event_aggregator;
+            }
+            
+            set{
+                if(event_aggregator != value){
+                    if(event_aggregator != null)
+                        event_aggregator.Unsubscribe(this);
+                    
+                    value.Subscribe(this);
+                    event_aggregator = value;
+                }
+            }
+        }
 
         public CompletionPopupView()
         {
             InitializeComponent();
+
             events = new FixedSizeStack<IPopupEvent>(15);
 
             CompletionItems.PreviewKeyDown += (sender, args) => Publish(new CancellableKeyEvent(args, EventSource.Popup));
@@ -42,66 +67,55 @@ namespace BVEEditor.CodeCompletion
             DataContextChanged += OnDataContextChanged;
         }
 
+        void OnObserversChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch(e.Action){
+            case NotifyCollectionChangedAction.Add:
+                break;
+
+            default:
+                throw new InvalidOperationException("Observers doesn't support operations other than Add.");
+            }
+        }
+
         void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if(e.NewValue as CompletionPopupViewModel == null)
+            if(!(e.OldValue is CompletionPopupViewModel) || !(e.NewValue is CompletionPopupViewModel))
                 return;
 
-            AddObservers(Model.Observers);
             Publish(new PositionInvalidatedEvent());
+            Observers.CollectionChanged += OnObserversChanged;
         }
 
-        void AddObservers(IList<IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>> observers)
-        {
-            observers.Add(new CustomKeyAction{
-                Action = x => {
-                    x.InvalidatePosition();
-                    x.IsOpen = true;
-                },
-                Key = Key.Space,
-                Modifiers = new[]{Key.LeftCtrl},
-                ShouldSwallowKeyPress = true
-            });
-
-            observers.Add(new SelectionChangedHideAction());
-            observers.Add(new InsertionAction(Key.Enter){ShouldSwallow = true});
-            observers.Add(new InsertionAction(Key.OemPeriod));
-            observers.Add(new InsertOnItemClicked());
-            observers.Add(new LocatePopupAction());
-            observers.Add(new CustomKeyAction(x => CompletionPopupActions.Hide(this), Enumerable.Empty<Key>(), Key.Escape));
-            observers.Add(new ElementChangedKeyAction{Key = Key.Up, IsTargetSource = IsEditor});
-            observers.Add(new ElementChangedKeyAction{Key = Key.Down, IsTargetSource = IsEditor});
-        }
-
-        bool IsEditor(EventSource source)
-        {
-            return source == EventSource.Editor;
-        }
-
+        #region Dependency properties
         [TypeConverter(typeof(EditorAdaptorConverter))]
-        public EditorAdaptorBase Target{
-            get{return (EditorAdaptorBase)GetValue(TargetProperty);}
+        public static readonly DependencyProperty TargetProperty =
+            DependencyProperty.Register("Target", typeof(ITextEditor), typeof(CompletionPopupView), new PropertyMetadata(default(ITextEditor), OnTargetChanged));
+
+        public static readonly DependencyProperty ObserversProperty =
+            DependencyProperty.Register("Observers", typeof(BindableCollection<IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>>),
+                typeof(CompletionPopupView), new PropertyMetadata(default(BindableCollection<IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>>)));
+
+        public ITextEditor Target{
+            get{return (ITextEditor)GetValue(TargetProperty);}
             set{SetValue(TargetProperty, value);}
         }
 
-        public CompletionPopupViewModel Model{
-            get{return this.DataContext as CompletionPopupViewModel;}
+        public BindableCollection<IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>> Observers{
+            get{return (BindableCollection<IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>>)GetValue(ObserversProperty);}
+            set{SetValue(ObserversProperty, value);}
         }
-
-        [TypeConverter(typeof(EditorAdaptorConverter))]
-        public static readonly DependencyProperty TargetProperty =
-            DependencyProperty.Register("Target", typeof(EditorAdaptorBase), typeof(CompletionPopupView), new PropertyMetadata(default(EditorAdaptorBase), OnTargetChanged));
 
         static void OnTargetChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             if(e.NewValue == null || obj == null)
                 return;
 
-            var target = e.NewValue as EditorAdaptorBase;
-            var old_target = e.OldValue as EditorAdaptorBase;
+            var target = e.NewValue as ITextEditor;
+            var old_target = e.OldValue as ITextEditor;
             var view = obj as CompletionPopupView;
 
-            EventHandler selection_changed_handler = (sender, args) => view.Publish(new SelectionChangedEvent(target.CaretOffset));
+            EventHandler selection_changed_handler = (sender, args) => view.Publish(new SelectionChangedEvent(target.Caret.Offset));
             KeyEventHandler preview_key_down_handler = (sender, args) => view.Publish(new CancellableKeyEvent(args, EventSource.Editor));
             KeyEventHandler key_up_handler = (sender, args) => view.Publish(new KeyUpEvent(args, EventSource.Editor));
             KeyEventHandler key_down_handler = (sender, args) => view.Publish(new KeyEvent(args, EventSource.Editor));
@@ -122,37 +136,124 @@ namespace BVEEditor.CodeCompletion
                 old_target.KeyUp -= key_up_handler;
             }
         }
+        #endregion
 
         void Publish(IPopupEvent @event)
         {
-            if(Model == null)
+            if(DataContext == null)
                 return;
 
             System.Diagnostics.Debug.WriteLine("publishing:" + @event.Type);
 
             events.Push(@event);
 
-            foreach(var observer in Model.Observers)
-                observer.Handle(events, this);
+            foreach(var observer in Observers)
+                observer.Handle(events, (CompletionPopupViewModel)DataContext);
         }
 
         void Publish(ICancellablePopupEvent @event)
         {
-            foreach(var observer in Model.Observers)
-                observer.Preview(events, @event, this);
+            foreach(var observer in Observers)
+                observer.Preview(events, @event, (CompletionPopupViewModel)DataContext);
 
             if(@event.IsCancelled && !@event.IsTransient)
                 return;
 
             events.Push(@event);
 
-            foreach(var observer in Model.Observers)
-                observer.Handle(events, this);
+            foreach(var observer in Observers)
+                observer.Handle(events, (CompletionPopupViewModel)DataContext);
         }
 
         internal void InvalidatePosition()
         {
             Publish(new PositionInvalidatedEvent());
+        }
+
+        void Show()
+        {
+            IsOpen = true;
+        }
+
+        #region IHandle<PopupShowMessage> メンバー
+
+        public void Handle(PopupShowMessage message)
+        {
+            if(object.ReferenceEquals(message.Sender, DataContext)){
+                if(CompletionItems.HasItems)
+                    Show();
+            }
+        }
+
+        #endregion
+
+        #region IHandle<PopupHideMessage> メンバー
+
+        public void Handle(PopupHideMessage message)
+        {
+            if(object.ReferenceEquals(message.Sender, DataContext)){
+                IsOpen = false;
+                event_aggregator.Publish(new FocusMessage(this));
+            }
+        }
+
+        #endregion
+
+        #region IHandle<InvalidatePositionMessage> メンバー
+
+        public void Handle(InvalidatePositionMessage message)
+        {
+            if(object.ReferenceEquals(message.Sender, DataContext))
+                InvalidatePosition();
+        }
+
+        #endregion
+
+        #region IHandle<ScrollIntoViewMessage> メンバー
+
+        public void Handle(ScrollIntoViewMessage message)
+        {
+            if(object.ReferenceEquals(message.Sender, DataContext)){
+                System.Diagnostics.Debug.Assert(message.TargetItem != null);
+                CompletionItems.ScrollIntoView(message.TargetItem);
+            }
+        }
+
+        #endregion
+
+        #region IHandle<PopupLocateMessage> メンバー
+
+        public void Handle(PopupLocateMessage message)
+        {
+            if(object.ReferenceEquals(message.Sender, DataContext)){
+                Rect rect = Target.GetCursorCoordinates();
+
+                PlacementRectangle = rect.IsEmpty ? default(Rect) : new Rect(CalculatePoint(rect, Target.EditorElement), rect.Size);
+            }
+        }
+
+        #endregion
+
+        ScrollViewer FindScrollAncestor(UIElement element)
+        {
+            DependencyObject obj = element;
+            while((obj = LogicalTreeHelper.GetParent(obj)) != null){
+                var scroll_viewer = obj as ScrollViewer;
+                if(scroll_viewer != null)
+                    return scroll_viewer;
+            }
+
+            return null;
+        }
+
+        Point CalculatePoint(Rect rect, UIElement textArea)
+        {
+            var scroll = FindScrollAncestor(textArea);
+
+            if(scroll == null)
+                return new Point(rect.X, rect.Y + 1);
+
+            return new Point(rect.X - scroll.HorizontalOffset, rect.Y - scroll.VerticalOffset + 1);
         }
     }
 }

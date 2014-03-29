@@ -17,6 +17,7 @@ using BVEEditor.Services;
 using Caliburn.Micro;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.Core;
+using ICSharpCode.NRefactory.Editor;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace BVEEditor.Workbench

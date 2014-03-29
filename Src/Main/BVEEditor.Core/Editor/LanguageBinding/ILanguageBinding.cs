@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
+using BVEEditor.Editor.CodeCompletion;
 
 namespace BVEEditor.Editor.LanguageBinding
 {
@@ -28,7 +29,7 @@ namespace BVEEditor.Editor.LanguageBinding
 		IBracketSearcher BracketSearcher {
 			get;
 		}
-		
+
 		/// <summary>
 		/// Provides access to the code generator for this language.
 		/// </summary>

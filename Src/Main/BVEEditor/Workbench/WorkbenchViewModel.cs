@@ -449,7 +449,7 @@ namespace BVEEditor.Workbench
             FileName non_null_filename = FileName.Create(filePath ?? "Untitled.txt");
             FileName possibly_null_filename = FileName.Create(filePath);
             var new_doc = display_binding.GetBindingPerFileName(non_null_filename)
-                .CreateViewModelForFile(possibly_null_filename);
+                                         .CreateViewModelForFile(possibly_null_filename);
 
             if(!string.IsNullOrEmpty(filePath)) // Loads content from the specified file if the path is not null
                 new_doc.Load(filePath);

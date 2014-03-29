@@ -23,14 +23,14 @@ namespace BVEEditor.Editor.CodeCompletion
 		/// <summary>
 		/// Performs code completion for the item.
 		/// </summary>
-		void Insert(EditorAdaptorBase editor);
+		void Insert(ITextEditor editor);
 		
 		/// <summary>
 		/// Gets a priority value for the completion data item.
 		/// When selecting items by their start characters, the item with the highest
 		/// priority is selected first.
 		/// </summary>
-		double Priority {
+		double Priority{
 			get;
 		}
 	}
@@ -66,10 +66,10 @@ namespace BVEEditor.Editor.CodeCompletion
 			this.Text = text;
 		}
 		
-		public virtual void Insert(EditorAdaptorBase editor)
+		public virtual void Insert(ITextEditor editor)
 		{
 			editor.Document.Replace(ReplacementRange.Offset, ReplacementRange.Length, Text);
-			editor.CaretOffset = ReplacementRange.EndOffset;
+			editor.Caret.Offset = ReplacementRange.EndOffset;
 		}
 	}
 }

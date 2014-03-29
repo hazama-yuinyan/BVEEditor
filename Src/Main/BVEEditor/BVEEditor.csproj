@@ -89,23 +89,29 @@
     <Compile Include="AvalonDock\ActiveDocumentConverter.cs" />
     <Compile Include="AvalonDock\DocumentContext.cs" />
     <Compile Include="AvalonDock\IDockingManagerProvider.cs" />
-    <Compile Include="Editor\AvalonEditorAdaptor.cs" />
-    <None Include="Editor\CodeCompletion\Actions\BackspaceHideAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\CloseOnSteppingIntoEndOfExpression.cs" />
-    <None Include="Editor\CodeCompletion\Actions\CloseOnWritingEndOfExpression.cs" />
-    <None Include="Editor\CodeCompletion\Actions\CustomKeyAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\ElementChangedKeyAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\InsertionAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\InsertOnItemClicked.cs" />
-    <None Include="Editor\CodeCompletion\Actions\KeyAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
-    <None Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\BackspaceHideAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CloseOnSteppingIntoEndOfExpression.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CloseOnWritingEndOfExpression.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\CustomKeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\ElementChangedKeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\InsertionAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\InsertOnItemClicked.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\KeyAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
     <Compile Include="Editor\CodeCompletion\Controls\EvenListBox.xaml.cs">
       <DependentUpon>EvenListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\CodeCompletion\Messages\ScrollIntoViewMessage.cs" />
     <Compile Include="Editor\EditorAdaptorConverter.cs" />
+    <Compile Include="Editor\CodeCompletion\Messages\InvalidatePositionMessage.cs" />
+    <Compile Include="Messages\FocusMessage.cs" />
+    <Compile Include="Messages\PopupHideMessage.cs" />
+    <Compile Include="Messages\PopupLocateMessage.cs" />
+    <Compile Include="Messages\PopupShowMessage.cs" />
     <Compile Include="Misc\BVEEditorStringTagProvider.cs" />
+    <Compile Include="Messages\MessageBase.cs" />
     <Compile Include="Options\AppearancePanelViewModel.cs" />
     <Compile Include="Options\CodeCompletionOptions.cs" />
     <Compile Include="Options\OptionsViewModel.cs" />
@@ -136,10 +142,10 @@
     <Compile Include="Util\FixedSizeStack.cs" />
     <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Util\IntToBoolConverter.cs" />
-    <None Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml.cs">
+    <Compile Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml.cs">
       <DependentUpon>CompletionPopupView.xaml</DependentUpon>
-    </None>
-    <None Include="Editor\CodeCompletion\Views\CompletionPopupViewModel.cs" />
+    </Compile>
+    <Compile Include="Editor\CodeCompletion\Views\CompletionPopupViewModel.cs" />
     <Compile Include="Search\Views\FindInFolderView.xaml.cs">
       <DependentUpon>FindInFolderView.xaml</DependentUpon>
     </Compile>
@@ -193,10 +199,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml">
+    <Page Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </None>
+    </Page>
     <Page Include="Search\Views\FindInFolderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -310,6 +316,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Log4net.Config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

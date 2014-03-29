@@ -19,22 +19,25 @@ namespace BVEEditor.Editor
 	public interface IFormattingStrategy
 	{
 		/// <summary>
-		/// This function formats a specific line after <code>charTyped</code> is pressed.
+		/// This method formats a specific line after <code>charTyped</code> is pressed.
 		/// </summary>
+        /// <remarks>
+        /// This method is supposed to be called whenever a new character is typed in.
+        /// </remarks>
 		void FormatLine(ITextEditor editor, char charTyped);
 		
 		/// <summary>
-		/// This function sets the indentation level in a specific line
+		/// This method sets the indentation level in a specific line
 		/// </summary>
 		void IndentLine(ITextEditor editor, IDocumentLine line);
 		
 		/// <summary>
-		/// This function sets the indentation in a range of lines.
+		/// This method sets the indentation in a range of lines.
 		/// </summary>
 		void IndentLines(ITextEditor editor, int beginLine, int endLine);
 		
 		/// <summary>
-		/// This function surrounds the selected text with a comment.
+		/// This method surrounds the selected text with a comment.
 		/// </summary>
 		void SurroundSelectionWithComment(ITextEditor editor);
 	}
@@ -52,11 +55,11 @@ namespace BVEEditor.Editor
 			IDocument document = editor.Document;
 			int line_num = line.LineNumber;
 			if(line_num > 1){
-				IDocumentLine previousLine = document.GetLineByNumber(line_num - 1);
-				string indentation = DocumentUtilities.GetWhitespaceAfter(document, previousLine.Offset);
+				IDocumentLine previous_line = document.GetLineByNumber(line_num - 1);
+				string indentation = DocumentUtilities.GetWhitespaceAfter(document, previous_line.Offset);
 				// copy indentation to line
-				string newIndentation = DocumentUtilities.GetWhitespaceAfter(document, line.Offset);
-				document.Replace(line.Offset, newIndentation.Length, indentation);
+				string new_indentation = DocumentUtilities.GetWhitespaceAfter(document, line.Offset);
+				document.Replace(line.Offset, new_indentation.Length, indentation);
 			}
 		}
 		

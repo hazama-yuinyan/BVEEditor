@@ -12,29 +12,29 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that hides the code completion popup when the backspace key is pressed.
     /// </summary>
-    public class BackspaceHideAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class BackspaceHideAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
         static readonly string WhitespaceCharacters = " 　";
 
-        #region IEventObserver<IPopupEvent,ICancellablePopupEvent,CompletionPopupView> メンバー
+        #region IEventObserver<IPopupEvent,ICancellablePopupEvent,CompletionPopupViewModel> メンバー
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
             var current = events.First();
 
-            if(!IsTriggered(current.Type, current.EventArgs as Selection, view.Target))
+            if(!IsTriggered(current.Type, current.EventArgs as Selection, viewModel.Target))
                 return;
 
-            view.IsOpen = false;
+            viewModel.Hide();
         }
 
         #endregion
 
-        bool IsTriggered(EventType type, Selection args, EditorAdaptorBase editor)
+        bool IsTriggered(EventType type, Selection args, ITextEditor editor)
         {
             if(editor == null || args == null || type != EventType.SelectionChanged)
                 return false;

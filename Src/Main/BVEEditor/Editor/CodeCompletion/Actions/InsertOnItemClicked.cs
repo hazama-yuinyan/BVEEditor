@@ -12,45 +12,32 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that inserts the content of the selected completion item when an item is clicked.
     /// </summary>
-    class InsertOnItemClicked : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    class InsertOnItemClicked : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
-        void InsertItem(ICompletionItem item, CompletionPopupView view)
+        void InsertItem(ICompletionItem item, CompletionPopupViewModel viewModel)
         {
             if(item == null)
                 throw new InvalidOperationException("ICompletionItem is null. Something is wrong with the hackish ItemClicked event.");
 
-            item.Insert(view.Target);
+            item.Insert(viewModel.Target);
         }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
             if(current.Source != EventSource.Popup || current.Type != EventType.ItemClicked)
                 return;
 
             var event_args = current.EventArgs as ItemClickedEventArgs;
 
-            InsertItem(event_args.Item, view);
+            InsertItem(event_args.Item, viewModel);
 
-            CompletionPopupActions.Hide(view);
+            viewModel.Hide();
 
             current.Cancel();
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
-        {}
-
-        #region IEventObserver<IPopupEvent,ICancellablePopupEvent,CompletionPopupView> メンバー
-
-        void IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>.Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
-            throw new NotImplementedException();
         }
-
-        void IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>.Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }

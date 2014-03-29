@@ -8,6 +8,7 @@
  */
 using System;
 using System.ComponentModel.Design;
+using BVEEditor.Editor.CodeCompletion;
 
 namespace BVEEditor.Editor.LanguageBinding
 {
@@ -45,7 +46,7 @@ namespace BVEEditor.Editor.LanguageBinding
 				return this.GetService<IBracketSearcher>();
 			}
 		}
-		
+
 		/*public CodeGenerator CodeGenerator {
 			get {
 				return this.GetService<CodeGenerator>();

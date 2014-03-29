@@ -12,7 +12,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// <summary>
     /// An action that opens the code completion popup when a new character is entered.
     /// </summary>
-    public class OpenOnWriteAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public class OpenOnWriteAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
         readonly ICodeCompletionBinding binding;
 
@@ -21,18 +21,18 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             this.binding = binding;
         }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(current.Type != EventType.CancellableInput || view.IsOpen)
+            if(current.Type != EventType.CancellableInput || viewModel.IsOpen)
                 return;
 
             var args = current.EventArgs as TextCompositionEventArgs;
 
-            if(args.Text.Length == 1 && binding.ShouldOpenPopup(view.Target, args.Text[0]))
-                CompletionPopupActions.Show(view);
+            if(args.Text.Length == 1 && binding.ShouldOpenPopup(viewModel.Target, args.Text[0]))
+                viewModel.Show();
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
         {
         }
     }

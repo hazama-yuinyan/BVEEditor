@@ -9,7 +9,7 @@ using BVEEditor.CodeCompletion;
 
 namespace BVEEditor.Editor.CodeCompletion.Actions
 {
-    public abstract class KeyAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupView>
+    public abstract class KeyAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
         protected KeyAction(IEnumerable<Key> modifiers, Key key)
         {
@@ -24,7 +24,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             this.Modifiers = new Caliburn.Micro.BindableCollection<Key>();
         }
 
-        private bool IsTriggered(IPopupEvent @event)
+        bool IsTriggered(IPopupEvent @event)
         {
             if(@event.Type != EventType.KeyPress)
                 return false;
@@ -34,14 +34,14 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             return IsTargetSource(@event.Source) && Key == keyArgs.Key && Modifiers.All(keyArgs.KeyboardDevice.IsKeyDown);
         }
 
-        protected abstract void DoAct(CompletionPopupView view, KeyEventArgs args);
+        protected abstract void DoAct(CompletionPopupViewModel viewModel, KeyEventArgs args);
 
-        protected virtual bool ShouldSwallow(CompletionPopupView view, KeyEventArgs args)
+        protected virtual bool ShouldSwallow(CompletionPopupViewModel viewModel, KeyEventArgs args)
         {
             return false;
         }
 
-        protected virtual bool IsTriggeredAddon(IPopupEvent @event, CompletionPopupView view)
+        protected virtual bool IsTriggeredAddon(IPopupEvent @event, CompletionPopupViewModel viewModel)
         {
             return true;
         }
@@ -53,21 +53,22 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         [TypeConverter(typeof(KeyActionListConverter))]
         public IEnumerable<Key> Modifiers { get; set; }
 
-        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupView view)
+        public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(!IsTriggered(current) || !IsTriggeredAddon(current, view))
+            if(!IsTriggered(current) || !IsTriggeredAddon(current, viewModel))
                 return;
 
             var keyArgs = current.EventArgs as KeyEventArgs;
 
-            DoAct(view, keyArgs);
+            DoAct(viewModel, keyArgs);
 
-            if(ShouldSwallow(view, keyArgs))
+            if(ShouldSwallow(viewModel, keyArgs))
                 current.Cancel();
         }
 
-        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupView view)
-        {}
+        public void Handle(IEnumerable<IPopupEvent> events, CompletionPopupViewModel viewModel)
+        {
+        }
     }
 
     public class KeyActionListConverter : TypeConverter

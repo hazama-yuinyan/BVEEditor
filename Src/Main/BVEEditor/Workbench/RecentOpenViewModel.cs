@@ -1,6 +1,6 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: Ryouta
+ * User: HAZAMA
  * Date: 2013/06/17
  * Time: 14:43
  * 
