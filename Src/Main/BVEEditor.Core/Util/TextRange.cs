@@ -29,4 +29,43 @@ namespace BVEEditor.Util
             Length = length;
         }
     }
+
+    public class LazyEvaluationTextRange : ISegment
+    {
+        Lazy<int> offset_promise, length_promise;
+
+        #region ISegment メンバー
+
+        public int Offset{
+            get{return offset_promise.Value;}
+        }
+
+        public int Length{
+            get{return length_promise.Value;}
+        }
+
+        public int EndOffset{
+            get{return Offset + Length;}
+        }
+
+        #endregion
+
+        public LazyEvaluationTextRange(Lazy<int> offsetPromise, Lazy<int> lengthPromise)
+        {
+            offset_promise = offsetPromise;
+            length_promise = lengthPromise;
+        }
+
+        public LazyEvaluationTextRange(int offset, Lazy<int> lengthPromise)
+        {
+            offset_promise = new Lazy<int>(() => offset);
+            length_promise = lengthPromise;
+        }
+
+        public LazyEvaluationTextRange(Lazy<int> offsetPromise, int length)
+        {
+            offset_promise = offsetPromise;
+            length_promise = new Lazy<int>(() => length);
+        }
+    }
 }

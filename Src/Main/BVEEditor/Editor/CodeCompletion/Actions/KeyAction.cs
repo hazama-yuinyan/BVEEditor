@@ -29,9 +29,9 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             if(@event.Type != EventType.KeyPress)
                 return false;
 
-            var keyArgs = @event.EventArgs as KeyEventArgs;
+            var key_args = @event.EventArgs as KeyEventArgs;
 
-            return IsTargetSource(@event.Source) && Key == keyArgs.Key && Modifiers.All(keyArgs.KeyboardDevice.IsKeyDown);
+            return IsTargetSource(@event.Source) && Key == key_args.Key && Modifiers.All(key_args.KeyboardDevice.IsKeyDown);
         }
 
         protected abstract void DoAct(CompletionPopupViewModel viewModel, KeyEventArgs args);

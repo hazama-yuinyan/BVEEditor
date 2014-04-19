@@ -22,6 +22,8 @@ using BVEEditor.Editor.CodeCompletion.Events;
 using BVEEditor.Messages;
 using BVEEditor.Util;
 using Caliburn.Micro;
+using ICSharpCode.NRefactory.Editor;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace BVEEditor.Editor.CodeCompletion
 {
@@ -59,8 +61,8 @@ namespace BVEEditor.Editor.CodeCompletion
 
             events = new FixedSizeStack<IPopupEvent>(15);
 
-            CompletionItems.PreviewKeyDown += (sender, args) => Publish(new CancellableKeyEvent(args, EventSource.Popup));
-            CompletionItems.ItemClicked += (sender, args) => Publish(new ItemClickedEvent(args.Arg2, (ICompletionItem)args.Arg1));
+            completionItems.PreviewKeyDown += (sender, args) => Publish(new CancellableKeyEvent(args, EventSource.Popup));
+            completionItems.ItemClicked += (sender, args) => Publish(new ItemClickedEvent(args.Arg2, (ICompletionItem)args.Arg1));
 
             Opened += (obj, args) => Publish(new PopupStateChangedEvent(PopupState.Open));
             Closed += (obj, args) => Publish(new PopupStateChangedEvent(PopupState.Closed));
@@ -120,6 +122,7 @@ namespace BVEEditor.Editor.CodeCompletion
             KeyEventHandler key_up_handler = (sender, args) => view.Publish(new KeyUpEvent(args, EventSource.Editor));
             KeyEventHandler key_down_handler = (sender, args) => view.Publish(new KeyEvent(args, EventSource.Editor));
             TextCompositionEventHandler preview_text_input_handler = (sender, args) => view.Publish(new CancellableInputEvent(args));
+            EventHandler<TextChangeEventArgs> text_changing_handler = (sender, args) => view.Publish(new TextChangingEvent(args));
 
             if(target != null){
                 target.PreviewTextInput += preview_text_input_handler;
@@ -127,13 +130,16 @@ namespace BVEEditor.Editor.CodeCompletion
                 target.PreviewKeyDown += preview_key_down_handler;
                 target.KeyDown += key_down_handler;
                 target.KeyUp += key_up_handler;
+                target.Document.TextChanging += text_changing_handler;
             }
 
             if(old_target != null){
+                old_target.PreviewTextInput -= preview_text_input_handler;
                 old_target.SelectionChanged -= selection_changed_handler;
                 old_target.PreviewKeyDown -= preview_key_down_handler;
                 old_target.KeyDown -= key_down_handler;
                 old_target.KeyUp -= key_up_handler;
+                old_target.Document.TextChanging -= text_changing_handler;
             }
         }
         #endregion
@@ -180,7 +186,7 @@ namespace BVEEditor.Editor.CodeCompletion
         public void Handle(PopupShowMessage message)
         {
             if(object.ReferenceEquals(message.Sender, DataContext)){
-                if(CompletionItems.HasItems)
+                if(completionItems.HasItems)
                     Show();
             }
         }
@@ -215,7 +221,7 @@ namespace BVEEditor.Editor.CodeCompletion
         {
             if(object.ReferenceEquals(message.Sender, DataContext)){
                 System.Diagnostics.Debug.Assert(message.TargetItem != null);
-                CompletionItems.ScrollIntoView(message.TargetItem);
+                completionItems.ScrollIntoView(message.TargetItem);
             }
         }
 

@@ -27,34 +27,35 @@ namespace BVEEditor.Editor.CodeCompletion
         /// <param name="editor">The editor</param>
         /// <param name="ch">The character being inserted.</param>
         /// <returns>Returns whether the completion binding has shown code completion.</returns>
-        bool ShouldOpenPopup(ITextEditor editor, char ch);
+        CodeCompletionKeyPressResult HandleKeyPress(ICompletionHandler completionHandler, char ch);
 
         /// <summary>
         /// Determines whether the cursor is at the end of an expression.
         /// </summary>
         /// <param name="editor">The editor.</param>
-        /// <returns>true, if it recognizes that the cursor is currently at the end of an expression.</returns>
-        bool ShouldMarkEndOfExpression(ITextEditor editor);
+        /// <param name="startOffset">The offset at which the expression being edited starts.</param>
+        /// <returns>true, if it recognizes that the cursor is currently out of the scope of an expression.</returns>
+        bool ShouldMarkEndOfExpression(ITextEditor editor, int startOffset);
 
         /// <summary>
         /// Determines whether the user finishes typing in an expression.
         /// </summary>
         /// <param name="editor">The editor.</param>
         /// <param name="ch">The character being inserted.</param>
+        /// <param name="startOffset">The offset at which the expression being edited starts.</param>
         /// <returns>true, if it recognizes that the user finished typing in an expression; otherwise, false.</returns>
-        bool ShouldMarkEndOfExpression(ITextEditor editor, char ch);
+        bool ShouldMarkEndOfExpression(ITextEditor editor, char ch, int startOffset);
 
         /// <summary>
         /// This method is called when a character is typed in.
         /// </summary>
         /// <param name="editor">The editor</param>
-        /// <param name="ch">The character that will be inserted. It will be '\0' if the method is called on Ctrl+Space action.</param>
         /// <returns>Returns whether the completion binding has shown code completion.</returns>
-        IEnumerable<ICompletionItem> GenerateItems(ITextEditor editor, char ch = '\0');
+        CodeCompletionKeyPressResult HandleCtrlSpace(ICompletionHandler completionHandler);
     }
 
     /// <summary>
-    /// The result of <see cref="ICodeCompletionBinding.ShouldOpenPopup"/>.
+    /// The result of <see cref="ICodeCompletionBinding.HandleKeyPress"/>.
     /// </summary>
     public enum CodeCompletionKeyPressResult
     {

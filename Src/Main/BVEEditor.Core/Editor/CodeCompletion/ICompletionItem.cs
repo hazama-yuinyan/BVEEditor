@@ -13,6 +13,9 @@ using ICSharpCode.NRefactory.Editor;
 
 namespace BVEEditor.Editor.CodeCompletion
 {
+    /// <summary>
+    /// Interface for completion items.
+    /// </summary>
 	public interface ICompletionItem
 	{
 		string Text{get;}

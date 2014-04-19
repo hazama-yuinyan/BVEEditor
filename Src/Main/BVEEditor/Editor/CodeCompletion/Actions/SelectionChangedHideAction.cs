@@ -14,17 +14,22 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
     /// </summary>
     public class SelectionChangedHideAction : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
+        readonly ICodeCompletionBinding CodeCompletionBinding;
         int last_index;
 
-        bool IsTriggered(EventType type, object args, ITextEditor editor)
+        public SelectionChangedHideAction(ICodeCompletionBinding completionBinding)
         {
-            if(type != EventType.SelectionChanged || editor == null)
+            CodeCompletionBinding = completionBinding;
+        }
+
+        bool IsTriggered(EventType type, object args, CompletionPopupViewModel viewModel)
+        {
+            if(type != EventType.SelectionChanged || viewModel == null)
                 return false;
 
             int caret_index = (int)args;
-            var doc = editor.Document;
 
-            return Math.Abs(caret_index - last_index) > 1 || !IsSameLine(doc, caret_index, last_index);
+            return CodeCompletionBinding.ShouldMarkEndOfExpression(viewModel.Editor, viewModel.StartOffset);
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
@@ -35,20 +40,13 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         {
             var current = events.First();
 
-            if(current.Type != EventType.SelectionChanged)
+            if(current.Type != EventType.SelectionChanged || !viewModel.IsOpen)
                 return;
 
-            if(IsTriggered(current.Type, current.EventArgs, viewModel.Target))
+            if(IsTriggered(current.Type, current.EventArgs, viewModel))
                 viewModel.Hide();
 
             last_index = (int)current.EventArgs;
-        }
-
-        bool IsSameLine(IDocument doc, int lastIndex, int currentIndex)
-        {
-            int last_line = doc.GetLineByOffset(last_index).LineNumber;
-            int current_line = doc.GetLineByOffset(currentIndex).LineNumber;
-            return last_line == current_line;
         }
     }
 }

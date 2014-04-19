@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace BVEEditor.Editor.CodeCompletion
 {
     /// <summary>
-    /// Interface for Popup events.
+    /// Interface for insight window handlers.
     /// </summary>
-    public interface IPopupEvent
+    public interface IInsightWindowHandler
     {
-        EventType Type{get;}
-        EventSource Source{get;}
-        object EventArgs{get;}
+        object Content{get; set;}
+        void Show();
+        void Close();
     }
 }

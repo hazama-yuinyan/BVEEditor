@@ -36,7 +36,7 @@ namespace BVEEditor.CodeCompletion.Controls
         public EvenListBox()
         {
             Loaded += (sender, args) => {
-                this.itemHeight = CalculateItemHeight();
+                this.item_height = CalculateItemHeight();
                 UpdateHeight();
             };
             PreviewMouseLeftButtonDown += OnMouseLeftButtonDown;
@@ -52,7 +52,7 @@ namespace BVEEditor.CodeCompletion.Controls
             OnItemClicked(source.DataContext, e);
         }
 
-        private void OnItemClicked(object dataContext, MouseButtonEventArgs e)
+        void OnItemClicked(object dataContext, MouseButtonEventArgs e)
         {
             if(ItemClicked != null)
                 ItemClicked(this, new EventArgs<object, MouseButtonEventArgs>(dataContext, e));
@@ -71,7 +71,7 @@ namespace BVEEditor.CodeCompletion.Controls
             this.Height = CalculateHeight();
         }
 
-        double itemHeight;
+        double item_height;
 
         public static readonly DependencyProperty DisplayedRowsProperty =
             DependencyProperty.Register("DisplayedRows", typeof(int), typeof(EvenListBox), new PropertyMetadata(default(int)));
@@ -106,7 +106,7 @@ namespace BVEEditor.CodeCompletion.Controls
             if(Items.Count <= DisplayedRows)
                 return double.NaN;
 
-            return itemHeight * DisplayedRows + 5;
+            return item_height * DisplayedRows + 5;
         }
     }
 }

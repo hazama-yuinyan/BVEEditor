@@ -15,23 +15,24 @@
     d:DesignWidth="300">
     <DockPanel>
         <CompletionControls:EvenListBox MinWidth="100" MaxWidth="200" DockPanel.Dock="Left"
-                                        x:Name="CompletionItems"
+                                        x:Name="completionItems"
                                         ItemsSource="{Binding CompletionItems}"
                                         SelectedItem="{Binding SelectedCompletionItem, Mode=TwoWay}"
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                        DisplayMemberPath="Name"
+                                        DisplayMemberPath="Text"
                                         DisplayedRows="7">
         </CompletionControls:EvenListBox>
+        
         <StackPanel Margin="1">
             <TextBox Width="300" IsTabStop="False" IsReadOnly="True" Focusable="False"
-                     Text="{Binding ElementName=CompletionItems, Path=SelectedItem.Description, Mode=OneWay}">
+                     Text="{Binding ElementName=completionItems, Path=SelectedItem.Description, Mode=OneWay}">
                 <TextBox.Style>
                     <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding CompletionItems.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=CompletionItems, Path=SelectedItem}" Value="{x:Null}">
+                            <DataTrigger Binding="{Binding ElementName=completionItems, Path=SelectedItem}" Value="{x:Null}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>

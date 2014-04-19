@@ -201,10 +201,10 @@ namespace BVEEditor.Editor
 	
 	public class BlockCommentRegion
 	{
-		public string CommentStart { get; private set; }
-		public string CommentEnd { get; private set; }
-		public int StartOffset { get; private set; }
-		public int EndOffset { get; private set; }
+		public string CommentStart{get; private set;}
+		public string CommentEnd{get; private set;}
+		public int StartOffset{get; private set;}
+		public int EndOffset{get; private set;}
 		
 		/// <summary>
 		/// The end offset is the offset where the comment end string starts from.
@@ -221,9 +221,13 @@ namespace BVEEditor.Editor
 		{
 			int hashCode = 0;
 			unchecked {
-				if (CommentStart != null) hashCode += 1000000007 * CommentStart.GetHashCode();
-				if (CommentEnd != null) hashCode += 1000000009 * CommentEnd.GetHashCode();
-				hashCode += 1000000021 * StartOffset.GetHashCode();
+				if(CommentStart != null)
+                    hashCode += 1000000007 * CommentStart.GetHashCode();
+				
+                if(CommentEnd != null)
+                    hashCode += 1000000009 * CommentEnd.GetHashCode();
+				
+                hashCode += 1000000021 * StartOffset.GetHashCode();
 				hashCode += 1000000033 * EndOffset.GetHashCode();
 			}
 			return hashCode;
@@ -232,8 +236,10 @@ namespace BVEEditor.Editor
 		public override bool Equals(object obj)
 		{
 			BlockCommentRegion other = obj as BlockCommentRegion;
-			if (other == null) return false;
-			return this.CommentStart == other.CommentStart &&
+			if(other == null)
+                return false;
+			
+            return this.CommentStart == other.CommentStart &&
 				this.CommentEnd == other.CommentEnd &&
 				this.StartOffset == other.StartOffset &&
 				this.EndOffset == other.EndOffset;

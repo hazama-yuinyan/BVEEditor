@@ -26,7 +26,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         {
             var current = events.First();
 
-            if(!IsTriggered(current.Type, current.EventArgs as Selection, viewModel.Target))
+            if(!IsTriggered(current.Type, current.EventArgs as Selection, viewModel.Editor))
                 return;
 
             viewModel.Hide();

@@ -12,6 +12,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
 {
     /// <summary>
     /// An action that hides the code completion popup when the cursor gets out of the scope of an expression.
+    /// Usually used with HandleCtrlSpace.
     /// </summary>
     public class CloseOnSteppingIntoEndOfExpression : IEventObserver<IPopupEvent, ICancellablePopupEvent, CompletionPopupViewModel>
     {
@@ -22,9 +23,10 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             this.CodeCompletionBinding = completionBinding;
         }
 
-        bool IsTriggered(KeyEventArgs key, ITextEditor editor)
+        bool IsTriggered(KeyEventArgs key, CompletionPopupViewModel viewModel)
         {
-            return CodeCompletionBinding.ShouldMarkEndOfExpression(editor) && key.Key == Key.Left || key.Key == Key.Right;
+            return CodeCompletionBinding.ShouldMarkEndOfExpression(viewModel.Editor, viewModel.StartOffset) &&
+                (key.Key == Key.Left || key.Key == Key.Right);
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
@@ -35,13 +37,11 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
         {
             var current = events.First();
 
-            if(current.Type != EventType.KeyUp || viewModel.Target == null)
+            if(current.Type != EventType.KeyUp || !viewModel.IsOpen || viewModel.Editor == null)
                 return;
 
-            if(!IsTriggered(current.EventArgs as KeyEventArgs, viewModel.Target))
-                return;
-
-            viewModel.Hide();
+            if(IsTriggered((KeyEventArgs)current.EventArgs, viewModel))
+                viewModel.Hide();
         }
     }
 }

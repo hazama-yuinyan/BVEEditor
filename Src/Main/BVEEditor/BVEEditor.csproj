@@ -42,8 +42,9 @@
       <HintPath>..\..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="Ninject">
-      <HintPath>..\..\..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -100,9 +101,11 @@
     <Compile Include="Editor\CodeCompletion\Actions\LocatePopupAction.cs" />
     <Compile Include="Editor\CodeCompletion\Actions\OpenOnWriteAction.cs" />
     <Compile Include="Editor\CodeCompletion\Actions\SelectionChangedHideAction.cs" />
+    <Compile Include="Editor\CodeCompletion\Actions\StartOffsetAdjustAction.cs" />
     <Compile Include="Editor\CodeCompletion\Controls\EvenListBox.xaml.cs">
       <DependentUpon>EvenListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Editor\CodeCompletion\InsightWindowPopupViewModel.cs" />
     <Compile Include="Editor\CodeCompletion\Messages\ScrollIntoViewMessage.cs" />
     <Compile Include="Editor\EditorAdaptorConverter.cs" />
     <Compile Include="Editor\CodeCompletion\Messages\InvalidatePositionMessage.cs" />
@@ -145,7 +148,7 @@
     <Compile Include="Editor\CodeCompletion\Views\CompletionPopupView.xaml.cs">
       <DependentUpon>CompletionPopupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Editor\CodeCompletion\Views\CompletionPopupViewModel.cs" />
+    <Compile Include="Editor\CodeCompletion\CompletionPopupViewModel.cs" />
     <Compile Include="Search\Views\FindInFolderView.xaml.cs">
       <DependentUpon>FindInFolderView.xaml</DependentUpon>
     </Compile>

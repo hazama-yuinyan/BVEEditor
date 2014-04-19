@@ -19,7 +19,7 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             if(item == null)
                 throw new InvalidOperationException("ICompletionItem is null. Something is wrong with the hackish ItemClicked event.");
 
-            item.Insert(viewModel.Target);
+            item.Insert(viewModel.Editor);
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)

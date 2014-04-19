@@ -22,17 +22,17 @@ namespace BVEEditor.Editor.CodeCompletion.Actions
             CodeCompletionBinding = completionBinding;
         }
 
-        bool IsTriggered(TextCompositionEventArgs args, ITextEditor editor)
+        bool IsTriggered(TextCompositionEventArgs args, CompletionPopupViewModel viewModel)
         {
-            return args.Text.Length == 1 && CodeCompletionBinding.ShouldMarkEndOfExpression(editor, args.Text[0]);
+            return args.Text.Length == 1 && CodeCompletionBinding.ShouldMarkEndOfExpression(viewModel.Editor, args.Text[0], viewModel.StartOffset);
         }
 
         public void Preview(IEnumerable<IPopupEvent> events, ICancellablePopupEvent current, CompletionPopupViewModel viewModel)
         {
-            if(current.Type != EventType.CancellableInput || viewModel.Target == null)
+            if(current.Type != EventType.CancellableInput || viewModel.Editor == null)
                 return;
 
-            if(!IsTriggered(current.EventArgs as TextCompositionEventArgs, viewModel.Target))
+            if(!IsTriggered((TextCompositionEventArgs)current.EventArgs, viewModel))
                 return;
 
             viewModel.Hide();

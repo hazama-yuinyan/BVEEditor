@@ -11,7 +11,8 @@ namespace BVEEditor.Editor.CodeCompletion
         ItemClicked,
         PopupStateChanged,
         PositionInvalidated,
-        CancellableInput
+        CancellableInput,
+        TextChanging
     }
 
     public enum EventSource
