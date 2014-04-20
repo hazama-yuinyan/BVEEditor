@@ -62,7 +62,9 @@ namespace BVEEditor.Editor.CodeCompletion
 		public virtual ImageSource Image{get; set;}
         public ISegment ReplacementRange{get; set;}
 		
-		public virtual double Priority{get{return 0;}}
+		public virtual double Priority{
+            get{return 0;}
+        }
 		
 		public DefaultCompletionItem(string text)
 		{
@@ -72,7 +74,8 @@ namespace BVEEditor.Editor.CodeCompletion
 		public virtual void Insert(ITextEditor editor)
 		{
 			editor.Document.Replace(ReplacementRange.Offset, ReplacementRange.Length, Text);
-			editor.Caret.Offset = ReplacementRange.EndOffset;
+            // Because TextDocument.Replace automatically locate the caret immediately after the replaced text
+            // we don't need to locate it manually
 		}
 	}
 }
