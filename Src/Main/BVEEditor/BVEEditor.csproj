@@ -166,23 +166,11 @@
     <Compile Include="Help\Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
-    <None Include="Workbench\Attachments\CheckBoxMenuItemViewModel.cs" />
     <Compile Include="Workbench\Attachments\EditMenuViewModel.cs" />
     <Compile Include="Workbench\Attachments\FileMenuViewModel.cs" />
     <Compile Include="Workbench\Attachments\HelpMenuViewModel.cs" />
-    <None Include="Workbench\Attachments\MenuItemViewModel.cs" />
-    <None Include="Workbench\Attachments\MenuSeparatorViewModel.cs" />
     <Compile Include="Workbench\Attachments\MenuDataTemplateSelector.cs" />
     <Compile Include="Workbench\Attachments\ToolsMenuViewModel.cs" />
-    <None Include="Workbench\Attachments\Views\EditMenuTemplate.xaml.cs">
-      <DependentUpon>EditMenuTemplate.xaml</DependentUpon>
-    </None>
-    <None Include="Workbench\Attachments\Views\FileMenuTemplate.xaml.cs">
-      <DependentUpon>FileMenuTemplate.xaml</DependentUpon>
-    </None>
-    <None Include="Workbench\Attachments\Views\HelpMenuTemplate.xaml.cs">
-      <DependentUpon>HelpMenuTemplate.xaml</DependentUpon>
-    </None>
     <Compile Include="Workbench\Attachments\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -195,9 +183,6 @@
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workbench\Attachments\ToolBarViewModel.cs" />
-    <None Include="Workbench\Attachments\Views\ToolsMenuTemplate.xaml.cs">
-      <DependentUpon>ToolsMenuTemplate.xaml</DependentUpon>
-    </None>
     <Compile Include="Workbench\Views\ErrorDocumentView.xaml.cs">
       <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
     </Compile>

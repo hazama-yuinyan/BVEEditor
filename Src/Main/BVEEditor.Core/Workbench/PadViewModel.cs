@@ -1,6 +1,6 @@
 ﻿/*
  * Created by SharpDevelop.
- * User: HAZAMA
+ * User: HAZAMA_Akkarin
  * Date: 2013/07/11
  * Time: 12:39
  * 

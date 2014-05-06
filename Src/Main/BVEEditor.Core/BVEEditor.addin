@@ -1,5 +1,5 @@
 ﻿<AddIn name        = "BVEEditor"
-       author      = "HAZAMA"
+       author      = "HAZAMA_Akkarin"
        copyright   = "prj:///doc/copyright.txt"
        url         = "http://funprogramming.ojaru.jp"
        description = "BVEEditor main module"
