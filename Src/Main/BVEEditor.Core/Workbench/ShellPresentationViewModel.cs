@@ -8,6 +8,9 @@ using Caliburn.Micro;
 
 namespace BVEEditor.Workbench
 {
+    /// <summary>
+    /// The view model for dialogs or windows.
+    /// </summary>
     public abstract class ShellPresentationViewModel : Screen
     {
         public IResultFactory Result{get; private set;}

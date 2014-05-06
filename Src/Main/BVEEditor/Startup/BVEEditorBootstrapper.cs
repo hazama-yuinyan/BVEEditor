@@ -23,6 +23,8 @@ using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
 using Ninject;
+using WPFLocalizeExtension.Engine;
+using WPFLocalizeExtension.Providers;
 
 namespace BVEEditor.Startup
 {
@@ -51,6 +53,7 @@ namespace BVEEditor.Startup
             kernel.Bind<ILanguageService>().To<LanguageBindingService>().InSingletonScope();
 
             SetupCustomMessageBindings();
+            LocalizeDictionary.Instance.DefaultProvider = InheritingResxLocalizationProvider.Instance;
 			
 			StartupSettings startup = new StartupSettings();
 				
@@ -78,6 +81,8 @@ namespace BVEEditor.Startup
 				
 			startup.AddAddInsFromDirectory(Path.Combine(startup.ApplicationRootPath, "AddIns"));
 			InitBVEEditorCore(startup);
+
+            SetupCustomConvensions();
 
             init_status = InitStatus.CoreInitialized;
 		}
@@ -134,6 +139,12 @@ namespace BVEEditor.Startup
         void SetupCustomMessageBindings()
         {
             DocumentContext.Init();
+        }
+
+        void SetupCustomConvensions()
+        {
+            // Add rule - Some.Namespace.SomeViewModel => Some.Namespace.Views.SomeView
+            ViewLocator.NameTransformer.AddRule(@"\.(\w+View)Model$", ".Views.$1");
         }
 		
 		#region Static helpers

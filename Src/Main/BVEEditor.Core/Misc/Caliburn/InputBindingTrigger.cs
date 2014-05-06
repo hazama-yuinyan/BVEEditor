@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using Caliburn.Micro;
+using BVEEditor.Workbench;
 
 namespace BVEEditor.Misc.Caliburn
 {
@@ -59,12 +60,7 @@ namespace BVEEditor.Misc.Caliburn
 
         static Window GetWindow(FrameworkElement element)
         {
-            var window = element as Window;
-            if(window != null)
-                return window;
-
-            var parent = element.Parent as FrameworkElement;
-            return GetWindow(parent);
+            return Application.Current.MainWindow;
         }
 
         #region ICommand メンバー

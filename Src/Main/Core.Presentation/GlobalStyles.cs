@@ -18,7 +18,7 @@ namespace Core.Presentation
 	{
 		static Style FindResource(ResourceKey key)
 		{
-			// don't crash if controls using GlobalStyles are instanciated in unit test mode
+			// don't crash if controls using GlobalStyles are instantiated in unit test mode
 			if (Application.Current == null)
 				return null;
 			else

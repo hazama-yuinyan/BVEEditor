@@ -78,6 +78,7 @@ namespace BVEEditor.Workbench
         readonly IMessageService msg_service;
         readonly IDisplayBindingService display_binding;
         readonly ISettingsManager settings_manager;
+        static readonly ILog Logger = LogManager.GetLog(typeof(WorkbenchViewModel));
 
         #region Binding sources
         public FlowDirection FlowDirection{
@@ -196,6 +197,7 @@ namespace BVEEditor.Workbench
 
         protected override void OnInitialize()
         {
+            Logger.Info("Initializing the workbench...");
             base.OnInitialize();
             // This causes the WPF Localization Extension library to synchronize its setting with System.Threading.Thread.CultureInfo
             WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = true;
@@ -203,10 +205,10 @@ namespace BVEEditor.Workbench
             settings_manager.LoadSettings();
 
             foreach(ICommand command in AddInTree.BuildItems<ICommand>("/BVEEditor/Workbench/AutostartAfterWorkbenchInitialized", null, false)){
-                try {
+                try{
                     command.Execute(null);
                 }
-                catch(Exception ex) {
+                catch(Exception ex){
                     // allow startup to continue if some commands fail
                     msg_service.ShowException(ex);
                 }
@@ -218,13 +220,29 @@ namespace BVEEditor.Workbench
             var handle_dirty_results = ViewDocuments.SelectMany(HandleDocumentClosing);
             foreach(var result in handle_dirty_results)
                 yield return result;
+        }
 
-            event_aggregator.Publish(new ApplicationExitingEvent());
+        protected override void OnActivate()
+        {
+            Logger.Info("Activating the workbench...");
+            base.OnActivate();
+
+            Menu.Activate();
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            Logger.Info("Deactivating the workbench with close={0}.", close);
+            base.OnDeactivate(close);
+            Menu.Deactivate(close);
+            
+            if(close)
+                event_aggregator.Publish(new ApplicationExitingEvent());
 
             settings_manager.SaveSettings();
             DeinitDocking();
 
-            var workbench_memento = CreateMemento();    //store workbench memento
+            var workbench_memento = CreateMemento();    // store workbench memento
             property_service.SetNestedProperties(WorkbenchMemento, workbench_memento);
             property_service.Save();
         }
@@ -448,6 +466,7 @@ namespace BVEEditor.Workbench
         {
             FileName non_null_filename = FileName.Create(filePath ?? "Untitled.txt");
             FileName possibly_null_filename = FileName.Create(filePath);
+            Logger.Info("Creating a ViewDocument for '{0}'.", non_null_filename);
             var new_doc = display_binding.GetBindingPerFileName(non_null_filename)
                                          .CreateViewModelForFile(possibly_null_filename);
 
@@ -486,7 +505,7 @@ namespace BVEEditor.Workbench
 			try{
 				return ICSharpCode.Core.Properties.Load(this.ViewContentMementosFileName) ?? new ICSharpCode.Core.Properties();
 			}catch(Exception ex){
-				Log4netLogger.Instance.Warn("Error while loading the view content memento file. Discarding any saved view states.", ex);
+				Logger.Warn("Error while loading the view content memento file. Discarding any saved view states.", ex);
 				return new ICSharpCode.Core.Properties();
 			}
 		}
@@ -497,9 +516,9 @@ namespace BVEEditor.Workbench
 			                     FileUtility.NormalizePath(viewDocument.FileName).ToUpperInvariant());
 		}
 		
-		public bool WillLoadDocumentProperties {
-			get { return property_service.Get("BVEEditor.LoadDocumentProperties", true); }
-			set { property_service.Set("BVEEditor.LoadDocumentProperties", value); }
+		public bool WillLoadDocumentProperties{
+			get{return property_service.Get("BVEEditor.LoadDocumentProperties", true);}
+			set{property_service.Set("BVEEditor.LoadDocumentProperties", value);}
 		}
 		
 		/// <summary>
@@ -514,7 +533,7 @@ namespace BVEEditor.Workbench
 					return;
 				
 				string key = GetMementoKeyName(viewDocument);
-				Log4netLogger.Instance.Debug("Saving memento of '" + viewDocument.ToString() + "' to key '" + key + "'");
+				Log4netLogger.Instance.Debug("Saving memento of '{0}' to key '{1}'.", viewDocument.ContentId, key);
 				
 				ICSharpCode.Core.Properties memento = memento_capable.CreateMemento();
 				ICSharpCode.Core.Properties p = this.LoadOrCreateViewContentMementos();
@@ -532,11 +551,11 @@ namespace BVEEditor.Workbench
 				
 				try{
 					string key = GetMementoKeyName(viewDocument);
-					Log4netLogger.Instance.Debug("Trying to restore memento of '" + viewDocument.ToString() + "' from key '" + key + "'");
+					Log4netLogger.Instance.Debug("Trying to restore memento of '{0}' from key '{1}'.", viewDocument.ToString(), key);
 					
 					memento_capable.SetMemento(LoadOrCreateViewContentMementos().NestedProperties(key));
 				}catch(Exception e){
-					MessageService.ShowException(e, "Can't get/set memento");
+					msg_service.ShowException(e, "Can't get/set memento");
 				}
 			}
 		}

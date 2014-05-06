@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using log4net.Config;
 
 namespace BVEEditor
 {
@@ -17,6 +18,7 @@ namespace BVEEditor
         static App()
         {
             LogManager.GetLog = type => new BVEEditor.Logging.Log4netLogger(type);
+            XmlConfigurator.Configure();
         }
 
         public App()

@@ -13,107 +13,35 @@ using BVEEditor.Help;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
+using System.Windows.Interactivity;
 
 namespace BVEEditor.Views.Main
 {
     /// <summary>
     /// The view model for the main menu.
     /// </summary>
-    public class MainMenuViewModel : PropertyChangedBase, IHandle<ActiveViewDocumentChangedEvent>
+    public class MainMenuViewModel : PropertyChangedBase, IMenu
     {
         const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
+        static readonly Guid MainMenuGuid = new Guid("C7249984-1645-48B1-907E-F2946AECA725");
+        readonly ILog Logger = LogManager.GetLog(typeof(MainMenuViewModel));
 
-        readonly IResultFactory result_factory;
-        readonly IFileDialogStrategies file_strategies;
-        readonly IEventAggregator event_aggregator;
-        readonly RecentOpenViewModel recent_open;
-
-        ViewDocumentViewModel active_doc;
-        ViewDocumentViewModel ActiveDocument{
-            get{return active_doc;}
-            set{
-                active_doc = value;
-                NotifyOfPropertyChange(() => CanSaveDocument);
-                NotifyOfPropertyChange(() => IsPathSet);
-                NotifyOfPropertyChange(() => CanQuickSaveDocument);
-            }
-        }
-
-        public RecentOpenViewModel RecentOpen{
-            get{return recent_open;}
-        }
-
-        // This property cann't use constructor injection
-        // because doing so creates a cyclic dependency.
-        public IWorkbench Workbench{private get; set;}
-
-        public MainMenuViewModel(IResultFactory resultFactory, IFileDialogStrategies fileStrategies, IEventAggregator eventAggregator,
-            RecentOpenViewModel recentOpen)
+        public MainMenuViewModel(FileMenuViewModel fileMenu, EditMenuViewModel editMenu, ToolsMenuViewModel toolsMenu,
+            HelpMenuViewModel helpMenu)
         {
-            eventAggregator.Subscribe(this);
-
-            result_factory = resultFactory;
-            file_strategies = fileStrategies;
-            event_aggregator = eventAggregator;
-            recent_open = recentOpen;
+            var menu_descriptors = AddInTree.BuildItems<MenuItemDescriptor>(MainMenuPath, null);
+            Items = new BindableCollection<IRootMenu>{
+                fileMenu,
+                editMenu,
+                toolsMenu,
+                helpMenu
+            };
         }
 
-        public void NewDocument()
+        void SetWorkbenchOnChildMenus(IWorkbench workbench)
         {
-            Workbench.CreateViewDocumentViewModel(null);
-        }
-
-        public IEnumerable<IResult> OpenDocument()
-        {
-            return file_strategies.Open(Workbench.CreateViewDocumentViewModel);
-        }
-
-        public void OpenDocument(RoutedEventArgs e)
-        {
-            var original_source = e.OriginalSource as FrameworkElement;
-            if(original_source == null)
-                return;
-
-            var file_name = original_source.DataContext as FileName;
-            if(file_name != null)
-                Workbench.CreateViewDocumentViewModel(file_name);
-        }
-
-        public IEnumerable<IResult> SaveDocument()
-        {
-            return Workbench.SaveDocument(active_doc, false);
-        }
-
-        public IEnumerable<IResult> QuickSaveDocument()
-        {
-            return Workbench.SaveDocument(active_doc, IsPathSet);
-        }
-
-        public bool CanQuickSaveDocument{
-            get{return CanSaveDocument && active_doc.IsDirty;}
-        }
-
-        public bool IsPathSet{
-            get{return !active_doc.IsUntitled;}
-        }
-
-        public bool CanSaveDocument{
-            get{return active_doc != null;}
-        }
-
-        public IEnumerable<IResult> Close()
-        {
-            yield return result_factory.Close();
-        }
-
-        public IEnumerable<IResult> ShowAboutDialog()
-        {
-            yield return result_factory.ShowDialogResult<AboutDialogViewModel>();
-        }
-
-        public IEnumerable<IResult> ShowOptionsDialog()
-        {
-            yield return result_factory.ShowDialogResult<OptionsViewModel>();
+            foreach(var menu in Items)
+                menu.Workbench = workbench;
         }
 
         /*public IEnumerable<IResult> ShowQuickSearchPanel()
@@ -121,26 +49,130 @@ namespace BVEEditor.Views.Main
             //yield return 
         }*/
 
-        #region IHandle<ActiveViewDocumentChangedEvent> メンバー
+        #region IMenu メンバー
 
-        public void Handle(ActiveViewDocumentChangedEvent message)
-        {
-            if(ActiveDocument != null)
-                ActiveDocument.PropertyChanged -= ViewDocumentPropertyChanged;
-
-            ActiveDocument = message.ViewDocument;
-            
-            if(ActiveDocument != null)
-                ActiveDocument.PropertyChanged += ViewDocumentPropertyChanged;
+        public IList<IRootMenu> Items{
+            get; private set;
         }
 
         #endregion
 
-        void ViewDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "IsDirty"){
-                NotifyOfPropertyChange(() => CanQuickSaveDocument);
+        #region ICanReferToWorkbench メンバー
+
+        // This property cann't use constructor injection
+        // because doing so creates a cyclic dependency.
+        IWorkbench workbench;
+        public IWorkbench Workbench{
+            private get{return workbench;}
+            set{
+                workbench = value;
+                SetWorkbenchOnChildMenus(value);
             }
         }
+
+        #endregion
+
+        #region IParent<IRootMenu> メンバー
+
+        public IEnumerable<IRootMenu> GetChildren()
+        {
+            return Items;
+        }
+
+        #endregion
+
+        #region IParent メンバー
+
+        System.Collections.IEnumerable IParent.GetChildren()
+        {
+            return GetChildren();
+        }
+
+        #endregion
+
+        #region IUnique メンバー
+
+        public Guid Id{
+            get{return MainMenuGuid;}
+        }
+
+        #endregion
+
+        #region IChild メンバー
+
+        public object Parent{
+            get{return Workbench;}
+            set{
+                Workbench = (IWorkbench)value;
+            }
+        }
+
+        #endregion
+
+        #region IActivate メンバー
+
+        /// <summary>
+        /// Activates all inactive child items.
+        /// </summary>
+        /// <remarks>
+        /// Note that the Activated event is fired for the first time this menu is activated.
+        /// </remarks>
+        public void Activate()
+        {
+            Logger.Info("Activating the main menu.");
+            foreach(var menu_item in Items){
+                if(!menu_item.IsActive){
+                    menu_item.Parent = this;
+                    menu_item.Activate();
+                }
+            }
+
+            if(!IsActive){
+                IsActive = true;
+                if(Activated != null){
+                    Activated(this, new ActivationEventArgs{
+                        WasInitialized = false
+                    });
+                }
+            }
+        }
+
+        public event EventHandler<ActivationEventArgs> Activated;
+
+        public bool IsActive{
+            get; set;
+        }
+
+        #endregion
+
+        #region IDeactivate メンバー
+
+        public event EventHandler<DeactivationEventArgs> AttemptingDeactivation;
+
+        public void Deactivate(bool close)
+        {
+            if(IsActive){
+                if(AttemptingDeactivation != null){
+                    AttemptingDeactivation(this, new DeactivationEventArgs{
+                        WasClosed = close
+                    });
+                }
+
+                IsActive = false;
+                Logger.Info("Deactivating the main menu.");
+                foreach(var menu_item in Items)
+                    menu_item.Deactivate(close);
+
+                if(Deactivated != null){
+                    Deactivated(this, new DeactivationEventArgs{
+                        WasClosed = close
+                    });
+                }
+            }
+        }
+
+        public event EventHandler<DeactivationEventArgs> Deactivated;
+
+        #endregion
     }
 }

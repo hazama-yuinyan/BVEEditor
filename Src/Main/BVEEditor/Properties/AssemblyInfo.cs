@@ -43,8 +43,6 @@ using System.Windows.Markup;
     //アプリケーション、またはいずれのテーマ固有のリソース ディクショナリにも見つからない場合に使用されます)
 )]
 
-[assembly: log4net.Config.XmlConfigurator(ConfigFile=@"Log4net.Config.xml", Watch = true)]
-
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //

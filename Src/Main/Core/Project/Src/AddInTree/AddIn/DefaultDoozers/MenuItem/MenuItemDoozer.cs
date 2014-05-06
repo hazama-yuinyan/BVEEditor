@@ -46,7 +46,7 @@ namespace ICSharpCode.Core
 	/// <children childTypes="MenuItem">
 	/// If "type" is "Menu", the item can have sub-menuitems.
 	/// </children>
-	/// <usage>Any menu strip paths or context menu paths, e.g. /SharpDevelop/Workbench/MainMenu</usage>
+	/// <usage>Any menu strip paths or context menu paths, e.g. /BVEEditor/Workbench/MainMenu</usage>
 	/// <returns>
 	/// A MenuItemDescriptor object.
 	/// </returns>
@@ -57,8 +57,8 @@ namespace ICSharpCode.Core
 		/// Gets if the doozer handles codon conditions on its own.
 		/// If this property return false, the item is excluded when the condition is not met.
 		/// </summary>
-		public bool HandleConditions {
-			get {
+		public bool HandleConditions{
+			get{
 				return true;
 			}
 		}
@@ -82,9 +82,10 @@ namespace ICSharpCode.Core
 		
 		public MenuItemDescriptor(object parameter, Codon codon, IList subItems, IReadOnlyCollection<ICondition> conditions)
 		{
-			if (codon == null)
+			if(codon == null)
 				throw new ArgumentNullException("codon");
-			this.Parameter = parameter;
+			
+            this.Parameter = parameter;
 			this.Codon = codon;
 			this.SubItems = subItems;
 			this.Conditions = conditions;

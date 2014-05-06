@@ -44,7 +44,7 @@
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <HintPath>..\..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -166,6 +166,23 @@
     <Compile Include="Help\Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <None Include="Workbench\Attachments\CheckBoxMenuItemViewModel.cs" />
+    <Compile Include="Workbench\Attachments\EditMenuViewModel.cs" />
+    <Compile Include="Workbench\Attachments\FileMenuViewModel.cs" />
+    <Compile Include="Workbench\Attachments\HelpMenuViewModel.cs" />
+    <None Include="Workbench\Attachments\MenuItemViewModel.cs" />
+    <None Include="Workbench\Attachments\MenuSeparatorViewModel.cs" />
+    <Compile Include="Workbench\Attachments\MenuDataTemplateSelector.cs" />
+    <Compile Include="Workbench\Attachments\ToolsMenuViewModel.cs" />
+    <None Include="Workbench\Attachments\Views\EditMenuTemplate.xaml.cs">
+      <DependentUpon>EditMenuTemplate.xaml</DependentUpon>
+    </None>
+    <None Include="Workbench\Attachments\Views\FileMenuTemplate.xaml.cs">
+      <DependentUpon>FileMenuTemplate.xaml</DependentUpon>
+    </None>
+    <None Include="Workbench\Attachments\Views\HelpMenuTemplate.xaml.cs">
+      <DependentUpon>HelpMenuTemplate.xaml</DependentUpon>
+    </None>
     <Compile Include="Workbench\Attachments\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -178,7 +195,10 @@
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workbench\Attachments\ToolBarViewModel.cs" />
-    <Compile Include="Workbench\ErrorDocumentView.xaml.cs">
+    <None Include="Workbench\Attachments\Views\ToolsMenuTemplate.xaml.cs">
+      <DependentUpon>ToolsMenuTemplate.xaml</DependentUpon>
+    </None>
+    <Compile Include="Workbench\Views\ErrorDocumentView.xaml.cs">
       <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workbench\ErrorDocumentViewModel.cs" />
@@ -226,6 +246,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Workbench\Attachments\Views\EditMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workbench\Attachments\Views\FileMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workbench\Attachments\Views\HelpMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Workbench\Attachments\Views\MainMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -238,11 +270,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\ErrorDocumentView.xaml">
+    <Page Include="Workbench\Attachments\Views\ToolsMenuTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\WorkbenchView.xaml">
+    <Page Include="Workbench\Views\ErrorDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Workbench\Views\WorkbenchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -251,7 +287,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="Logging\BVEEditorMessageService.cs" />
-    <Compile Include="Workbench\WorkbenchView.xaml.cs">
+    <Compile Include="Workbench\Views\WorkbenchView.xaml.cs">
       <DependentUpon>WorkbenchView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -319,11 +355,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Log4net.Config.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
