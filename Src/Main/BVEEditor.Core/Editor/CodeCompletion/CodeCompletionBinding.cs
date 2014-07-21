@@ -7,9 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using ICSharpCode.Core;
 
 namespace BVEEditor.Editor.CodeCompletion
@@ -148,6 +146,9 @@ namespace BVEEditor.Editor.CodeCompletion
         public bool CanHandle(ITextEditor editor)
         {
             string ext = Path.GetExtension(editor.FileName);
+            if(string.IsNullOrEmpty(ext))
+                return false;
+
             foreach(var extension in extensions){
                 if(ext.Equals(extension, StringComparison.OrdinalIgnoreCase))
                     return true;

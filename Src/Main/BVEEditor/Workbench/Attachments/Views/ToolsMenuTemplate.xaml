@@ -7,10 +7,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     mc:Ignorable="d">
     
-    <MenuItem lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    <MenuItem lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
+              lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
               lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources"
               cal:Bind.ModelWithoutContext="{Binding .}" Header="{lex:Loc MainMenu_Tools}">
-        <MenuItem x:Name="ShowOptionsDialog" Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}">
+        <MenuItem Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}" cal:Message.Attach="[Click] = [ShowOptionsDialog()]">
             <MenuItem.Icon>
                 <Image Source="{StaticResource Options}" />
             </MenuItem.Icon>

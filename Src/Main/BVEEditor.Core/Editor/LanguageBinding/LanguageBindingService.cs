@@ -62,7 +62,7 @@ namespace BVEEditor
                     return binding.Binding;
             }
 
-            return null;
+            return DefaultCodeCompletionBinding.Instance;
         }
     }
 }

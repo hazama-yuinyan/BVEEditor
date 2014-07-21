@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using BVEEditor.Events;
-using BVEEditor.Options;
-using BVEEditor.Result;
-using BVEEditor.Strategies;
-using BVEEditor.Help;
 using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
-using System.Windows.Interactivity;
 
 namespace BVEEditor.Views.Main
 {
@@ -36,6 +25,8 @@ namespace BVEEditor.Views.Main
                 toolsMenu,
                 helpMenu
             };
+            //foreach(var descriptor in menu_descriptors)
+            //    descriptor.Codon
         }
 
         void SetWorkbenchOnChildMenus(IWorkbench workbench)

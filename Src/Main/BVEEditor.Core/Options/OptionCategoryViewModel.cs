@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BVEEditor.Logging;
+using Caliburn.Micro;
 
 namespace BVEEditor.Options
 {
@@ -13,14 +14,17 @@ namespace BVEEditor.Options
     /// </summary>
     public class OptionCategoryViewModel : OptionPanelViewModel
     {
+        static readonly ILog Logger = LogManager.GetLog(typeof(OptionCategoryViewModel));
+
         public OptionCategoryViewModel() : base(null)
-        {}
+        {
+        }
 
         public override void LoadOptions()
         {
             foreach(var child in Children){
                 child.LoadOptions();
-                Log4netLogger.Instance.Info("Loaded options in " + child.Title + " from disk");
+                Logger.Info("Loaded options in {0} from disk.", child.Title);
             }
         }
 
@@ -30,7 +34,7 @@ namespace BVEEditor.Options
                 if(!child.SaveOptions())
                     return false;
                 else
-                    Log4netLogger.Instance.Info("Saved options in " + child.Title + " to disk");
+                    Logger.Info("Saved options in {0} to disk.", child.Title);
             }
 
             return true;

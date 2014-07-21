@@ -141,7 +141,6 @@
     <Compile Include="Startup\StartupSettings.cs" />
     <Compile Include="Strategies\FileDialogStrategies.cs" />
     <None Include="Workbench\FileService.cs" />
-    <None Include="Util\CompletionPopupActions.cs" />
     <Compile Include="Util\FixedSizeStack.cs" />
     <Compile Include="Util\TaskUtils.cs" />
     <Compile Include="Util\IntToBoolConverter.cs" />

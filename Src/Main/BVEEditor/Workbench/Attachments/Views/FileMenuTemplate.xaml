@@ -12,7 +12,8 @@
         <util:IntToBoolConverter x:Key="IntToBoolConverter" />
     </DataTemplate.Resources>
     
-    <MenuItem lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    <MenuItem lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
+              lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
               lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources"
               cal:Bind.ModelWithoutContext="{Binding .}" Header="{lex:Loc MainMenu_File}">
         <common:GestureMenuItem x:Name="NewDocument" Header="{lex:Loc MainMenu_FileMenu_NewEntry}" Modifiers="Ctrl" Key="N">

@@ -35,6 +35,7 @@ namespace BVEEditor.Startup
 	{                                                       //we should tell the bootstrapper that IWorkbench is the root view model class.
         IKernel kernel;
         System.Action<IKernel> addin_initializer;
+        static readonly ILog Logger = LogManager.GetLog(typeof(Bootstrapper));
 		
 		#region Bootstrapper overrides
 		protected override void Configure()
@@ -53,7 +54,6 @@ namespace BVEEditor.Startup
             kernel.Bind<ILanguageService>().To<LanguageBindingService>().InSingletonScope();
 
             SetupCustomMessageBindings();
-            LocalizeDictionary.Instance.DefaultProvider = InheritingResxLocalizationProvider.Instance;
 			
 			StartupSettings startup = new StartupSettings();
 				
@@ -124,11 +124,11 @@ namespace BVEEditor.Startup
 		
 		protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
 		{
-            Log4netLogger.Instance.Info("Initializing AddInTree...");
+            Logger.Info("Initializing AddInTree...");
             addin_initializer(kernel);
             addin_initializer = null;
 
-            Log4netLogger.Instance.Info("Run OnStartup...");
+            Logger.Info("Run OnStartup...");
             StringParser.RegisterStringTagProvider(new BVEEditorStringTagProvider(IoC.Get<IWorkbench>()));
 
             init_status = InitStatus.Busy;
@@ -176,7 +176,7 @@ namespace BVEEditor.Startup
 		#region Initialize Core
 		public void InitBVEEditorCore(StartupSettings properties)
 		{
-			Log4netLogger.Instance.Info("InitBVEEditor...");
+			Logger.Info("InitBVEEditor...");
 			CoreStartup startup = new CoreStartup(properties.ApplicationName);
 			/*if (properties.UseSharpDevelopErrorHandler) {
 				this.useSharpDevelopErrorHandler = true;
@@ -198,7 +198,7 @@ namespace BVEEditor.Startup
             foreach(var inst in core_services.Item2)
                 kernel.Bind(inst.Key).ToConstant(inst.Value);
 
-			Log4netLogger.Instance.Info("Looking for AddIns...");
+			Logger.Info("Looking for AddIns...");
 			foreach(string file in properties.addInFiles)
 				startup.AddAddInFile(file);
 
@@ -218,7 +218,7 @@ namespace BVEEditor.Startup
 			
 			//((AssemblyParserService)SD.AssemblyParserService).DomPersistencePath = properties.DomPersistencePath;
 			
-			Log4netLogger.Instance.Info("InitBVEEditor finished");
+			Logger.Info("InitBVEEditor finished");
 		}
 		#endregion
 	}

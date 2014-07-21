@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     mc:Ignorable="d">
     
-    <MenuItem lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    <MenuItem lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
+              lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
               lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources"
               cal:Bind.ModelWithoutContext="{Binding .}" Header="{lex:Loc MainMenu_Edit}">
         <MenuItem Header="{lex:Loc MainMenu_EditMenu_UndoEntry}" Command="Undo">

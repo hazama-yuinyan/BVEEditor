@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ICSharpCode.NRefactory.Editor;
 
 namespace BVEEditor.Util
 {
+    /// <summary>
+    /// Represents a range of text simply by an offset and a length.
+    /// </summary>
     public class TextRange : ISegment
     {
         #region ISegment メンバー
@@ -30,6 +29,9 @@ namespace BVEEditor.Util
         }
     }
 
+    /// <summary>
+    /// A text range segment that can lazily evaluate its content.
+    /// </summary>
     public class LazyEvaluationTextRange : ISegment
     {
         Lazy<int> offset_promise, length_promise;

@@ -29,18 +29,18 @@ namespace ICSharpCode.AvalonEdit.Search
 		
 		public SearchResultBackgroundRenderer()
 		{
-			markerBrush = Brushes.LightGreen;
-			markerPen = new Pen(markerBrush, 1);
+			marker_brush = Brushes.LightGreen;
+			marker_pen = new Pen(marker_brush, 1);
 		}
 		
-		Brush markerBrush;
-		Pen markerPen;
+		Brush marker_brush;
+		Pen marker_pen;
 		
 		public Brush MarkerBrush {
-			get { return markerBrush; }
+			get { return marker_brush; }
 			set {
-				this.markerBrush = value;
-				markerPen = new Pen(markerBrush, 1);
+				this.marker_brush = value;
+				marker_pen = new Pen(marker_brush, 1);
 			}
 		}
 		
@@ -68,7 +68,7 @@ namespace ICSharpCode.AvalonEdit.Search
 				geo_builder.AddSegment(textView, result);
 				Geometry geometry = geo_builder.CreateGeometry();
 				if(geometry != null)
-					drawingContext.DrawGeometry(markerBrush, markerPen, geometry);
+					drawingContext.DrawGeometry(marker_brush, marker_pen, geometry);
 			}
 		}
 	}

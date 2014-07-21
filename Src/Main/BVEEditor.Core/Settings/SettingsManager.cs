@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BVEEditor.Logging;
 using ICSharpCode.Core;
+using Caliburn.Micro;
 
 namespace BVEEditor.Settings
 {
@@ -15,6 +16,7 @@ namespace BVEEditor.Settings
     public class SettingsManager : ISettingsManager
     {
         const string GlobalSettingsPath = "/BVEEditor/GlobalSettings";
+        static readonly ILog Logger = LogManager.GetLog(typeof(SettingsManager));
 
         Properties settings_property;
         List<ISettingSnippet> settings = new List<ISettingSnippet>();
@@ -33,7 +35,7 @@ namespace BVEEditor.Settings
         {
             foreach(var item in settings){
                 item.Load(this);
-                Log4netLogger.Instance.Info("Loaded settings into " + item.SnippetName + " from PropertyService");
+                Logger.Info("Loaded settings into {0} from PropertyService.", item.SnippetName);
             }
         }
 
@@ -41,7 +43,7 @@ namespace BVEEditor.Settings
         {
             foreach(var item in settings){
                 if(item.Save(this))
-                    Log4netLogger.Instance.Info("Saved settings in " + item.SnippetName + " to PropertyService");
+                    Logger.Info("Saved settings in {0} to PropertyService.", item.SnippetName);
                 else
                     return false;
             }

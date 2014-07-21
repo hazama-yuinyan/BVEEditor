@@ -13,6 +13,7 @@
     d:DesignHeight="100" d:DesignWidth="300"
     cal:Bind.Model="{Binding .}"
     lex:LocalizeDictionary.DesignCulture="en"
+    lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
     lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
     lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources">
     <UserControl.Resources>
@@ -22,6 +23,7 @@
     <Grid>
         <Menu IsMainMenu="True"
               ItemsSource="{Binding Items}"
+              lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
               ItemContainerTemplateSelector="{StaticResource menuDataTemplateSelector}"
               UsesItemContainerTemplate="True" />
     </Grid>

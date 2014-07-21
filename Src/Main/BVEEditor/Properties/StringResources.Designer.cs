@@ -178,7 +178,7 @@ namespace BVEEditor.Properties {
         }
         
         /// <summary>
-        ///   Save before closing? に類似しているローカライズされた文字列を検索します。
+        ///   Save it before closing? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Common_Dialogs_Captions_SaveBeforeClose {
             get {

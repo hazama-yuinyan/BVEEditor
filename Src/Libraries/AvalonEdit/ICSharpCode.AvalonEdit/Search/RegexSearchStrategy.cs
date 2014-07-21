@@ -13,29 +13,32 @@ using ICSharpCode.NRefactory.Editor;
 
 namespace ICSharpCode.AvalonEdit.Search
 {
+    /// <summary>
+    /// An <see cref="ISearchStrategy"/> implementation that finds strings with regular expressions.
+    /// </summary>
 	class RegexSearchStrategy : ISearchStrategy
 	{
-		readonly Regex searchPattern;
-		readonly bool matchWholeWords;
+		readonly Regex SearchPattern;
+		readonly bool MatchWholeWords;
 		
 		public RegexSearchStrategy(Regex searchPattern, bool matchWholeWords)
 		{
 			if(searchPattern == null)
 				throw new ArgumentNullException("searchPattern");
 			
-            this.searchPattern = searchPattern;
-			this.matchWholeWords = matchWholeWords;
+            SearchPattern = searchPattern;
+			MatchWholeWords = matchWholeWords;
 		}
 		
 		public IEnumerable<ISearchResult> FindAll(ITextSource document, int offset, int length)
 		{
-			int endOffset = offset + length;
-			foreach(Match result in searchPattern.Matches(document.Text)){
-				int resultEndOffset = result.Length + result.Index;
-				if(offset > result.Index || endOffset < resultEndOffset)
+			int end_offset = offset + length;
+			foreach(Match result in SearchPattern.Matches(document.Text)){
+				int result_end_offset = result.Length + result.Index;
+				if(offset > result.Index || end_offset < result_end_offset)
 					continue;
 				
-                if(matchWholeWords && (!IsWordBorder(document, result.Index) || !IsWordBorder(document, resultEndOffset)))
+                if(MatchWholeWords && (!IsWordBorder(document, result.Index) || !IsWordBorder(document, result_end_offset)))
 					continue;
 				
                 yield return new SearchResult{StartOffset = result.Index, Length = result.Length, Data = result};
@@ -56,15 +59,15 @@ namespace ICSharpCode.AvalonEdit.Search
 		{
 			var strategy = other as RegexSearchStrategy;
 			return strategy != null &&
-				strategy.searchPattern.ToString() == searchPattern.ToString() &&
-				strategy.searchPattern.Options == searchPattern.Options &&
-				strategy.searchPattern.RightToLeft == searchPattern.RightToLeft;
+				strategy.SearchPattern.ToString() == SearchPattern.ToString() &&
+				strategy.SearchPattern.Options == SearchPattern.Options &&
+				strategy.SearchPattern.RightToLeft == SearchPattern.RightToLeft;
 		}
 	}
 	
 	public class SearchResult : TextSegment, ISearchResult
 	{
-		public Match Data { get; set; }
+		public Match Data{get; set;}
 		
 		public string ReplaceWith(string replacement)
 		{
