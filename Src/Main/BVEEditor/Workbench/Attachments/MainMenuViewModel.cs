@@ -50,7 +50,7 @@ namespace BVEEditor.Views.Main
 
         #region ICanReferToWorkbench メンバー
 
-        // This property cann't use constructor injection
+        // This property can't use constructor injection
         // because doing so creates a cyclic dependency.
         IWorkbench workbench;
         public IWorkbench Workbench{

@@ -8,9 +8,12 @@ XSharpDevelopのコア機能を使用したアドインシステム
 しかし、そうすると循環参照になってしまいこれまたコンパイルが通らなくなる。なので、FindReplaceDialogはAvalonDock.AddInで実装して
 アドインという形で本体に統合しようという魂胆。
    ・メニュー項目のアドイン化
-   　　・メニューアイテムの見た目はスタイルで変更するようにする
+   　　-メニューアイテムの見た目はスタイルで変更するようにする
+      -参考:http://stackoverflow.com/questions/14489112/how-do-i-dynamically-bind-and-statically-add-menuitems
+       MainMenu,MenuをCompositeCollectionを使用した実装に変更して、読み込みの高速化を図る
    ・ツールバーのアドイン化
 Xシンタックスハイライティングの実装
 Xオートコンプリーションの実装
+・insight windowの実装
 ・テキストエディターのオプションの拡張
 ・テーマ機能の実装、デフォルトテーマの準備
