@@ -170,6 +170,15 @@
     <Compile Include="Workbench\Attachments\HelpMenuViewModel.cs" />
     <Compile Include="Workbench\Attachments\MenuDataTemplateSelector.cs" />
     <Compile Include="Workbench\Attachments\ToolsMenuViewModel.cs" />
+    <Compile Include="Workbench\Attachments\Views\EditMenuView.xaml.cs">
+      <DependentUpon>EditMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\Attachments\Views\FileMenuView.xaml.cs">
+      <DependentUpon>FileMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Workbench\Attachments\Views\HelpMenuView.xaml.cs">
+      <DependentUpon>HelpMenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Workbench\Attachments\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -182,6 +191,9 @@
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Workbench\Attachments\ToolBarViewModel.cs" />
+    <Compile Include="Workbench\Attachments\Views\ToolsMenuView.xaml.cs">
+      <DependentUpon>ToolsMenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Workbench\Views\ErrorDocumentView.xaml.cs">
       <DependentUpon>ErrorDocumentView.xaml</DependentUpon>
     </Compile>
@@ -230,15 +242,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\Attachments\Views\EditMenuTemplate.xaml">
+    <Page Include="Workbench\Attachments\Views\EditMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\Attachments\Views\FileMenuTemplate.xaml">
+    <None Include="Workbench\Attachments\Views\FileMenuTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <Page Include="Workbench\Attachments\Views\FileMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\Attachments\Views\HelpMenuTemplate.xaml">
+    <Page Include="Workbench\Attachments\Views\HelpMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,7 +270,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Workbench\Attachments\Views\ToolsMenuTemplate.xaml">
+    <Page Include="Workbench\Attachments\Views\ToolsMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

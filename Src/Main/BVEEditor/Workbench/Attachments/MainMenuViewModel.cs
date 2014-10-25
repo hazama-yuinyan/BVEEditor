@@ -15,22 +15,50 @@ namespace BVEEditor.Views.Main
         static readonly Guid MainMenuGuid = new Guid("C7249984-1645-48B1-907E-F2946AECA725");
         readonly ILog Logger = LogManager.GetLog(typeof(MainMenuViewModel));
 
+        #region Binding sources
+        public FileMenuViewModel FileMenu{
+            get; private set;
+        }
+
+        public EditMenuViewModel EditMenu{
+            get; private set;
+        }
+
+        public ToolsMenuViewModel ToolsMenu{
+            get; private set;
+        }
+
+        public HelpMenuViewModel HelpMenu{
+            get; private set;
+        }
+        #endregion
+
         public MainMenuViewModel(FileMenuViewModel fileMenu, EditMenuViewModel editMenu, ToolsMenuViewModel toolsMenu,
             HelpMenuViewModel helpMenu)
         {
             var menu_descriptors = AddInTree.BuildItems<MenuItemDescriptor>(MainMenuPath, null);
-            Items = new BindableCollection<IRootMenu>{
+            FileMenu = fileMenu;
+            EditMenu = editMenu;
+            ToolsMenu = toolsMenu;
+            HelpMenu = helpMenu;
+            Items = new BindableCollection<IRootMenu>();
+            /*Items = new BindableCollection<IRootMenu>{
                 fileMenu,
                 editMenu,
                 toolsMenu,
                 helpMenu
-            };
+            };*/
             //foreach(var descriptor in menu_descriptors)
             //    descriptor.Codon
         }
 
         void SetWorkbenchOnChildMenus(IWorkbench workbench)
         {
+            FileMenu.Workbench = workbench;
+            EditMenu.Workbench = workbench;
+            ToolsMenu.Workbench = workbench;
+            HelpMenu.Workbench = workbench;
+
             foreach(var menu in Items)
                 menu.Workbench = workbench;
         }

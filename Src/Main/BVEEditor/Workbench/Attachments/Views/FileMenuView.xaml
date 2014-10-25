@@ -1,0 +1,73 @@
+﻿<MenuItem
+    x:Class="BVEEditor.Workbench.Attachments.FileMenuView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    xmlns:common="clr-namespace:BVEEditor.Misc.Caliburn;assembly=BVEEditor.Core"
+    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:util="clr-namespace:BVEEditor.Util"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
+    lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
+    lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources"
+    mc:Ignorable="d"
+    Header="{lex:Loc MainMenu_File}">
+    <MenuItem.Resources>
+        <util:IntToBoolConverter x:Key="IntToBoolConverter" />
+    </MenuItem.Resources>
+
+    <common:GestureMenuItem x:Name="NewDocument" Header="{lex:Loc MainMenu_FileMenu_NewEntry}" Modifiers="Ctrl" Key="N">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource NewDocument}" />
+        </MenuItem.Icon>
+    </common:GestureMenuItem>
+
+    <common:GestureMenuItem x:Name="OpenDocument" Header="{lex:Loc MainMenu_FileMenu_OpenDocumentEntry}" Modifiers="Control" Key="O">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource OpenFile}" />
+        </MenuItem.Icon>
+    </common:GestureMenuItem>
+
+    <Separator />
+
+    <common:GestureMenuItem x:Name="QuickSaveDocument" Header="{lex:Loc MainMenu_FileMenu_QuickSaveDocumentEntry}" Modifiers="Control" Key="S">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource Save}" />
+        </MenuItem.Icon>
+    </common:GestureMenuItem>
+
+    <MenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource SaveAs}" />
+        </MenuItem.Icon>
+    </MenuItem>
+
+    <Separator />
+
+    <MenuItem
+        Header="{lex:Loc MainMenu_FileMenu_RecentFilesEntry}"
+        ItemsSource="{Binding RecentOpen.RecentFiles}"
+        IsEnabled="{Binding Path=RecentOpen.RecentFiles.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}"
+        cal:Message.Attach="OpenDocument($eventArgs)">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource RecentFiles}" />
+        </MenuItem.Icon>
+
+        <MenuItem.ItemContainerStyle>
+            <Style TargetType="{x:Type MenuItem}">
+                <Setter Property="Header" Value="{Binding}" />
+                <Setter Property="CommandParameter" Value="{Binding}" />
+            </Style>
+        </MenuItem.ItemContainerStyle>
+    </MenuItem>
+
+    <Separator />
+
+    <common:GestureMenuItem x:Name="Close" Header="{lex:Loc MainMenu_FileMenu_ApplicationExitEntry}" Modifiers="Alt" Key="F4">
+        <MenuItem.Icon>
+            <Image Source="{StaticResource ApplicationExit}" />
+        </MenuItem.Icon>
+    </common:GestureMenuItem>
+</MenuItem>

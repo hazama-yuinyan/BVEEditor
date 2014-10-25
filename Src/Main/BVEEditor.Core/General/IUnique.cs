@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BVEEditor
 {
     /// <summary>
-    /// Denotes the derived classes that they are identifiable in the ID.
+    /// Denotes the derived classes that they are identifiable by the ID.
     /// </summary>
     public interface IUnique
     {

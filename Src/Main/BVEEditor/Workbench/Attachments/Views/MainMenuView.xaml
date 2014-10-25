@@ -7,11 +7,11 @@
     xmlns:util="clr-namespace:BVEEditor.Util;assembly=BVEEditor.Core"
     xmlns:core="clr-namespace:Core.Presentation;assembly=Core.Presentation"
     xmlns:workbench="clr-namespace:BVEEditor.Workbench"
+    xmlns:menuViews="clr-namespace:BVEEditor.Workbench.Attachments"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     mc:Ignorable="d" 
     d:DesignHeight="100" d:DesignWidth="300"
-    cal:Bind.Model="{Binding .}"
     lex:LocalizeDictionary.DesignCulture="en"
     lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
     lex:InheritingResxLocalizationProvider.DefaultAssembly="BVEEditor"
@@ -22,9 +22,17 @@
     
     <Grid>
         <Menu IsMainMenu="True"
-              ItemsSource="{Binding Items}"
-              lex:LocalizeDictionary.Provider="{x:Static lex:InheritingResxLocalizationProvider.Instance}"
               ItemContainerTemplateSelector="{StaticResource menuDataTemplateSelector}"
-              UsesItemContainerTemplate="True" />
+              UsesItemContainerTemplate="True">
+            <Menu.ItemsSource>
+                <CompositeCollection>
+                    <menuViews:FileMenuView cal:Bind.Model="{Binding FileMenu}" />
+                    <menuViews:EditMenuView cal:Bind.Model="{Binding EditMenu}" />
+                    <CollectionContainer Collection="{Binding Items}" />
+                    <menuViews:ToolsMenuView cal:Bind.Model="{Binding ToolsMenu}" />
+                    <menuViews:HelpMenuView cal:Bind.Model="{Binding HelpMenu}" />
+                </CompositeCollection>
+            </Menu.ItemsSource>
+        </Menu>
     </Grid>
 </UserControl>
