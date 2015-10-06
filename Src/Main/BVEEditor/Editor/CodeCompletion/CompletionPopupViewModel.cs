@@ -1,15 +1,15 @@
-﻿using System;
+﻿using BVEEditor.Editor.CodeCompletion;
+using BVEEditor.Editor.CodeCompletion.Actions;
+using BVEEditor.Messages;
+using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using BVEEditor.Editor.CodeCompletion;
-using BVEEditor.Editor.CodeCompletion.Actions;
-using BVEEditor.Messages;
-using Caliburn.Micro;
-using System.Globalization;
 
 namespace BVEEditor.Editor.CodeCompletion
 {
@@ -21,12 +21,13 @@ namespace BVEEditor.Editor.CodeCompletion
         readonly IEventAggregator event_aggregator;
         readonly ILanguageService language_service;
         BindableCollection<ICompletionItem> completion_items;
-        IList<ICompletionItem> items_cache;
         ICompletionItem current_completion_item;
         bool is_open;
+        int description_window_width, description_window_height;
         ITextEditor target;
         InsightWindowPopupViewModel insight_window;
         string current_text;
+        DescriptionElementConverter parser = new DescriptionElementConverter();
 
         #region Binding sources
         public BindableCollection<ICompletionItem> CompletionItems{
@@ -69,6 +70,32 @@ namespace BVEEditor.Editor.CodeCompletion
             }
         }
 
+        public int DescriptionWindowWidth{
+            get{
+                return description_window_width;
+            }
+
+            set{
+                if(description_window_width != value){
+                    description_window_width = value;
+                    NotifyOfPropertyChange(() => DescriptionWindowWidth);
+                }
+            }
+        }
+
+        public int DescriptionWindowHeight{
+            get{
+                return description_window_height;
+            }
+
+            set{
+                if(description_window_height != value){
+                    description_window_height = value;
+                    NotifyOfPropertyChange(() => DescriptionWindowHeight);
+                }
+            }
+        }
+
         public ITextEditor Editor{
             get{
                 return target;
@@ -89,14 +116,11 @@ namespace BVEEditor.Editor.CodeCompletion
         }
         #endregion
 
+        /// <summary>
+        /// Holds all completion items.
+        /// </summary>
         public IList<ICompletionItem> ItemsCache{
-            get{
-                return items_cache;
-            }
-
-            set{
-                items_cache = value;
-            }
+            get; set;
         }
 
         public bool IsFiltering{
@@ -135,6 +159,7 @@ namespace BVEEditor.Editor.CodeCompletion
 
             IsFiltering = true;
             StartOffset = -1;
+            DescriptionWindowWidth = 300;
 
             AddObservers(Observers);
         }
@@ -173,7 +198,7 @@ namespace BVEEditor.Editor.CodeCompletion
 
         public void OnCaretPositionChanged(object sender, EventArgs e)
         {
-            if(StartOffset != -1)
+            if(StartOffset != -1 && Editor.Caret.Offset > StartOffset)
                 FilterItems(Editor.Document.GetText(StartOffset, Editor.Caret.Offset - StartOffset));
         }
 
@@ -234,12 +259,23 @@ namespace BVEEditor.Editor.CodeCompletion
 
         public void LocatePopup()
         {
+            if(SelectedCompletionItem != null){
+                var description = SelectedCompletionItem.Description;
+                var first_line = description.TakeStart(description.IndexOf('\n'));
+                DescriptionWindowWidth = first_line.Length * 12;
+                DescriptionWindowHeight = (description.Count(c => c == '\n') + 1) * 30;
+            }
             event_aggregator.Publish(new PopupLocateMessage(this, null));
         }
 
         public void InvalidatePosition()
         {
             event_aggregator.Publish(new InvalidatePositionMessage(this));
+        }
+
+        void ReplaceItem()
+        {
+            ICompletionItem fancy_item;
         }
 
         bool IsEditor(EventSource source)
@@ -337,12 +373,12 @@ namespace BVEEditor.Editor.CodeCompletion
 
             int best_index = -1, best_quality = -1;
             double best_priority = 0;
-            for(int i = 0; i < items_cache.Count; ++i){
-                int quality = GetMatchQuality(items_cache[i].Text, query);
+            for(int i = 0; i < ItemsCache.Count; ++i){
+                int quality = GetMatchQuality(ItemsCache[i].Text, query);
                 if(quality < 0)
                     continue;
 
-                double priority = items_cache[i].Priority;
+                double priority = ItemsCache[i].Priority;
                 bool use_this_item;
                 if(best_quality < quality){
                     use_this_item = true;

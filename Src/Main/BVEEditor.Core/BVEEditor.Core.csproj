@@ -74,6 +74,10 @@
     <Compile Include="Editor\CodeCompletion\CompletionContext.cs" />
     <Compile Include="Editor\CodeCompletion\CompletionEventAttributes.cs" />
     <Compile Include="Editor\CodeCompletion\DefaultCodeCompletionBinding.cs" />
+    <Compile Include="Editor\CodeCompletion\DescriptionParser\DescriptionElementConverter.cs" />
+    <Compile Include="Editor\CodeCompletion\DescriptionParser\FancyDescriptionCompletionItem.cs" />
+    <Compile Include="Editor\CodeCompletion\DescriptionParser\IDescriptionElementTransformer.cs" />
+    <Compile Include="Editor\CodeCompletion\DescriptionParser\ParamDescriptionElementTransformer.cs" />
     <Compile Include="Editor\CodeCompletion\Events\CancellableInputEvent.cs" />
     <Compile Include="Editor\CodeCompletion\Events\CancellableKeyEvent.cs" />
     <Compile Include="Editor\CodeCompletion\Events\ItemClickedEvent.cs" />

@@ -18,9 +18,29 @@ namespace BVEEditor.Editor.CodeCompletion
     /// </summary>
 	public interface ICompletionItem
 	{
+        /// <summary>
+        /// The content to be inserted.
+        /// </summary>
 		string Text{get;}
+
+        /// <summary>
+        /// The description of this item. It may contain html tags.
+        /// </summary>
 		string Description{get;}
+
+        /// <summary>
+        /// The real description of this item. 
+        /// </summary>
+        string RealDescription{get;}
+
+        /// <summary>
+        /// The icon of this item.
+        /// </summary>
 		ImageSource Image{get;}
+
+        /// <summary>
+        /// The text range to be replaced.
+        /// </summary>
         ISegment ReplacementRange{get;}
 		
 		/// <summary>
@@ -47,9 +67,16 @@ namespace BVEEditor.Editor.CodeCompletion
         /// The content. It can be various WPF objects.
         /// </summary>
 		object Content{get;}
-		new object Description{get;}
+
+        /// <summary>
+        /// The rich description of this item.
+        /// </summary>
+        object FancyDescription{get;}
 	}
 	
+    /// <summary>
+    /// Completion item that represents a code snippet.
+    /// </summary>
 	public interface ISnippetCompletionItem : ICompletionItem
 	{
 		string Keyword{get;}
@@ -59,6 +86,7 @@ namespace BVEEditor.Editor.CodeCompletion
 	{
 		public string Text{get; private set;}
 		public virtual string Description{get; set;}
+        public virtual string RealDescription{get; set;}
 		public virtual ImageSource Image{get; set;}
         public ISegment ReplacementRange{get; set;}
 		

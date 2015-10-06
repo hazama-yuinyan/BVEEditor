@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:CompletionControls="clr-namespace:BVEEditor.CodeCompletion.Controls"
+    xmlns:CodeCompletion="clr-namespace:BVEEditor.Editor.CodeCompletion;assembly=BVEEditor.Core"
     mc:Ignorable="d"
     StaysOpen="False"
     Placement="Bottom"
@@ -13,6 +14,9 @@
     IsOpen="{Binding IsOpen}"
     d:DesignHeight="300"
     d:DesignWidth="300">
+    <Popup.Resources>
+        <CodeCompletion:DescriptionElementConverter x:Key="DescriptionElementConverter" />
+    </Popup.Resources>
     <DockPanel>
         <CompletionControls:EvenListBox MinWidth="100" MaxWidth="200" DockPanel.Dock="Left"
                                         x:Name="completionItems"
@@ -20,14 +24,15 @@
                                         SelectedItem="{Binding SelectedCompletionItem, Mode=TwoWay}"
                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                         DisplayMemberPath="Text"
-                                        DisplayedRows="7">
+                                        DisplayedRows="8">
         </CompletionControls:EvenListBox>
         
-        <StackPanel Margin="1">
-            <TextBox Width="300" IsTabStop="False" IsReadOnly="True" Focusable="False"
-                     Text="{Binding ElementName=completionItems, Path=SelectedItem.Description, Mode=OneWay}">
-                <TextBox.Style>
-                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+        <StackPanel Margin="1" VerticalAlignment="Stretch">
+            <Label HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" MinWidth="100" MinHeight="50"
+                   MaxHeight="600" Opacity="1.0" Visibility="Visible" Width="{Binding DescriptionWindowWidth}" Height="{Binding DescriptionWindowHeight}"
+                   IsTabStop="False" Focusable="False">
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding CompletionItems.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed" />
@@ -36,9 +41,15 @@
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
+                        <Setter Property="BorderBrush" Value="Black" />
+                        <Setter Property="Background" Value="LightGray" />
+                        <Setter Property="BorderThickness" Value="2" />
                     </Style>
-                </TextBox.Style>
-            </TextBox>
+                </Label.Style>
+                <Label.Content>
+                    <Binding ElementName="completionItems" Path="SelectedItem.Description" Mode="OneWay" Converter="{StaticResource DescriptionElementConverter}" />
+                </Label.Content>
+            </Label>
         </StackPanel>
     </DockPanel>
 </Popup>

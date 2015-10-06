@@ -1,4 +1,13 @@
-﻿using System;
+﻿using BVEEditor.Editor;
+using BVEEditor.Editor.CodeCompletion;
+using BVEEditor.Editor.CodeCompletion.Actions;
+using BVEEditor.Editor.CodeCompletion.Events;
+using BVEEditor.Messages;
+using BVEEditor.Util;
+using Caliburn.Micro;
+using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.NRefactory.Editor;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -15,15 +24,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BVEEditor.Editor;
-using BVEEditor.Editor.CodeCompletion;
-using BVEEditor.Editor.CodeCompletion.Actions;
-using BVEEditor.Editor.CodeCompletion.Events;
-using BVEEditor.Messages;
-using BVEEditor.Util;
-using Caliburn.Micro;
-using ICSharpCode.NRefactory.Editor;
-using ICSharpCode.AvalonEdit.Document;
 
 namespace BVEEditor.Editor.CodeCompletion
 {
@@ -31,7 +31,7 @@ namespace BVEEditor.Editor.CodeCompletion
     /// CompletionPopupView.xaml の相互作用ロジック
     /// </summary>
     public partial class CompletionPopupView : Popup, IHandle<PopupShowMessage>, IHandle<PopupHideMessage>,
-        IHandle<InvalidatePositionMessage>, IHandle<ScrollIntoViewMessage>, IHandle<PopupLocateMessage>
+        IHandle<InvalidatePositionMessage>, IHandle<ScrollIntoViewMessage>, IHandle<PopupLocateMessage>, INotifyPropertyChangedEx
     {
         readonly FixedSizeStack<IPopupEvent> events;
 
@@ -66,6 +66,7 @@ namespace BVEEditor.Editor.CodeCompletion
 
             Opened += (obj, args) => Publish(new PopupStateChangedEvent(PopupState.Open));
             Closed += (obj, args) => Publish(new PopupStateChangedEvent(PopupState.Closed));
+
             DataContextChanged += OnDataContextChanged;
         }
 
@@ -261,5 +262,35 @@ namespace BVEEditor.Editor.CodeCompletion
 
             return new Point(rect.X - scroll.HorizontalOffset, rect.Y - scroll.VerticalOffset + 1);
         }
+
+        #region INotifyPropertyChangedEx メンバー
+
+        public bool IsNotifying{
+            get{
+                throw new NotImplementedException();
+            }
+            set{
+                throw new NotImplementedException();
+            }
+        }
+
+        public void NotifyOfPropertyChange(string propertyName)
+        {
+            if(propertyName == "Text"){
+            }
+        }
+
+        public void Refresh()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged メンバー
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
     }
 }

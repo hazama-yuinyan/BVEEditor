@@ -376,8 +376,8 @@ namespace BVEEditor.Workbench
                 Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.SystemIdle, (System.Action)delegate{
                     event_aggregator.Publish(new ActiveViewDocumentChangedEvent(viewdoc_conductor.ActiveItem));
 
-                    /*if(value != null && this.mShutDownInProgress == false) {
-                            if(value.IsFilePathReal == true)
+                    /*if(value != null && !this.mShutDownInProgress) {
+                            if(value.IsFilePathReal)
                                 this.Config.LastActiveFile = value.FilePath;
                     }*/
                 });
