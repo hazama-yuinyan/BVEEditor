@@ -9,21 +9,20 @@ using System.Windows;
 namespace BVEEditor.Workbench
 {
     /// <summary>
-    /// Interface for defining a menu.
+    /// Interface for describing a menu item.
     /// </summary>
-    public interface IMenu : IParent<IRootMenu>, IUnique, IChild, ICanReferToWorkbench, IActivate, IDeactivate
+    public interface IMenu : IParent<IMenu>, IUnique, IChild, ICanReferToWorkbench, IActivate, IDeactivate
     {
         /// <summary>
-        /// Gets the collection of the child menu items.
+        /// Gets the collection of child menu items that will be inserted before other static items.
         /// </summary>
-        IList<IRootMenu> Items{get;}
-    }
+        BindableCollection<IMenu> ItemsBefore{get;}
 
-    /// <summary>
-    /// Interface for describing a root menu item.
-    /// </summary>
-    public interface IRootMenu : IChild, IUnique, ICanReferToWorkbench, IActivate, IDeactivate
-    {
+        /// <summary>
+        /// Gets the collection of child menu items that will be appended.
+        /// </summary>
+        BindableCollection<IMenu> ItemsAfter{get;}
+        
         /// <summary>
         /// The assembly name in which the view for this menu resides.
         /// </summary>

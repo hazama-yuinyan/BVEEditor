@@ -9,6 +9,6 @@ namespace BVEEditor.Editor.CodeCompletion
 {
     interface IDescriptionElementTransformer
     {
-        Inline Transform(List<KeyValuePair<string, string>> parameters, string value);
+        Inline[] Transform(List<KeyValuePair<string, string>> parameters, string value);
     }
 }

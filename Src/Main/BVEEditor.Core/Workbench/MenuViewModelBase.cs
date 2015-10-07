@@ -1,14 +1,40 @@
 ﻿using Caliburn.Micro;
+using ICSharpCode.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BVEEditor.Workbench
 {
     /// <summary>
     /// Base class for all menu view models.
     /// </summary>
-    public class MenuViewModelBase : PropertyChangedBase, IRootMenu
+    public class MenuViewModelBase : PropertyChangedBase, IMenu
     {
         protected readonly ILog Logger;
+
+        BindableCollection<IMenu> items_before = new BindableCollection<IMenu>();
+        BindableCollection<IMenu> items_after = new BindableCollection<IMenu>();
+
+        #region IMenu メンバー
+
+        public BindableCollection<IMenu> ItemsBefore{
+            get{return items_before;}
+        }
+
+        public BindableCollection<IMenu> ItemsAfter{
+            get{return items_after;}
+        }
+
+        public string ReferenceAssemblyName{
+            get; private set;
+        }
+
+        public string MenuName{
+            get; private set;
+        }
+
+        #endregion
 
         #region IChild メンバー
 
@@ -85,23 +111,36 @@ namespace BVEEditor.Workbench
 
         #endregion
 
-        #region IRootMenu メンバー
-
-        public string ReferenceAssemblyName{
-            get; private set;
-        }
-
-        public string MenuName{
-            get; private set;
-        }
-
-        #endregion
-
         protected MenuViewModelBase(ILog logger, string menuName, string refereceAssemblyName = null)
         {
             Logger = logger;
             ReferenceAssemblyName = refereceAssemblyName;
             MenuName = menuName;
+        }
+
+        #region IParent メンバー
+
+        System.Collections.IEnumerable IParent.GetChildren()
+        {
+            return GetChildren();
+        }
+
+        #endregion
+
+        #region IParent<IMenu> メンバー
+
+        public IEnumerable<IMenu> GetChildren()
+        {
+            return ItemsBefore.Concat(ItemsAfter);
+        }
+
+        #endregion
+
+        public static IEnumerable<IMenu> TransformMenuItems(IEnumerable<MenuItemDescriptor> descriptors)
+        {
+            foreach(var desc in descriptors){
+                yield return null;
+            }
         }
     }
 }

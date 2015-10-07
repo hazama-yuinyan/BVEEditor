@@ -19,7 +19,7 @@ namespace BVEEditor.Workbench
 
         public override DataTemplate SelectTemplate(object item, ItemsControl parentItemsControl)
         {
-            var menu_item = item as IRootMenu;
+            var menu_item = item as IMenu;
             if(menu_item != null){
                 Logger.Info("Creating view for the menu '{0}'.", menu_item.MenuName);
                 string base_uri = (menu_item.ReferenceAssemblyName != null) ? menu_item.ReferenceAssemblyName + ";component/" : BaseUri;

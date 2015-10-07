@@ -86,8 +86,8 @@ namespace BVEEditor.Editor.CodeCompletion
                         j += match2.Length;
                     }
 
-                    var element = transformers[open_tag.Value].Transform(parameters, match2.Groups[3].Value);
-                    block.Inlines.Add(element);
+                    var elements = transformers[open_tag.Value].Transform(parameters, match1.Groups[3].Value);
+                    block.Inlines.AddRange(elements);
                     i += match1.Length;
                 }else{
                     break;

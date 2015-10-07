@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using ICSharpCode.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BVEEditor.Workbench
     {
         public EditMenuViewModel() : base(LogManager.GetLog(typeof(EditMenuViewModel)), "Edit")
         {
+            ItemsBefore.AddRange(MenuViewModelBase.TransformMenuItems(AddInTree.BuildItems<MenuItemDescriptor>("/BVEEditor/Workbench/MainMenu/EditMenu/Before", null)));
+            ItemsAfter.AddRange(MenuViewModelBase.TransformMenuItems(AddInTree.BuildItems<MenuItemDescriptor>("/BVEEditor/Workbench/MainMenu/EditMenu/After", null)));
         }
     }
 }

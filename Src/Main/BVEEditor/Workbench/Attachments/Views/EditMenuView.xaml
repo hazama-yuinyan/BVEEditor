@@ -12,45 +12,51 @@
     lex:InheritingResxLocalizationProvider.DefaultDictionary="StringResources"
     mc:Ignorable="d"
     Header="{lex:Loc MainMenu_Edit}">
-    
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_UndoEntry}" Command="Undo">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Undo}" />
-        </MenuItem.Icon>
-    </MenuItem>
+    <MenuItem.ItemsSource>
+        <CompositeCollection>
+            <CollectionContainer Collection="{Binding ItemsBefore}" />
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_UndoEntry}" Command="Undo">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Undo}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_RedoEntry}" Command="Redo">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Redo}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_RedoEntry}" Command="Redo">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Redo}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <Separator />
+            <Separator />
 
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_CutEntry}" Command="Cut">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Cut}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_CutEntry}" Command="Cut">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Cut}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_CopyEntry}" Command="Copy">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Copy}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_CopyEntry}" Command="Copy">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Copy}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_PasteEntry}" Command="Paste">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Paste}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_PasteEntry}" Command="Paste">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Paste}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_DeleteEntry}" Command="Delete">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Delete}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_DeleteEntry}" Command="Delete">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Delete}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <Separator />
-    <MenuItem Header="{lex:Loc MainMenu_EditMenu_SelectAllEntry}" Command="SelectAll"></MenuItem>
+            <Separator />
+            <MenuItem Header="{lex:Loc MainMenu_EditMenu_SelectAllEntry}" Command="SelectAll"></MenuItem>
+            
+            <CollectionContainer Collection="{Binding ItemsAfter}" />
+        </CompositeCollection>
+    </MenuItem.ItemsSource>
 </MenuItem>

@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using BVEEditor.Workbench;
+﻿using BVEEditor.Workbench;
 using Caliburn.Micro;
 using ICSharpCode.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BVEEditor.Views.Main
 {
@@ -14,6 +15,8 @@ namespace BVEEditor.Views.Main
         const string MainMenuPath = "/BVEEditor/Workbench/MainMenu";
         static readonly Guid MainMenuGuid = new Guid("C7249984-1645-48B1-907E-F2946AECA725");
         readonly ILog Logger = LogManager.GetLog(typeof(MainMenuViewModel));
+        BindableCollection<IMenu> items_before = new BindableCollection<IMenu>();
+        BindableCollection<IMenu> items_after = new BindableCollection<IMenu>();
 
         #region Binding sources
         public FileMenuViewModel FileMenu{
@@ -41,7 +44,6 @@ namespace BVEEditor.Views.Main
             EditMenu = editMenu;
             ToolsMenu = toolsMenu;
             HelpMenu = helpMenu;
-            Items = new BindableCollection<IRootMenu>();
             /*Items = new BindableCollection<IRootMenu>{
                 fileMenu,
                 editMenu,
@@ -59,7 +61,10 @@ namespace BVEEditor.Views.Main
             ToolsMenu.Workbench = workbench;
             HelpMenu.Workbench = workbench;
 
-            foreach(var menu in Items)
+            foreach(var menu in ItemsBefore)
+                menu.Workbench = workbench;
+
+            foreach(var menu in ItemsAfter)
                 menu.Workbench = workbench;
         }
 
@@ -70,8 +75,20 @@ namespace BVEEditor.Views.Main
 
         #region IMenu メンバー
 
-        public IList<IRootMenu> Items{
-            get; private set;
+        public BindableCollection<IMenu> ItemsBefore{
+            get{return items_before;}
+        }
+
+        public BindableCollection<IMenu> ItemsAfter{
+            get{return items_after;}
+        }
+
+        public string ReferenceAssemblyName{
+            get{return "";}
+        }
+
+        public string MenuName{
+            get{return "MainMenu";}
         }
 
         #endregion
@@ -91,11 +108,11 @@ namespace BVEEditor.Views.Main
 
         #endregion
 
-        #region IParent<IRootMenu> メンバー
+        #region IParent<IMenu> メンバー
 
-        public IEnumerable<IRootMenu> GetChildren()
+        public IEnumerable<IMenu> GetChildren()
         {
-            return Items;
+            return ItemsBefore.Concat(ItemsAfter);
         }
 
         #endregion
@@ -139,7 +156,7 @@ namespace BVEEditor.Views.Main
         public void Activate()
         {
             Logger.Info("Activating the main menu.");
-            foreach(var menu_item in Items){
+            foreach(var menu_item in ItemsBefore.Concat(ItemsAfter)){
                 if(!menu_item.IsActive){
                     menu_item.Parent = this;
                     menu_item.Activate();
@@ -179,7 +196,7 @@ namespace BVEEditor.Views.Main
 
                 IsActive = false;
                 Logger.Info("Deactivating the main menu.");
-                foreach(var menu_item in Items)
+                foreach(var menu_item in ItemsBefore.Concat(ItemsAfter))
                     menu_item.Deactivate(close);
 
                 if(Deactivated != null){

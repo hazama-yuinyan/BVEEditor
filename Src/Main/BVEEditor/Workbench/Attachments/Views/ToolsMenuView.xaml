@@ -13,9 +13,17 @@
     Header="{lex:Loc MainMenu_Tools}"
     mc:Ignorable="d">
 
-    <MenuItem Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}" cal:Message.Attach="[Click] = [ShowOptionsDialog()]">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Options}" />
-        </MenuItem.Icon>
-    </MenuItem>
+    <MenuItem.ItemsSource>
+        <CompositeCollection>
+            <CollectionContainer Collection="{Binding ItemsBefore}" />
+            
+            <MenuItem Header="{lex:Loc MainMenu_ToolsMenu_OptionsEntry}" cal:Message.Attach="[Click] = [ShowOptionsDialog()]">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Options}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            
+            <CollectionContainer Collection="{Binding ItemsAfter}" />
+        </CompositeCollection>
+    </MenuItem.ItemsSource>
 </MenuItem>

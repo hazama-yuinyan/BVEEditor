@@ -13,5 +13,11 @@
     mc:Ignorable="d"
     Header="{lex:Loc MainMenu_Help}">
 
-    <MenuItem Header="{lex:Loc MainMenu_HelpMenu_ShowAboutEntry}" cal:Message.Attach="[Click] = [ShowAboutDialog()]" />
+    <MenuItem.ItemsSource>
+        <CompositeCollection>
+            <CollectionContainer Collection="{Binding ItemsBefore}" />
+            <MenuItem Header="{lex:Loc MainMenu_HelpMenu_ShowAboutEntry}" cal:Message.Attach="[Click] = [ShowAboutDialog()]" />
+            <CollectionContainer Collection="{Binding ItemsAfter}" />
+        </CompositeCollection>
+    </MenuItem.ItemsSource>
 </MenuItem>

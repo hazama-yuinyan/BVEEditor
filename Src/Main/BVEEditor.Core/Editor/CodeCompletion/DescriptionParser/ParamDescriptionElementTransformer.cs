@@ -13,9 +13,12 @@ namespace BVEEditor.Editor.CodeCompletion
     {
         #region IDescriptionElementTransformer メンバー
 
-        public Inline Transform(List<KeyValuePair<string, string>> parameters, string value)
+        public Inline[] Transform(List<KeyValuePair<string, string>> parameters, string value)
         {
-            return new Span(new Bold(new Run(value)));
+            return new []{
+                new Span(new Bold(new Run(parameters[0].Value))),
+                new Span(new Run(value))
+            };
         }
 
         #endregion

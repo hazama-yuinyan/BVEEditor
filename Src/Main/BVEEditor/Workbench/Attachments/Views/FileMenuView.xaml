@@ -18,56 +18,64 @@
         <util:IntToBoolConverter x:Key="IntToBoolConverter" />
     </MenuItem.Resources>
 
-    <common:GestureMenuItem x:Name="NewDocument" Header="{lex:Loc MainMenu_FileMenu_NewEntry}" Modifiers="Ctrl" Key="N">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource NewDocument}" />
-        </MenuItem.Icon>
-    </common:GestureMenuItem>
+    <MenuItem.ItemsSource>
+        <CompositeCollection>
+            <CollectionContainer Collection="{Binding ItemsBefore}" />
+            
+            <common:GestureMenuItem x:Name="NewDocument" Header="{lex:Loc MainMenu_FileMenu_NewEntry}" Modifiers="Ctrl" Key="N">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource NewDocument}" />
+                </MenuItem.Icon>
+            </common:GestureMenuItem>
 
-    <common:GestureMenuItem x:Name="OpenDocument" Header="{lex:Loc MainMenu_FileMenu_OpenDocumentEntry}" Modifiers="Control" Key="O">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource OpenFile}" />
-        </MenuItem.Icon>
-    </common:GestureMenuItem>
+            <common:GestureMenuItem x:Name="OpenDocument" Header="{lex:Loc MainMenu_FileMenu_OpenDocumentEntry}" Modifiers="Control" Key="O">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource OpenFile}" />
+                </MenuItem.Icon>
+            </common:GestureMenuItem>
 
-    <Separator />
+            <Separator />
 
-    <common:GestureMenuItem x:Name="QuickSaveDocument" Header="{lex:Loc MainMenu_FileMenu_QuickSaveDocumentEntry}" Modifiers="Control" Key="S">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource Save}" />
-        </MenuItem.Icon>
-    </common:GestureMenuItem>
+            <common:GestureMenuItem x:Name="QuickSaveDocument" Header="{lex:Loc MainMenu_FileMenu_QuickSaveDocumentEntry}" Modifiers="Control" Key="S">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource Save}" />
+                </MenuItem.Icon>
+            </common:GestureMenuItem>
 
-    <MenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource SaveAs}" />
-        </MenuItem.Icon>
-    </MenuItem>
+            <MenuItem x:Name="SaveDocument" Header="{lex:Loc MainMenu_FileMenu_SaveDocumentAsEntry}">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource SaveAs}" />
+                </MenuItem.Icon>
+            </MenuItem>
 
-    <Separator />
+            <Separator />
 
-    <MenuItem
-        Header="{lex:Loc MainMenu_FileMenu_RecentFilesEntry}"
-        ItemsSource="{Binding RecentOpen.RecentFiles}"
-        IsEnabled="{Binding Path=RecentOpen.RecentFiles.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}"
-        cal:Message.Attach="OpenDocument($eventArgs)">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource RecentFiles}" />
-        </MenuItem.Icon>
+            <MenuItem
+                Header="{lex:Loc MainMenu_FileMenu_RecentFilesEntry}"
+                ItemsSource="{Binding RecentOpen.RecentFiles}"
+                IsEnabled="{Binding Path=RecentOpen.RecentFiles.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}"
+                cal:Message.Attach="OpenDocument($eventArgs)">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource RecentFiles}" />
+                </MenuItem.Icon>
 
-        <MenuItem.ItemContainerStyle>
-            <Style TargetType="{x:Type MenuItem}">
-                <Setter Property="Header" Value="{Binding}" />
-                <Setter Property="CommandParameter" Value="{Binding}" />
-            </Style>
-        </MenuItem.ItemContainerStyle>
-    </MenuItem>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Header" Value="{Binding}" />
+                        <Setter Property="CommandParameter" Value="{Binding}" />
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
 
-    <Separator />
+            <Separator />
 
-    <common:GestureMenuItem x:Name="Close" Header="{lex:Loc MainMenu_FileMenu_ApplicationExitEntry}" Modifiers="Alt" Key="F4">
-        <MenuItem.Icon>
-            <Image Source="{StaticResource ApplicationExit}" />
-        </MenuItem.Icon>
-    </common:GestureMenuItem>
+            <common:GestureMenuItem x:Name="Close" Header="{lex:Loc MainMenu_FileMenu_ApplicationExitEntry}" Modifiers="Alt" Key="F4">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ApplicationExit}" />
+                </MenuItem.Icon>
+            </common:GestureMenuItem>
+            
+            <CollectionContainer Collection="{Binding ItemsAfter}" />
+        </CompositeCollection>
+    </MenuItem.ItemsSource>
 </MenuItem>
